@@ -1219,7 +1219,7 @@ function stickerBookPage(){
     const t=e.taskId&&S.tasks.find(x=>x.id===e.taskId);
     const inner=`${stickerHtml(e.sticker,'sm')}<span class="t"><b>${esc(t?t.text:e.text||'A done to-do')}</b><small>${esc(e.catName||e.siteName||'To-do')} · ${esc(stDate(e.at))}</small></span>`;
     return t?`<a class="earned" href="#/quests/${t.siteId}/${t.catId}/${t.id}">${inner}</a>`:`<div class="earned">${inner}</div>`;
-  }).join(''):'<p class="sb-empty">Finish a to-do and your first sticker lands here.</p>';
+  }).join(''):'<p class="sb-empty">Finish a to-do and to see your first sticker.</p>';
   const sets=STICKER_SETS.map(set=>{
     const got=set.items.filter((_,i)=>own.has(set.id+'-'+(i+1))).length;
     const cells=set.items.map(([emoji,name],i)=>{
@@ -1230,7 +1230,7 @@ function stickerBookPage(){
   }).join('');
   const customs=S.stickers.custom.map(c=>`<div class="custom">${stickerHtml({kind:'custom',id:c.id},'lg')}<span>${esc(c.name)}</span><button class="del" data-act="delcustom" data-id="${c.id}" title="Remove ${esc(c.name)}">${IC.x}</button></div>`).join('');
   return{crumbs:[['Home','#/']],body:`
-    <div class="head"><div class="head-main">${hdrArt?`<div class="head-art" aria-hidden="true">${hdrArt}</div>`:''}<div><p class="eyebrow">Album</p><h1>Sticker book</h1><p class="sub">Every finished to-do earns a sticker, and the album keeps them.</p></div></div>
+    <div class="head"><div class="head-main">${hdrArt?`<div class="head-art" aria-hidden="true">${hdrArt}</div>`:''}<div><p class="eyebrow">Album</p><h1>Sticker book</h1></div></div>
       <div class="acts"><button class="primary sm" data-act="uploadsticker">${IC.plus} Add your own</button></div></div>
     <div class="sb-stats">
       <div class="sb-stat"><b>${S.stickers.earned.length}</b><span>stickers earned</span></div>
@@ -1238,12 +1238,12 @@ function stickerBookPage(){
       <div class="sb-stat"><b>${S.stickers.custom.length}</b><span>photos in your stash</span></div>
     </div>
     ${missing?`<div class="reward-card"><div class="reward-empty">${mk(STAR,26,'currentColor')}</div><div class="reward-copy"><b>${plural(missing,'finished to-do')} without a sticker</b><p>Give the wins from before the sticker book their badge.</p><button class="ghost sm" data-act="backfill">Catch them up</button></div></div>`:''}
-    <div class="sb-sec"><h2>Recent wins</h2><p class="sb-sub">The newest additions to your album.</p><div class="earned-grid">${winHtml}</div></div>
-    <div class="sb-sec"><h2>The built-in stash</h2><p class="sb-sub">Finish to-dos to unlock all ${STICKERS.length}. Favourites can be changed on any finished to-do.</p><div class="sets">${sets}</div></div>
-    <div class="sb-sec"><h2>Your photos</h2><p class="sb-sub">Upload a picture and it becomes a sticker too.</p>
+    <div class="sb-sec"><h2>Recent wins</h2><div class="earned-grid">${winHtml}</div></div>
+    <div class="sb-sec"><h2>The built-in stash</h2><p class="sb-sub">You can change your favourites on any finished to-do.</p><div class="sets">${sets}</div></div>
+    <div class="sb-sec"><h2>Your photos</h2><p class="sb-sub">Upload a picture to create your own sticker.</p>
       <div class="custom-grid">${customs}<button class="custom" data-act="uploadsticker" style="border-style:dashed;justify-content:center;min-height:96px">${IC.plus}<span>Add photo</span></button></div>
     </div>
-    <p class="sb-empty">Saved separately from your to-dos, so clearing completed to-dos never clears the album.</p>`};
+    <p class="sb-empty">These are saved separately from your to-dos, so clearing completed to-dos never clears the album.</p>`};
 }
 function openStickerPicker(t){
   if(!t)return;
@@ -1472,7 +1472,7 @@ function homePage(){
     </a>
     <a class="door" style="--c:var(--a2)" href="#/lib">
       ${d2?`<div class="door-art" aria-hidden="true">${d2}</div>`:''}
-      <div><h2>Library</h2><p>Every file and folder</p></div>
+      <div><h2>Library</h2><p>Files and folders</p></div>
       <div class="foot"><span>${plural(S.lib.length,'item')}</span><span class="go">${IC.arrow}</span></div>
     </a>
   </div>${quickLinks()}${rewardStrip()}`};
@@ -1567,7 +1567,7 @@ function taskPage(s,c,t){
       <div class="seg">${timerOpts.map(m=>`<button class="${m===defMin?'on':''}" data-act="timer" data-v="${m}">${m} min${m===defMin?' &bull; default':''}</button>`).join('')}</div>
     </div>
     ${rewardCard}
-    <div class="bigdone"><button class="primary" data-act="finish">${done?'Reopen':'Mark done'}</button>${done?'':`<span class="reward-hint">${IC.star} Finish to earn a sticker</span>`}</div>
+    <div class="bigdone"><button class="primary" data-act="finish">${done?'Reopen':'Mark done'}</button>${done?'':`<span class="reward-hint">${IC.star} Sticker when complete</span>`}</div>
     <details class="more"><summary>More</summary>
       <div class="blk" style="margin-top:16px"><label>Move to section</label><select data-f="catId" style="max-width:300px">${s.cats.map(x=>`<option value="${x.id}" ${x.id===c.id?'selected':''}>${esc(x.name)}</option>`).join('')}</select></div>
       <button class="ghost danger" data-act="deltask">Delete this to-do</button></details>
@@ -1677,9 +1677,9 @@ function siteForm(s){
   s=s||{id:uid(),name:'',color:COLORS[S.sites.length%COLORS.length],cats:defCats()};
   modal({title:isNew?'Add a site':'Edit site',
     fields:[
-      {key:'name',label:'Name',value:s.name,ph:'Ellipsus, Tumblr, Discord'},
+      {key:'name',label:'Name',value:s.name,ph:'Jcink, Tumblr, other RP sites'},
       {key:'color',label:'Colour',type:'swatch',value:s.color},
-      {key:'cats',label:'Sections',type:'textarea',rows:5,value:s.cats.map(c=>c.name).join('\n'),hint:'One per line. Rename freely. If you remove a line, its to-dos move to the first section.'}],
+      {key:'cats',label:'Sections',type:'textarea',rows:5,value:s.cats.map(c=>c.name).join('\n'),hint:'One per line, rename freely. If you remove a line, its to-dos move to the first section.'}],
     onSave:v=>{
       const old=s.cats.slice(),used=new Set(),lines=v.cats.split('\n').map(x=>x.trim()).filter(Boolean);
       const next=lines.map((name,i)=>{
@@ -1699,10 +1699,10 @@ function libForm(l,type){
   modal({title:(isNew?'New ':'Edit ')+(l.type==='folder'?'folder':'file or link'),
     fields:[
       {key:'name',label:'Name',value:l.name},
-      {key:'url',label:'Link',value:l.url,ph:'https://...',hint:l.type==='folder'?'Optional. You can still browse the files you list inside it here.':'Google Docs, Sheets, Slides, Ellipsus, YouTube, Pinterest and more are recognised.'},
+      {key:'url',label:'Link',value:l.url,ph:'https://...',hint:l.type==='folder'?'Optional; you can still browse the files you list inside it here.':'Google Docs, Sheets, Slides, Ellipsus, YouTube, Pinterest and more are recognised.'},
       ...(l.type==='file'?[{key:'kind',label:'Type',type:'select',value:l.kind||'',options:[['','Auto from link'],...Object.entries(KINDS).map(([k,v])=>[k,v[0]])]}]:[]),
       {key:'status',label:'Status',type:'select',value:l.status||'',options:[['','No status'],...Object.entries(LST)]},
-      {key:'note',label:'Summary',type:'textarea',value:l.note,hint:'What is in it, where you left off. Shows on the card.'},
+      {key:'note',label:'Summary',type:'textarea',value:l.note,hint:'Shows on the card.'},
       {key:'tags',label:'Tags',value:l.tags||'',ph:'characters, fandom, arc',hint:'Separate with commas.'},
       {key:'words',label:'Word count',type:'number',value:l.words||''},
       {key:'worked',label:'Last worked on',type:'date',value:l.worked||''},
@@ -1784,13 +1784,13 @@ function openLookModal(){
       <div id="th-wrap">${themeGridHtml(cur)}</div>
     </div>
     <div class="fld">
-      <label>Doodles &amp; spot art</label>
+      <label>Doodles</label>
       <div class="opt-grid" data-lk="doodles">
         ${doodleOpts.map(([k,l])=>`<button type="button" class="opt-btn ${lk.doodles===k?'on':''}" data-v="${k}">${l}</button>`).join('')}
       </div>
     </div>
     <div class="fld">
-      <label>Home header banner</label>
+      <label>Home banner</label>
       <input id="banner-in" value="${esc(BANNER_PRESETS[lk.banner]?'':lk.banner)}" placeholder="Paste an image URL, or pick a preset below" autocomplete="off">
       <div class="banner-presets">
         <button type="button" class="bpre ${!lk.banner?'on':''}" data-bp="">Off</button>
@@ -1899,7 +1899,7 @@ function settings(){
       ${doneCount?`<div style="margin-top:10px"><button type="button" class="ghost sm" data-cleardone>Clear ${plural(doneCount,'completed to-do')} now</button></div>`:''}
       <small style="margin-top:10px">Stickers stay in your <a href="#/stickers" data-go-stickers style="font-weight:700">sticker book</a> even after completed to-dos are cleared.</small>
     </div>
-    <div class="fld"><label>Backup &amp; restore</label><small style="margin:0 0 12px">Saved in this browser automatically. Download a copy now and then.</small>
+    <div class="fld"><label>Backup &amp; restore</label><small style="margin:0 0 12px">Saved in this browser. Download a copy now and then for safety.</small>
       <div class="mrow" style="margin-top:0"><button type="button" class="primary sm" data-ex>Download backup</button><button type="button" class="ghost sm" data-im>Restore</button><input type="file" accept=".json" hidden id="fi"></div></div>
     <div class="mrow"><button type="button" class="ghost danger sm" data-rs>Reset everything</button><span class="sp"></span><button type="button" class="ghost" data-x>Close</button></div></div>`;
   document.body.appendChild(ov);
