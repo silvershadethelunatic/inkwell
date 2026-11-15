@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>inkwell</title>
-   <link rel="icon" type="image/png" href="favicon.ico">
+<link rel="icon" type="image/png" href="favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -66,6 +66,7 @@
 
 /* ---------- base & paper patterns ---------- */
 *{box-sizing:border-box;margin:0}
+[hidden]{display:none!important}
 html{scroll-behavior:smooth}
 body{
   font-family:var(--font-body);
@@ -146,6 +147,9 @@ h1{font-weight:800;font-size:clamp(2.1rem,5.5vw,3.2rem);line-height:1.08;letter-
 @media(max-width:560px){
   .doodle-hero svg{width:76px;height:76px}
   .banner-wrap{height:115px}
+  .banner-wrap[data-bh="slim"]{height:72px}
+  .banner-wrap[data-bh="tall"]{height:155px}
+  .banner-wrap.sub{height:60px}
 }
 
 /* ---------- buttons ---------- */
@@ -312,131 +316,79 @@ a.tile:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--edge)}
 .toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:11px 22px;border-radius:99px;font-weight:600;z-index:100;animation:rise .25s both}
 
 /* ---------- stickers & rewards ---------- */
-.sticker{
-  --sz:44px;
-  width:var(--sz);height:var(--sz);flex:0 0 auto;display:inline-grid;place-items:center;
-  font-size:calc(var(--sz) * .56);line-height:1;background:#fff;
-  border-radius:50%;border:2px solid rgba(30,20,40,.22);
-  box-shadow:2px 2px 0 var(--edge);overflow:hidden;
-  transform:rotate(var(--rot,0deg));user-select:none;
-}
-.sticker img{width:100%;height:100%;object-fit:cover;display:block}
-.sticker.xs{--sz:26px;box-shadow:1.5px 1.5px 0 var(--edge)}
-.sticker.sm{--sz:34px}
-.sticker.md{--sz:44px}
-.sticker.lg{--sz:64px}
-.sticker.xl{--sz:92px;box-shadow:4px 4px 0 var(--edge)}
-.sticker-emoji{display:block;transform:translateY(.01em)}
+.stk{display:inline-block;line-height:0;transform:rotate(var(--r,0deg));filter:drop-shadow(0 2px 0 rgba(0,0,0,.16)) drop-shadow(0 6px 8px rgba(0,0,0,.16));transition:transform .2s ease;flex:0 0 auto}
+.stk svg,.stk img{display:block}
+.stk.up img{border-radius:6px;filter:drop-shadow(2px 0 0 #fff) drop-shadow(-2px 0 0 #fff) drop-shadow(0 2px 0 #fff) drop-shadow(0 -2px 0 #fff)}
+.stk:hover{transform:rotate(calc(var(--r,0deg) + 8deg)) scale(1.1)}
+@keyframes sheen{0%,65%,100%{filter:brightness(1)}82%{filter:brightness(1.22) saturate(1.25)}}
+.stk.r1 svg{animation:sheen 3.8s ease-in-out infinite}
+.stk.r2 svg{animation:sheen 2.6s ease-in-out infinite}
+.slap{position:fixed;z-index:120;pointer-events:none}
+.row .stk{margin:0 4px 0 2px}
+.donecard{display:flex;align-items:center;gap:18px;margin:-10px 0 28px;padding:14px 18px;border:2px dashed var(--edge);border-radius:18px}
+.donecard b{font-weight:700}
+.donecard small{display:block;color:var(--muted);margin:2px 0 8px}
+a.pillbtn{text-decoration:none;color:inherit}
+.cntb{display:inline-block;min-width:20px;padding:0 6px;border-radius:99px;background:var(--ink);color:var(--bg);font-size:.76rem;font-weight:700;text-align:center;margin-left:2px}
+.srow{display:flex;align-items:center;flex-wrap:wrap;gap:6px 12px;margin-top:10px;text-decoration:none;color:inherit}
+.srow-more{display:inline-flex;align-items:center;gap:6px;margin-left:8px;font-weight:600;color:var(--muted)}
+.srow:hover .srow-more{color:var(--ink)}
+.tray{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:95;width:min(580px,calc(100% - 24px));background:var(--surface);border:2px solid var(--edge);border-radius:22px;box-shadow:6px 6px 0 var(--edge);padding:14px 16px;animation:rise .3s both}
+.tray h3{font-weight:700;font-size:1rem;margin-bottom:8px}
+.tgrid{display:flex;gap:6px;flex-wrap:wrap}
+.tpick{border-radius:16px;padding:4px;transition:.12s}
+.tpick:hover{background:var(--surface2);transform:translateY(-3px)}
+.tfoot2{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+.sect{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:1.35rem;letter-spacing:-.02em;margin:38px 0 14px}
+.grp{font-weight:600;color:var(--muted);margin:18px 0 10px}
+.sstats{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.sstat{padding:10px 20px;border-radius:16px;border:2px solid var(--edge);background:var(--surface);color:var(--muted);font-weight:600}
+.sstat b{display:block;font-size:1.7rem;line-height:1.1;color:var(--ink);font-family:'Bricolage Grotesque',sans-serif}
+.snext{max-width:420px;color:var(--muted);font-weight:500}
+.mls{display:flex;gap:16px;flex-wrap:wrap}
+.ml{width:78px;text-align:center;font-weight:700;font-size:.86rem}
+.ml.lock .stk{opacity:.22;filter:grayscale(1)}
+.ml.lock{color:var(--muted);font-weight:500}
+.sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(138px,1fr));gap:16px}
+.scard{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;padding:16px 10px 12px;border-radius:18px;background:color-mix(in srgb,var(--c,var(--a2)) 14%,var(--surface));border:2px solid var(--edge);box-shadow:3px 3px 0 var(--edge)}
+.scard b{font-weight:600;font-size:.92rem;line-height:1.25;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.scard small{color:var(--muted);font-size:.8rem}
+.scard .rm{position:absolute;top:8px;right:8px;opacity:0}
+.scard:hover .rm,.scard .rm:focus-visible{opacity:1}
+@media(hover:none){.scard .rm{opacity:.7}}
+.empty svg{opacity:.9}
+@media(prefers-reduced-motion:reduce){.stk,.stk svg{animation:none!important;transition:none!important}}
 .stickerbtn{position:relative}
 .stickerbtn .count{
   position:absolute;top:-6px;right:-6px;min-width:18px;height:18px;padding:0 5px;
   border-radius:99px;background:var(--a1);color:#231a2e;border:1.5px solid var(--edge);
   font-size:.68rem;font-weight:800;display:grid;place-items:center;line-height:1;
 }
-.reward-pop{
-  position:fixed;right:22px;bottom:22px;z-index:95;display:flex;align-items:center;gap:13px;
-  max-width:310px;padding:11px 18px 11px 11px;border:2px solid var(--edge);
-  border-radius:20px;background:var(--surface);box-shadow:6px 6px 0 var(--edge);
-  animation:rewardIn .38s cubic-bezier(.2,.8,.3,1) both;cursor:pointer;
-}
-.reward-pop.out{animation:rewardOut .28s ease both}
-.reward-pop .sticker{--rot:-5deg}
-.reward-pop b{display:block;font-family:var(--font-head);font-size:1.05rem;line-height:1.2}
-.reward-pop small{display:block;color:var(--muted);font-size:.82rem;max-width:190px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:2px}
-@keyframes rewardIn{from{opacity:0;transform:translateY(16px) rotate(-2deg)}}
-@keyframes rewardOut{to{opacity:0;transform:translateY(10px) scale(.96)}}
-.reward-card{
-  display:flex;align-items:center;gap:16px;padding:16px 18px;margin-bottom:26px;
-  border:2px solid var(--edge);border-radius:var(--r-card);
-  background:color-mix(in srgb,var(--pop) 16%,var(--surface));
-  box-shadow:var(--sh-row);
-}
-.reward-card .reward-copy{min-width:0;flex:1 1 auto}
-.reward-card b{display:block;font-family:var(--font-head);font-size:1.18rem;line-height:1.15}
-.reward-card p{color:var(--muted);font-size:.9rem;margin-top:3px;overflow-wrap:anywhere}
-.reward-card .ghost{margin-top:0;margin-left:auto;align-self:center}
-.reward-card .sticker{--rot:-4deg}
-.reward-empty{
-  width:64px;height:64px;border-radius:50%;border:2px dashed var(--edge);
-  display:grid;place-items:center;color:var(--muted);flex:0 0 auto;
-}
-.reward-hint{display:inline-flex;align-items:center;gap:7px;color:var(--muted);font-size:.9rem;margin-left:14px}
-.rowsticker{flex:0 0 auto;display:inline-flex;margin:0 2px}
-.winchip{
-  display:inline-flex;align-items:center;gap:8px;padding:5px 14px 5px 6px;border-radius:99px;
-  max-width:270px;text-decoration:none;font-weight:600;
-  background:var(--surface);border:2px solid var(--edge);transition:.15s;
-}
-.winchip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.winchip:hover{transform:translate(-2px,-2px);box-shadow:3px 3px 0 var(--edge)}
-.reward-strip{margin-top:30px}
-.reward-strip .strip-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:2px}
-.reward-strip .strip-head .eyebrow{margin:0}
-.reward-strip .strip-head a{font-size:.86rem;padding:4px 10px}
+.row .stk{margin:0 2px}
+@media(max-width:560px){.tray{bottom:10px}}
 
-/* sticker book */
-.sb-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:28px}
-.sb-stat{padding:14px 16px;border:2px solid var(--edge);border-radius:var(--r-card);background:var(--surface);box-shadow:var(--sh-row)}
-.sb-stat b{display:block;font-family:var(--font-head);font-size:1.6rem;line-height:1.05}
-.sb-stat span{color:var(--muted);font-size:.85rem;font-weight:600}
-.sb-stat .bar{margin-top:10px}
-.sb-sec{margin-top:34px}
-.sb-sec h2{font-size:1.45rem;letter-spacing:-.02em}
-.sb-sec .sb-sub{color:var(--muted);font-size:.9rem;margin-top:2px}
-.earned-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin-top:14px}
-.earned{
-  display:flex;align-items:center;gap:12px;padding:11px 13px;border:2px solid var(--edge);
-  border-radius:var(--r-card);background:var(--surface);box-shadow:var(--sh-row);
-  text-decoration:none;color:var(--ink);min-width:0;
-}
-a.earned:hover{transform:translate(-2px,-2px);box-shadow:var(--sh-row-h)}
-.earned .t{min-width:0}
-.earned b{display:block;font-size:.98rem;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.earned small{display:block;color:var(--muted);font-size:.78rem;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.sets{display:grid;gap:22px;margin-top:16px}
-.set h3{display:flex;align-items:baseline;justify-content:space-between;gap:10px;font-size:1rem;font-weight:700;margin-bottom:9px}
-.set h3 span{font-size:.78rem;color:var(--muted);font-weight:600}
-.stash-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(58px,1fr));gap:9px}
-.stash{
-  display:flex;flex-direction:column;align-items:center;gap:5px;padding:9px 4px 6px;
-  border:2px solid var(--edge);border-radius:14px;background:var(--surface);
-  font-size:.64rem;font-weight:600;text-align:center;color:var(--muted);
-}
-.stash .sticker{--sz:36px;box-shadow:1.5px 1.5px 0 var(--edge)}
-.stash.locked{opacity:.42;filter:grayscale(1);border-style:dashed}
-.stash.locked .sticker{background:var(--surface2);color:var(--muted)}
-.stash span{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.custom-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:12px;margin-top:14px}
-.custom{
-  position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;
-  padding:12px 8px 9px;border:2px solid var(--edge);border-radius:var(--r-card);
-  background:var(--surface);box-shadow:var(--sh-row);font-size:.72rem;font-weight:600;text-align:center;
-}
-.custom .sticker{--sz:52px}
-.custom .del{
-  position:absolute;top:4px;right:4px;width:22px;height:22px;border-radius:50%;
-  background:var(--surface2);border:1.5px solid var(--edge);display:grid;place-items:center;color:var(--muted);
-}
-.custom .del:hover{background:#ff9aa8;color:#231a2e}
-.custom span{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.sb-empty{color:var(--muted);font-size:.95rem;padding:18px 4px}
-.picker-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(56px,1fr));gap:8px;margin:10px 0 4px}
-.pickst{
-  display:grid;place-items:center;padding:7px 4px;border:2px solid transparent;border-radius:14px;
-  background:var(--surface);transition:.12s;
-}
-.pickst:hover{border-color:var(--edge);transform:translateY(-2px)}
-.pickst:disabled{opacity:.3;cursor:not-allowed;filter:grayscale(.8)}
-.pickst:disabled:hover{border-color:transparent;transform:none}
-.pickst.on{border-color:var(--edge);background:var(--surface2);box-shadow:2px 2px 0 var(--edge)}
-.pickst .sticker{--sz:38px;box-shadow:1.5px 1.5px 0 var(--edge)}
-.picker-set{margin-top:16px}
-.picker-set h3{font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:2px}
-@media(max-width:560px){
-  .reward-pop{left:14px;right:14px;bottom:14px;max-width:none}
-  .reward-card{flex-wrap:wrap}
-  .bigdone .reward-hint{margin-left:0;width:100%}
-}
+
+/* ---------- row links, banners, doodle options, look tabs ---------- */
+.rowlink{flex:0 0 auto;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;border:2px solid var(--edge);background:var(--surface);color:var(--ink);text-decoration:none;transition:.15s}
+.rowlink:hover{background:var(--pop);color:#231a2e;transform:translate(-1px,-1px)}
+.banner-wrap svg{width:100%;height:100%;display:block}
+.banner-wrap[data-bh="slim"]{height:88px}
+.banner-wrap[data-bh="tall"]{height:215px}
+.banner-wrap.sub{height:74px;margin-bottom:20px}
+[data-dsize="small"]{--dz:.78}
+[data-dsize="large"]{--dz:1.3}
+.head-art,.door-art,.doodle-hero,.empty>svg{zoom:var(--dz,1)}
+[data-dstyle="line"] :is(.head-art,.door-art,.doodle-hero,.empty) svg *:not([stroke="none"]){fill:none!important}
+[data-dstyle="soft"] :is(.head-art,.door-art,.doodle-hero,.empty) svg{opacity:.5;filter:saturate(.6)}
+.lksub{font-family:var(--font-head);font-weight:800;font-size:1.1rem;margin:26px 0 2px}
+.lkpanel .fld{margin-top:16px}
+.bgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:8px;margin-top:8px}
+.bthumb{display:flex;flex-direction:column;gap:5px;font-size:.78rem;font-weight:600;text-align:left;padding:5px;border:2px solid transparent;border-radius:12px;transition:.12s}
+.bthumb:hover{border-color:var(--muted)}
+.bthumb.on{border-color:var(--edge);background:var(--surface2);box-shadow:2px 2px 0 var(--edge)}
+.bthumb .bt{height:46px;border-radius:8px;border:2px solid var(--edge);overflow:hidden;background:var(--surface2);display:grid;place-items:center;font-size:.75rem;color:var(--muted)}
+.bthumb .bt svg,.bthumb .bt img{width:100%;height:100%;object-fit:cover;display:block}
+.stk .emo{display:grid;place-items:center;border-radius:50%;background:#fff;border:2px solid #fff}
 
 /* Mini-window Theme Cards */
 .themes{display:grid;grid-template-columns:repeat(auto-fill,minmax(106px,1fr));gap:10px}
@@ -493,6 +445,36 @@ a.earned:hover{transform:translate(-2px,-2px);box-shadow:var(--sh-row-h)}
   .top-acts .pillbtn .lb{display:none}
 }
 
+
+/* ---------- row links, extra look options ---------- */
+.rowbody{flex:1;min-width:0;padding:6px 0}
+.rowbody .rowmain{display:block;padding:4px 0;flex:none}
+.rowlinks{display:flex;flex-wrap:wrap;gap:6px;margin:2px 0 4px}
+.rlink{display:inline-flex;align-items:center;gap:6px;max-width:100%;padding:3px 11px 3px 9px;border-radius:99px;font-size:.84rem;font-weight:600;text-decoration:none;color:var(--ink);
+  background:color-mix(in srgb,var(--c,var(--a2)) var(--mix),var(--surface));border:2px solid var(--edge);transition:.12s}
+.rlink span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:210px}
+.rlink svg{flex:0 0 auto}
+.rlink:hover{transform:translate(-1px,-1px);box-shadow:2px 2px 0 var(--edge)}
+.homepic{width:96px;height:96px;border-radius:50%;object-fit:cover;display:block;border:2px solid var(--edge);box-shadow:var(--sh-door)}
+@media(max-width:560px){.doodle-hero img{width:76px;height:76px}}
+.banner-wrap[data-bs="soft"] svg,.banner-wrap[data-bs="soft"] img{opacity:.55;filter:saturate(.75)}
+.banner-wrap[data-bs="fade"]{border-color:transparent;box-shadow:none;background:transparent;-webkit-mask-image:linear-gradient(#000 35%,transparent);mask-image:linear-gradient(#000 35%,transparent)}
+.banner-wrap[data-bf="top"] img{object-position:center top}
+.banner-wrap[data-bf="bottom"] img{object-position:center bottom}
+details.lkmore{margin:2px 0 14px}
+details.lkmore summary{cursor:pointer;font-weight:600;color:var(--muted);list-style:none;padding:6px 0}
+details.lkmore summary::-webkit-details-marker{display:none}
+details.lkmore summary::before{content:'+ '}
+details.lkmore[open] summary::before{content:'\2013  '}
+details.lkmore[open] summary{color:var(--ink);margin-bottom:6px}
+.picrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.picpv{width:54px;height:54px;border-radius:50%;border:2px solid var(--edge);display:grid;place-items:center;overflow:hidden;font-size:.74rem;color:var(--muted);background:var(--surface2)}
+.picpv img{width:100%;height:100%;object-fit:cover}
+html[data-danim="float"] :is(.head-art,.door-art,.doodle-hero,.empty>svg){animation:dfloat 6s ease-in-out infinite}
+@keyframes dfloat{50%{translate:0 -5px;rotate:-1.5deg}}
+html[data-ts="large"]{font-size:18px}html[data-ts="large"] body{font-size:19px}
+html[data-ts="xl"]{font-size:20px}html[data-ts="xl"] body{font-size:21.5px}
+html[data-motion="calm"] *,html[data-motion="calm"] *::before,html[data-motion="calm"] *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
 </style>
 </head>
 <body>
@@ -511,13 +493,28 @@ const DEFAULT_LOOK={
   bg:'dots',         // 'dots' | 'grid' | 'clean'
   font:'grotesk',    // 'grotesk' | 'editorial' | 'mono'
   style:'brutal',    // 'brutal' | 'soft'
-  banner:''          // '' | preset key | custom URL
+  banner:'',         // '' | preset key | 'upload' | custom URL
+  bannerImg:'',      // uploaded banner picture
+  bannerWhere:'home',// 'home' | 'all'
+  bannerH:'regular', // 'slim' | 'regular' | 'tall'
+  dsize:'medium',    // 'small' | 'medium' | 'large'
+  dstyle:'colour',   // 'colour' | 'line' | 'soft'
+  dwhere:'all',      // 'all' | 'headers' | 'home'
+  danim:'still',     // 'still' | 'float'
+  homePic:'',        // your own picture for the home page
+  bannerS:'full',    // 'full' | 'soft' | 'fade'
+  bannerF:'middle',  // 'top' | 'middle' | 'bottom'
+  tsize:'normal',    // 'normal' | 'large' | 'xl'
+  motion:'full'      // 'full' | 'calm'
 };
 
 const DEFAULT_PREFS={
   greeting:'time',   // 'time' | 'cozy' | 'minimal'
   timer:25,          // 15 | 25 | 45
-  cleanup:'keep'     // 'keep' | '7days'
+  cleanup:'keep',    // 'keep' | '7days'
+  reward:'surprise', // 'surprise' | 'choose' | 'favourite' | 'off'
+  pool:'all',        // 'all' | 'mine'
+  fav:''             // favourite sticker id
 };
 
 function seed(){
@@ -534,11 +531,11 @@ function seed(){
     tasks:[
       t(0,'Example: reply to the rooftop scene','todo',{note:'Edit or delete me.'}),
       t(1,'Example: write a backstory','todo'),
-      t(2,'Example: finish chapter three','doing',{due:new Date(Date.now()+2*864e5).toISOString().slice(0,10)})
+      t(2,'Example: finish chapter three','doing',{due:dstrN(2)})
     ],
     lib:[
       {id:f1,parent:'',type:'folder',name:'Main stories',url:'',note:'Example folder. Edit or delete me.',status:'ongoing',tags:'main',pin:true},
-      {id:uid(),parent:f1,type:'file',name:'Chapter one',url:'https://ellipsus.com',note:'Opening scene, needs a stronger last line.',status:'drafting',tags:'arc one, main',words:'3200',worked:new Date().toISOString().slice(0,10)},
+      {id:uid(),parent:f1,type:'file',name:'Chapter one',url:'https://ellipsus.com',note:'Opening scene, needs a stronger last line.',status:'drafting',tags:'arc one, main',words:'3200',worked:dstrN(0)},
       {id:uid(),parent:f1,type:'file',name:'Plot timeline',url:'https://docs.google.com/spreadsheets',note:'Who is where, and when.',status:'ongoing',tags:'planning'},
       {id:uid(),parent:f1,type:'file',name:'Mood board',url:'https://pinterest.com',note:'',status:'',tags:'visuals'},
       {id:f2,parent:'',type:'folder',name:'Characters',url:'',note:''}
@@ -568,19 +565,32 @@ function load(){
   return seed();
 }
 
-function normalizeStickers(st){
-  st=st&&typeof st==='object'?st:{};
-  return{
-    custom:Array.isArray(st.custom)?st.custom.filter(x=>x&&x.id&&x.src):[],
-    earned:Array.isArray(st.earned)?st.earned.filter(x=>x&&x.sticker).map(x=>({...x,id:x.id||uid(),at:x.at||Date.now()})):[]
-  };
+function dstrN(n){const d=new Date(Date.now()+n*864e5);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+const LEGACY_EMO={"ink-1": "🖋️", "ink-2": "🖊️", "ink-3": "✒️", "ink-4": "📝", "ink-5": "📖", "ink-6": "📚", "ink-7": "🌟", "ink-8": "⭐", "ink-9": "✨", "ink-10": "🌙", "ink-11": "🪶", "ink-12": "💫", "garden-1": "🌸", "garden-2": "🌼", "garden-3": "🌷", "garden-4": "🌻", "garden-5": "🌿", "garden-6": "🍀", "garden-7": "🌱", "garden-8": "🪴", "garden-9": "🍄", "garden-10": "🌺", "garden-11": "💐", "garden-12": "🌾", "desk-1": "☕", "desk-2": "🍵", "desk-3": "🕯️", "desk-4": "🧸", "desk-5": "📔", "desk-6": "📎", "desk-7": "🖌️", "desk-8": "🎧", "desk-9": "🫖", "desk-10": "🪔", "desk-11": "🧵", "desk-12": "✂️", "critters-1": "🐈", "critters-2": "🐈\u200d⬛", "critters-3": "🦊", "critters-4": "🐰", "critters-5": "🐝", "critters-6": "🦋", "critters-7": "🐢", "critters-8": "🦉", "critters-9": "🐧", "critters-10": "🐿️", "critters-11": "🐌", "critters-12": "🦔", "hearts-1": "💖", "hearts-2": "💗", "hearts-3": "💓", "hearts-4": "💞", "hearts-5": "💕", "hearts-6": "💘", "hearts-7": "🫶", "hearts-8": "🥰", "hearts-9": "😊", "hearts-10": "🌈", "hearts-11": "🎀", "hearts-12": "🩷", "weather-1": "☀️", "weather-2": "🌤️", "weather-3": "⛅", "weather-4": "🌧️", "weather-5": "⛈️", "weather-6": "❄️", "weather-7": "🍂", "weather-8": "🍁", "weather-9": "🍃", "weather-10": "🌊", "weather-11": "🌪️", "weather-12": "🌠"};
+/* brings older saved data (emoji stickers from the earlier sticker book) into the current shape */
+function normalize(d){
+  d.recent=Array.isArray(d.recent)?d.recent:[];d.book=Array.isArray(d.book)?d.book:[];d.badges=Array.isArray(d.badges)?d.badges:[];d.mySt=Array.isArray(d.mySt)?d.mySt:[];
+  d.look={...DEFAULT_LOOK,...(d.look||{})};d.prefs={...DEFAULT_PREFS,...(d.prefs||{})};
+  const old=d.stickers;
+  if(old&&typeof old==='object'){
+    (old.custom||[]).forEach(c=>{if(c&&c.id&&c.src&&!d.mySt.some(u=>u.id===c.id))d.mySt.push({id:c.id,url:c.src,name:c.name||'My sticker'})});
+    const ref=r=>!r?null:r.kind==='custom'?(d.mySt.some(u=>u.id===r.id)?'u:'+r.id:null):(LEGACY_EMO[r.id]?'e:'+LEGACY_EMO[r.id]:null);
+    const col=id=>{const s=(d.sites||[]).find(x=>x.id===id);return s?s.color:'#ff7a9c'};
+    const have=new Set(d.book.map(b=>b.tid));
+    (old.earned||[]).slice().reverse().forEach(e=>{const sid=ref(e.sticker);if(!sid||have.has(e.taskId))return;have.add(e.taskId);d.book.push({id:e.id||uid(),tid:e.taskId,text:e.text||'Untitled',site:e.siteName||'',color:col(e.siteId),sid,at:e.at||Date.now()})});
+    d.book.sort((a,b)=>b.at-a.at);
+    delete d.stickers;
+  }
+  (d.tasks||[]).forEach(t=>{
+    if(t.sticker&&typeof t.sticker==='object'){const r=t.sticker;t.sticker=r.kind==='custom'?(d.mySt.some(u=>u.id===r.id)?'u:'+r.id:''):(LEGACY_EMO[r.id]?'e:'+LEGACY_EMO[r.id]:'')}
+    if(!t.sticker)delete t.sticker;delete t.stickerAt;
+  });
+  return d;
 }
-let S=load();
-S.recent=S.recent||[];
-S.look={...DEFAULT_LOOK,...(S.look||{})};
-S.prefs={...DEFAULT_PREFS,...(S.prefs||{})};
-S.stickers=normalizeStickers(S.stickers);
-const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S));return true}catch(e){return false}};
+
+let S=normalize(load());
+let saveWarned=false;
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S));return true}catch(e){if(!saveWarned){saveWarned=true;setTimeout(()=>{toast('Storage is full. Download a backup and remove some uploaded pictures.');saveWarned=false},0)}return false}};
 
 /* ---------- helpers ---------- */
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -1042,236 +1052,245 @@ const DOODLES={
   }
 };
 
+/* Detailed spot art, one distinct picture per page, per doodle set.
+   Home hero and the two home doors live in DOODLES above; everything else is here. */
+const SZ={sitesHeader:68,siteDetailHeader:68,sec_threads:68,sec_character:68,sec_oog:68,sec_generic:68,libraryHeader:68,libFolder:68,stickersHeader:68,taskStamp:56,taskFlourish:28,empty_todo:84,empty_waiting:84,empty_done:84,empty_lib:84};
+const ART={
+inkwell:{
+  sitesHeader:'<rect x="10" y="26" width="56" height="44" rx="7" fill="var(--a2)"/><rect x="22" y="16" width="56" height="44" rx="7" fill="var(--surface)"/><path d="M22 30h56"/><circle cx="30" cy="23" r="2.2" fill="var(--a1)" stroke="none"/><circle cx="38" cy="23" r="2.2" fill="var(--pop)" stroke="none"/><circle cx="46" cy="23" r="2.2" fill="var(--a3)" stroke="none"/><path d="M32 40h28M32 49h18"/><path d="M58 56l24 10-10 4-4 10z" fill="var(--pop)"/>',
+  siteDetailHeader:'<path d="M12 30a6 6 0 0 1 6-6h20l8 9h32a6 6 0 0 1 6 6v33a6 6 0 0 1-6 6H18a6 6 0 0 1-6-6z" fill="var(--pop)"/><path d="M12 42h72"/><rect x="22" y="50" width="16" height="10" rx="3" fill="var(--a1)"/><rect x="42" y="50" width="16" height="10" rx="3" fill="var(--a2)"/><rect x="62" y="50" width="12" height="10" rx="3" fill="var(--a3)"/><path d="M72 6l2.6 6.4L81 15l-6.4 2.6L72 24l-2.6-6.4L63 15l6.4-2.6z" fill="var(--a1)" stroke="none"/>',
+  sec_threads:'<rect x="26" y="18" width="40" height="9" rx="3" fill="var(--surface)"/><rect x="26" y="69" width="40" height="9" rx="3" fill="var(--surface)"/><rect x="30" y="27" width="32" height="42" fill="var(--a1)"/><path d="M30 35h32M30 43h32M30 51h32M30 59h32" stroke-width="1.8"/><path d="M62 62c14 0 22 8 14 15s-24 6-34 1"/><path d="M82 14L58 38"/><circle cx="84" cy="12" r="3" fill="var(--pop)"/>',
+  sec_character:'<rect x="18" y="12" width="60" height="72" rx="10" fill="var(--surface)"/><rect x="24" y="18" width="48" height="60" rx="6" fill="var(--surface2)"/><circle cx="48" cy="42" r="11" fill="var(--pop)"/><path d="M36 40c0-14 24-14 24 0-5-5-19-5-24 0z" fill="var(--a1)"/><path d="M28 78c2-13 11-19 20-19s18 6 20 19z" fill="var(--a2)"/><path d="M44 45h.01M52 45h.01" stroke-width="3"/><path d="M72 8l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="var(--a3)" stroke="none"/>',
+  sec_oog:'<path d="M10 30h34a8 8 0 0 1 8 8v40a6 6 0 0 0-6-6H10z" fill="var(--surface)"/><path d="M86 30H52a8 8 0 0 0-8 8v40a6 6 0 0 1 6-6h36z" fill="var(--surface2)"/><path d="M18 42h20M18 52h20M18 62h14M58 42h20M58 52h20"/><path d="M58 8c12-3 24 2 28 12-12 3-22 1-30 8z" fill="var(--a1)"/><path d="M56 30L82 14"/>',
+  sec_generic:'<rect x="22" y="12" width="52" height="72" rx="6" fill="var(--a3)"/><rect x="30" y="12" width="44" height="72" rx="6" fill="var(--surface)"/><path d="M40 12v26l6-5 6 5V12" fill="var(--a1)"/><path d="M40 52h24M40 62h24M40 72h14"/>',
+  taskStamp:'<rect x="12" y="12" width="72" height="72" rx="3" fill="var(--surface)" stroke-dasharray="3 5"/><rect x="20" y="20" width="56" height="56" rx="4" fill="var(--surface2)"/><path d="M48 28l15 24-15 16-15-16z" fill="var(--pop)"/><path d="M48 52V40"/><circle cx="48" cy="55" r="2.5" fill="var(--a1)" stroke="none"/><path d="M32 72h32" stroke-width="2"/>',
+  taskFlourish:'<circle cx="48" cy="54" r="28" fill="var(--surface2)"/><path d="M48 54V36M38 18h20M48 18v8"/><path d="M48 54l12 8"/><circle cx="48" cy="54" r="3.5" fill="var(--a1)" stroke="none"/><path d="M70 28l6-6"/>',
+  libraryHeader:'<rect x="12" y="16" width="72" height="66" rx="6" fill="var(--surface)"/><path d="M12 49h72"/><rect x="20" y="24" width="9" height="25" rx="2" fill="var(--a1)"/><rect x="31" y="29" width="9" height="20" rx="2" fill="var(--a2)"/><rect x="42" y="22" width="9" height="27" rx="2" fill="var(--pop)"/><path d="M56 49l8-25 8 3-8 22z" fill="var(--a3)"/><rect x="20" y="57" width="12" height="18" rx="2" fill="var(--a3)"/><rect x="34" y="61" width="12" height="14" rx="2" fill="var(--pop)"/><rect x="52" y="56" width="14" height="19" rx="2" fill="var(--a1)"/>',
+  libFolder:'<rect x="12" y="18" width="72" height="64" rx="8" fill="var(--surface)"/><path d="M12 50h72"/><rect x="33" y="28" width="30" height="12" rx="4" fill="var(--pop)"/><path d="M41 34h14"/><rect x="33" y="60" width="30" height="12" rx="4" fill="var(--a1)"/><path d="M41 66h14"/><path d="M28 18V9h40v9" fill="var(--surface2)"/>',
+  empty_todo:'<path d="M32 58h32l6 24c1 4-2 8-6 8H32c-4 0-7-4-6-8z" fill="var(--surface)"/><rect x="38" y="48" width="20" height="10" rx="3" fill="var(--a2)"/><path d="M48 48C52 34 64 22 80 14c-2 16-10 27-24 34z" fill="var(--pop)"/><path d="M48 50L74 20"/><circle cx="20" cy="30" r="3" fill="var(--a1)" stroke="none"/><path d="M78 68l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="var(--a3)" stroke="none"/>',
+  empty_waiting:'<path d="M28 12h40M28 84h40"/><path d="M32 12c0 22 16 26 16 36S32 62 32 84M64 12c0 22-16 26-16 36s16 14 16 36"/><path d="M36 18c2 10 8 14 12 18 4-4 10-8 12-18z" fill="var(--pop)"/><path d="M40 80c2-8 6-10 8-14 2 4 6 6 8 14z" fill="var(--a1)"/>',
+  empty_done:'<path d="M30 6h13l7 24-9 6z" fill="var(--a1)"/><path d="M66 6H53l-7 24 9 6z" fill="var(--a2)"/><circle cx="48" cy="60" r="24" fill="var(--pop)"/><circle cx="48" cy="60" r="16" fill="var(--surface)"/><path d="M48 51l3.4 6.8 7.6 1-5.5 5.3 1.3 7.5-6.8-3.6-6.8 3.6 1.3-7.5-5.5-5.3 7.6-1z" fill="var(--a2)" stroke-width="1.6"/>',
+  empty_lib:'<path d="M14 42l34 14 34-14v26L48 82 14 68z" fill="var(--surface2)"/><path d="M14 42l34-14 34 14-34 14z" fill="var(--surface)"/><path d="M48 56v26"/><path d="M30 20l3-8 3 8 8 3-8 3-3 8-3-8-8-3z" fill="var(--pop)" stroke="none"/><circle cx="72" cy="24" r="3.5" fill="var(--a1)" stroke="none"/>',
+  stickersHeader:'<rect x="14" y="14" width="64" height="68" rx="8" fill="var(--surface)"/><path d="M56 82l22-26v26z" fill="var(--surface2)"/><path d="M36 28l5 10 11 2-8 8 2 11-10-6-10 6 2-11-8-8 11-2z" fill="var(--pop)"/><circle cx="62" cy="38" r="9" fill="var(--a1)"/><path d="M22 70h26" stroke-dasharray="2 4"/>'
+},
+botanical:{
+  sitesHeader:'<path d="M12 84V46L48 14l36 32v38z" fill="var(--surface)"/><path d="M12 46h72M30 31v53M66 31v53M48 14v70"/><path d="M36 84c0-14 6-20 12-24 6 4 12 10 12 24z" fill="var(--a3)"/><circle cx="48" cy="50" r="5" fill="var(--a1)"/>',
+  siteDetailHeader:'<path d="M28 58h40l-5 28H33z" fill="var(--a1)"/><rect x="24" y="52" width="48" height="9" rx="2" fill="var(--pop)"/><path d="M48 52V28"/><path d="M48 42c-14 0-20-8-18-20 12 0 18 8 18 20z" fill="var(--a3)"/><path d="M48 34c12 0 18-8 16-18-11 0-16 7-16 18z" fill="var(--a2)"/>',
+  sec_threads:'<path d="M20 86V12M76 86V12M20 30h56M20 54h56M20 78h56" stroke-width="2"/><path d="M28 84c12-14-8-24 4-36s26-10 16-26" stroke="var(--a3)" stroke-width="3"/><path d="M32 62c-9-3-11-11-7-17 8 2 11 9 7 17z" fill="var(--a3)"/><path d="M46 44c8-2 12-9 9-16-8 1-12 8-9 16z" fill="var(--pop)"/><circle cx="52" cy="20" r="6" fill="var(--a1)"/>',
+  sec_character:'<path d="M48 90V56"/><path d="M48 76c-12 0-18-6-18-14 10 0 18 5 18 14z" fill="var(--a3)"/><g fill="var(--a1)"><ellipse cx="48" cy="17" rx="8" ry="11"/><ellipse cx="48" cy="17" rx="8" ry="11" transform="rotate(72 48 36)"/><ellipse cx="48" cy="17" rx="8" ry="11" transform="rotate(144 48 36)"/><ellipse cx="48" cy="17" rx="8" ry="11" transform="rotate(216 48 36)"/><ellipse cx="48" cy="17" rx="8" ry="11" transform="rotate(288 48 36)"/></g><circle cx="48" cy="36" r="10" fill="var(--pop)"/><path d="M44 34h.01M52 34h.01" stroke-width="3"/><path d="M44 39q4 3 8 0"/>',
+  sec_oog:'<path d="M10 44h34a8 8 0 0 1 8 8v34a6 6 0 0 0-6-6H10z" fill="var(--surface)"/><path d="M86 44H52a8 8 0 0 0-8 8v34a6 6 0 0 1 6-6h36z" fill="var(--surface2)"/><path d="M48 50V16"/><path d="M48 32c-12-1-16-9-14-18 10 1 14 8 14 18z" fill="var(--a3)"/><path d="M48 26c10-1 15-8 13-16-9 1-13 7-13 16z" fill="var(--pop)"/><path d="M18 58h20M18 68h14M58 58h20"/>',
+  sec_generic:'<path d="M48 90C26 72 26 30 48 8c22 22 22 64 0 82z" fill="var(--a3)"/><path d="M48 90V8M48 32l-12 10M48 32l12 10M48 52l-14 12M48 52l14 12"/><circle cx="74" cy="22" r="6" fill="var(--a1)"/>',
+  taskStamp:'<rect x="12" y="12" width="72" height="72" rx="3" fill="var(--surface)" stroke-dasharray="3 5"/><circle cx="48" cy="48" r="23" fill="var(--surface2)"/><path d="M48 70V32"/><path d="M48 56c-12-1-17-8-15-17 10 1 15 8 15 17z" fill="var(--a3)"/><path d="M48 46c10-1 15-8 13-16-9 1-13 7-13 16z" fill="var(--pop)"/>',
+  taskFlourish:'<path d="M48 82V46"/><path d="M48 62c-14 0-22-8-20-20 12 0 20 8 20 20z" fill="var(--a3)"/><path d="M48 52c12 0 18-8 16-18-11 0-16 7-16 18z" fill="var(--pop)"/><path d="M30 84h36"/>',
+  libraryHeader:'<rect x="14" y="12" width="68" height="72" rx="8" fill="var(--surface)"/><rect x="22" y="20" width="52" height="56" rx="4" fill="var(--surface2)"/><path d="M48 70V40"/><circle cx="48" cy="33" r="8" fill="var(--a1)"/><path d="M48 56c-9-1-13-7-11-14 7 1 11 6 11 14z" fill="var(--a3)"/><path d="M48 62c9-1 13-7 11-14-7 1-11 6-11 14z" fill="var(--pop)"/>',
+  libFolder:'<path d="M22 18h52v68H22z" fill="var(--surface)"/><path d="M22 18l8 9h36l8-9" fill="var(--surface2)"/><circle cx="48" cy="56" r="16" fill="var(--pop)"/><path d="M48 66V48"/><path d="M48 58c-6 0-9-3-8-8 5 0 8 3 8 8z" fill="var(--a3)"/><path d="M34 78h28"/>',
+  empty_todo:'<path d="M28 58h40l-5 28H33z" fill="var(--a1)"/><rect x="24" y="52" width="48" height="9" rx="2" fill="var(--pop)"/><path d="M48 52V36"/><path d="M48 44c-8 0-12-5-11-12 7 0 11 5 11 12z" fill="var(--a3)"/><circle cx="72" cy="24" r="3" fill="var(--a2)" stroke="none"/>',
+  empty_waiting:'<path d="M22 44h40v32a8 8 0 0 1-8 8H30a8 8 0 0 1-8-8z" fill="var(--a2)"/><path d="M62 52l20-14v12L62 64" fill="var(--a2)"/><path d="M22 52h-8a8 8 0 0 0 0 14h8"/><path d="M26 44a16 8 0 0 1 32 0"/><path d="M86 58c3 5 3 8 0 10-3-2-3-5 0-10zM78 70c3 5 3 8 0 10-3-2-3-5 0-10z" fill="var(--a3)"/>',
+  empty_done:'<path d="M48 88V54M48 88L34 58M48 88l14-30"/><circle cx="48" cy="44" r="11" fill="var(--a1)"/><circle cx="31" cy="50" r="8" fill="var(--pop)"/><circle cx="65" cy="50" r="8" fill="var(--a2)"/><path d="M38 84h20l-3 7H41z" fill="var(--a3)"/>',
+  empty_lib:'<path d="M30 20h36v8c10 6 12 14 12 26v22a8 8 0 0 1-8 8H26a8 8 0 0 1-8-8V54c0-12 2-20 12-26z" fill="var(--surface)"/><path d="M26 20h44"/><path d="M34 82c0-12 6-18 14-20 8 2 14 8 14 20z" fill="var(--a3)"/><circle cx="48" cy="52" r="5" fill="var(--a1)"/>',
+  stickersHeader:'<rect x="14" y="14" width="64" height="68" rx="8" fill="var(--surface)"/><path d="M56 82l22-26v26z" fill="var(--surface2)"/><path d="M26 56C28 36 40 26 60 24 60 44 48 56 26 56z" fill="var(--a3)"/><path d="M28 54L52 32"/><circle cx="62" cy="64" r="9" fill="var(--a1)"/><circle cx="62" cy="64" r="3.5" fill="var(--pop)"/>'
+},
+celestial:{
+  sitesHeader:'<rect x="10" y="14" width="76" height="68" rx="10" fill="var(--surface)"/><path d="M22 64l16-22 18 12 18-24"/><circle cx="22" cy="64" r="5" fill="var(--a1)"/><circle cx="38" cy="42" r="5" fill="var(--pop)"/><circle cx="56" cy="54" r="5" fill="var(--a2)"/><circle cx="74" cy="30" r="5" fill="var(--a3)"/>',
+  siteDetailHeader:'<path d="M14 42l46-18 8 20-46 18z" fill="var(--a2)"/><path d="M60 24l16-6 8 20-16 6z" fill="var(--pop)"/><path d="M38 62l-8 26M50 58l8 30M44 60v28"/><circle cx="22" cy="22" r="3" fill="var(--a1)" stroke="none"/><path d="M80 72l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="var(--a3)" stroke="none"/>',
+  sec_threads:'<path d="M14 72l22-34 22 24 26-44" stroke-dasharray="1 6" stroke-width="3"/><path d="M14 64l2.6 5.4 5.4.8-4 3.8 1 5.4-5-2.7-5 2.7 1-5.4-4-3.8 5.4-.8z" fill="var(--a1)"/><path d="M36 30l2.6 5.4 5.4.8-4 3.8 1 5.4-5-2.7-5 2.7 1-5.4-4-3.8 5.4-.8z" fill="var(--pop)"/><path d="M58 54l2.6 5.4 5.4.8-4 3.8 1 5.4-5-2.7-5 2.7 1-5.4-4-3.8 5.4-.8z" fill="var(--a2)"/><path d="M84 18l3.4 7 7.6 1-5.5 5.3 1.3 7.5-6.8-3.6-6.8 3.6 1.3-7.5-5.5-5.3 7.6-1z" fill="var(--a3)"/>',
+  sec_character:'<path d="M60 8a40 40 0 1 0 26 66A32 32 0 0 1 60 8z" fill="var(--surface2)"/><circle cx="44" cy="52" r="8" fill="var(--pop)"/><path d="M30 80c1-10 7-15 14-15s13 5 14 15z" fill="var(--a2)"/><path d="M70 16l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="var(--a1)" stroke="none"/><circle cx="24" cy="30" r="2.5" fill="var(--a3)" stroke="none"/>',
+  sec_oog:'<path d="M10 56h34a8 8 0 0 1 8 8v24a6 6 0 0 0-6-6H10z" fill="var(--surface)"/><path d="M86 56H52a8 8 0 0 0-8 8v24a6 6 0 0 1 6-6h36z" fill="var(--surface2)"/><path d="M48 14l5 10 11 1.6-8 7.8 2 11-10-5.4-10 5.4 2-11-8-7.8 11-1.6z" fill="var(--pop)" transform="translate(0 0)"/><path d="M22 36l2.4 4.8 5.2.8-3.8 3.6.9 5.2-4.7-2.5-4.7 2.5.9-5.2-3.8-3.6 5.2-.8z" fill="var(--a1)"/><path d="M76 30l2.4 4.8 5.2.8-3.8 3.6.9 5.2-4.7-2.5-4.7 2.5.9-5.2-3.8-3.6 5.2-.8z" fill="var(--a3)"/>',
+  sec_generic:'<path d="M54 42L10 86 52 62z" fill="var(--a2)"/><path d="M62 46L24 88l34-18z" fill="var(--a1)" opacity=".7"/><circle cx="68" cy="30" r="15" fill="var(--pop)"/><circle cx="64" cy="26" r="3" fill="var(--a1)" stroke="none"/>',
+  taskStamp:'<rect x="12" y="12" width="72" height="72" rx="3" fill="var(--surface)" stroke-dasharray="3 5"/><circle cx="48" cy="48" r="23" fill="var(--surface2)"/><path d="M48 28l6 14 15 2-11 10 3 15-13-8-13 8 3-15-11-10 15-2z" fill="var(--pop)"/>',
+  taskFlourish:'<path d="M58 14a34 34 0 1 0 24 56A28 28 0 0 1 58 14z" fill="var(--pop)"/><circle cx="72" cy="28" r="3.5" fill="var(--a1)" stroke="none"/><circle cx="32" cy="22" r="2.5" fill="var(--a3)" stroke="none"/>',
+  libraryHeader:'<path d="M14 84V58a34 34 0 0 1 68 0v26z" fill="var(--surface)"/><path d="M42 26a22 22 0 0 1 12 0v32H42z" fill="var(--a2)"/><path d="M10 84h76"/><path d="M80 10l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="var(--pop)" stroke="none"/><circle cx="18" cy="24" r="3" fill="var(--a1)" stroke="none"/>',
+  libFolder:'<rect x="16" y="22" width="64" height="52" rx="6" fill="var(--surface)"/><ellipse cx="16" cy="48" rx="6" ry="26" fill="var(--surface2)"/><ellipse cx="80" cy="48" rx="6" ry="26" fill="var(--surface2)"/><path d="M30 58l12-12 10 8 14-16" stroke-dasharray="1 5" stroke-width="3"/><circle cx="30" cy="58" r="4" fill="var(--a1)"/><circle cx="66" cy="38" r="5" fill="var(--pop)"/>',
+  empty_todo:'<path d="M60 12a36 36 0 1 0 24 60A30 30 0 0 1 60 12z" fill="var(--pop)"/><path d="M38 52q4 3 8 0"/><path d="M66 18h10l-10 10h10" stroke-width="2"/><circle cx="20" cy="26" r="3" fill="var(--a1)" stroke="none"/>',
+  empty_waiting:'<circle cx="48" cy="48" r="13" fill="var(--a2)"/><ellipse cx="48" cy="48" rx="36" ry="14" transform="rotate(-20 48 48)"/><circle cx="76" cy="38" r="5" fill="var(--pop)"/><circle cx="20" cy="60" r="3" fill="var(--a1)" stroke="none"/>',
+  empty_done:'<path d="M48 10l9.5 21 23 3-17 16 4.5 23L48 59l-20 14 4.5-23-17-16 23-3z" fill="var(--pop)"/><path d="M34 86h28"/>',
+  empty_lib:'<rect x="18" y="14" width="60" height="70" rx="28" fill="var(--surface)"/><path d="M44 30a13 13 0 1 0 13 19 11 11 0 0 1-13-19z" fill="var(--pop)"/><circle cx="60" cy="34" r="2.5" fill="var(--a1)" stroke="none"/><path d="M18 84h60"/>',
+  stickersHeader:'<rect x="14" y="14" width="64" height="68" rx="8" fill="var(--surface)"/><path d="M56 82l22-26v26z" fill="var(--surface2)"/><path d="M34 26l5 11 12 1.6-9 8 2.4 12-10.4-6-10.4 6 2.4-12-9-8 12-1.6z" fill="var(--pop)" transform="translate(4 2) scale(.9)"/><path d="M64 30a11 11 0 1 0 8 17 9 9 0 0 1-8-17z" fill="var(--a2)"/>'
+}};
+const secKey=n=>{n=(n||'').toLowerCase();return /thread|\brp\b|role|repl|ask|post/.test(n)?'threads':/char|\boc\b|develop|bio|backstor/.test(n)?'character':/oog|writ|story|chapter|draft|fic|prose|book/.test(n)?'oog':'generic'};
+
+
+const MIXSETS=['inkwell','botanical','celestial'];
+const calm=()=>matchMedia('(prefers-reduced-motion:reduce)').matches||document.documentElement.dataset.motion==='calm';
 function getDoodle(slot){
-  const v=(S.look&&S.look.doodles)||'inkwell';
-  if(v==='none'||!DOODLES[v])return'';
+  const lk=S.look||{};let v=lk.doodles||'inkwell';
+  if(v==='none')return'';
+  const home=/^home/.test(slot),header=/Header$|^sec_|^libFolder$/.test(slot),w=lk.dwhere||'all';
+  if(!home&&((w==='home')||(w==='headers'&&!header)))return'';
+  if(v==='mix')v=MIXSETS[hash(slot)%MIXSETS.length];
+  if(!DOODLES[v])return'';
+  const body=ART[v]&&ART[v][slot];
+  if(body){const n=SZ[slot]||64;return`<svg width="${n}" height="${n}" viewBox="0 0 96 96" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">${body}</svg>`}
   return DOODLES[v][slot]||'';
 }
 
-/* ---------- sticker collection ---------- */
-const STICKER_SETS=[
-  {id:'ink',name:'Ink & stars',items:[
-    ['🖋️','Ink pen'],['🖊️','Ballpoint'],['✒️','Nib'],['📝','Memo'],['📖','Open book'],['📚','Book stack'],
-    ['🌟','Glow star'],['⭐','Gold star'],['✨','Sparkles'],['🌙','Crescent moon'],['🪶','Quill feather'],['💫','Swirl']
-  ]},
-  {id:'garden',name:'Garden',items:[
-    ['🌸','Blossom'],['🌼','Daisy'],['🌷','Tulip'],['🌻','Sunflower'],['🌿','Herb sprig'],['🍀','Clover'],
-    ['🌱','Seedling'],['🪴','Potted plant'],['🍄','Mushroom'],['🌺','Hibiscus'],['💐','Bouquet'],['🌾','Wheat']
-  ]},
-  {id:'desk',name:'Cozy desk',items:[
-    ['☕','Coffee'],['🍵','Tea'],['🕯️','Candle'],['🧸','Teddy'],['📔','Notebook'],['📎','Paperclip'],
-    ['🖌️','Paintbrush'],['🎧','Headphones'],['🫖','Teapot'],['🪔','Oil lamp'],['🧵','Thread'],['✂️','Scissors']
-  ]},
-  {id:'critters',name:'Little creatures',items:[
-    ['🐈','Cat'],['🐈‍⬛','Black cat'],['🦊','Fox'],['🐰','Rabbit'],['🐝','Bee'],['🦋','Butterfly'],
-    ['🐢','Turtle'],['🦉','Owl'],['🐧','Penguin'],['🐿️','Squirrel'],['🐌','Snail'],['🦔','Hedgehog']
-  ]},
-  {id:'hearts',name:'Hearts & feelings',items:[
-    ['💖','Sparkle heart'],['💗','Growing heart'],['💓','Beating heart'],['💞','Revolving hearts'],['💕','Two hearts'],['💘','Cupid heart'],
-    ['🫶','Heart hands'],['🥰','Smiling with hearts'],['😊','Smile'],['🌈','Rainbow'],['🎀','Ribbon'],['🩷','Pink heart']
-  ]},
-  {id:'weather',name:'Weather & seasons',items:[
-    ['☀️','Sun'],['🌤️','Sun behind cloud'],['⛅','Cloudy sun'],['🌧️','Rain'],['⛈️','Storm'],['❄️','Snowflake'],
-    ['🍂','Fallen leaf'],['🍁','Maple leaf'],['🍃','Leaf in wind'],['🌊','Wave'],['🌪️','Tornado'],['🌠','Shooting star']
-  ]}
+/* ---------- stickers: the reward engine ---------- */
+IC.sticker=mk('<path d="M4 4h16v10l-6 6H4z"/><path d="M14 20v-6h6"/><path d="M9 10h.01M13 10h.01"/><path d="M8.5 13.5c1.5 1.5 4 1.5 5.5 0"/>',16);
+const dstr=ms=>{const d=new Date(ms);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+const rnd=n=>Math.floor(Math.random()*n);
+const poly=(n,r1,r2,rot=-90)=>{const p=[];for(let i=0;i<n*2;i++){const r=i%2?r2:r1,a=(rot+i*180/n)*Math.PI/180;p.push((50+r*Math.cos(a)).toFixed(1)+','+(50+r*Math.sin(a)).toFixed(1))}return`<polygon points="${p.join(' ')}"/>`};
+const petals=[0,72,144,216,288].map(a=>`<circle cx="50" cy="27" r="18" transform="rotate(${a} 50 50)"/>`).join('')+'<circle cx="50" cy="50" r="15"/>';
+/* name, body, detail layer, face anchor (null = no face) */
+const SHAPES=[
+ ['star',poly(5,46,21),'',[50,54]],
+ ['burst',poly(12,46,35),'',[50,52]],
+ ['heart','<path d="M50 90C18 66 6 46 12 28 18 10 42 10 50 30 58 10 82 10 88 28 94 46 82 66 50 90z"/>','',[50,50]],
+ ['flower',petals,'<circle cx="50" cy="50" r="11"/>',[50,52]],
+ ['cloud','<path d="M28 76a19 19 0 0 1-2-38 25 25 0 0 1 48-4 21 21 0 0 1 4 42z"/>','',[50,56]],
+ ['moon','<path d="M62 8a44 44 0 1 0 30 66A36 36 0 0 1 62 8z"/>','',[40,54]],
+ ['bolt','<path d="M58 6L22 54h24l-6 40 40-54H54z"/>','',null],
+ ['leaf','<path d="M16 84C12 44 38 16 86 12 88 58 62 88 16 84z"/>','<path d="M20 80L70 30" fill="none"/>',null],
+ ['gem','<path d="M28 16h44l22 26-44 50L6 42z"/>','<path d="M6 42h88M38 16l-8 26 20 50M62 16l8 26-20 50" fill="none"/>',null],
+ ['drop','<path d="M50 6C70 34 84 50 84 66a34 34 0 0 1-68 0C16 50 30 34 50 6z"/>','',[50,64]],
+ ['crown','<path d="M10 76L6 28l26 22 18-34 18 34 26-22-4 48z"/>','<circle cx="32" cy="62" r="5"/><circle cx="50" cy="62" r="5"/><circle cx="68" cy="62" r="5"/>',null],
+ ['cat','<path d="M16 82V20l24 15h20l24-15v62a10 10 0 0 1-10 10H26a10 10 0 0 1-10-10z"/>','<path d="M26 36v-9l9 6zM74 36v-9l-9 6z"/>',[50,62]],
+ ['ghost','<path d="M18 92V46a32 32 0 0 1 64 0v46l-11-9-11 9-10-9-10 9-11-9z"/>','',[50,50]],
+ ['bubble','<path d="M14 16h72a8 8 0 0 1 8 8v46a8 8 0 0 1-8 8H50L28 94V78H14a8 8 0 0 1-8-8V24a8 8 0 0 1 8-8z"/>','',[50,46]],
+ ['rosette',poly(14,46,38),'<circle cx="50" cy="50" r="24"/>',[50,52]],
+ ['mug','<path d="M18 30h52v40a16 16 0 0 1-16 16H34a16 16 0 0 1-16-16z"/><path d="M70 40h8a10 10 0 0 1 0 22h-8"/>','<path d="M32 20q4-6 0-12M46 20q4-6 0-12" fill="none"/>',[44,58]],
+ ['book','<path d="M16 12h54a10 10 0 0 1 10 10v66H26a10 10 0 0 1-10-10z"/>','<path d="M30 12v76" fill="none"/><rect x="40" y="24" width="30" height="14" rx="3"/>',[56,62]],
+ ['butterfly','<path d="M50 50C28 12 4 24 12 48c4 12 22 12 38 2zM50 50C72 12 96 24 88 48c-4 12-22 12-38 2z"/><rect x="45" y="28" width="10" height="50" rx="5"/>','<circle cx="26" cy="40" r="7"/><circle cx="74" cy="40" r="7"/>',null],
+ ['pencil','<path d="M12 88l6-22L70 14l16 16-52 52z"/>','<path d="M18 66l16 16M62 22l16 16" fill="none"/>',null],
+ ['sun',poly(14,48,35),'',[50,52]],
+ ['mushroom','<path d="M10 54C10 26 28 10 50 10s40 16 40 44z"/><path d="M34 54h32v26a10 10 0 0 1-10 10H44a10 10 0 0 1-10-10z"/>','<circle cx="32" cy="34" r="6"/><circle cx="62" cy="28" r="5"/><circle cx="72" cy="44" r="4"/>',[50,72]]
 ];
-const STICKERS=STICKER_SETS.flatMap(set=>set.items.map(([emoji,name],i)=>({id:set.id+'-'+(i+1),emoji,name,set:set.name,setId:set.id})));
-const STICKER_BY_ID=Object.fromEntries(STICKERS.map(s=>[s.id,s]));
-
-const customSticker=id=>S.stickers.custom.find(c=>c.id===id)||null;
-const stickerRef=ref=>ref&&(ref.kind==='builtin'||ref.kind==='custom')&&ref.id?ref:null;
-function resolveSticker(ref){
-  if(!ref)return null;
-  if(ref.kind==='custom'){
-    const c=customSticker(ref.id);
-    return c?{kind:'custom',id:c.id,name:c.name||'My sticker',src:c.src,emoji:'🖼️'}:{kind:'custom',id:ref.id,name:'Removed picture',src:'',emoji:'🖼️'};
+const PALS=[['#ff8fa8','#ffd24a'],['#ffd24a','#ff7a59'],['#7fe0c0','#2e86de'],['#8fc6ff','#ff8fa8'],['#c9a8ff','#ffd24a'],['#ffb48a','#8f7bff'],['#b6e86a','#ff6b8a'],['#ff7a7a','#ffe28a'],['#5ed6d0','#ff9ec0'],['#ffa94d','#4aa8ff'],['#d884ff','#7fe0c0'],['#f5f0e6','#ff6b8a']];
+const CAPS=['Done!','Yes!','Nice','Boom','Wow','Ink on','Brave','Slay','Go go','Whew','Proud','Neat','Bloom','Shine','Check!','Level up'];
+const MILES=[1,5,10,25,50,100,200,365,500,1000];
+let sk=0;
+const parseGen=id=>{const p=id.slice(2).split('.');return{shape:(+p[0]||0)%SHAPES.length,pal:(+p[1]||0)%PALS.length,cap:p[2]||'-1',rar:+p[3]||0,face:+p[4]||0}};
+const capText=c=>c==='-1'?'':c[0]==='m'?c.slice(1):(CAPS[+c]||'');
+function genSvg(o,n){
+  const k=++sk,sh=SHAPES[o.shape],pal=PALS[o.pal],gold=o.rar===2,cap=capText(o.cap),edge=gold?'#ffd24a':'#fff';
+  const tf=cap?'translate(9 -1) scale(.82)':'';
+  const body=sh[1],det=sh[2],ink='#231a2e';
+  const fx=sh[3]&&o.face?`<circle cx="${sh[3][0]-8}" cy="${sh[3][1]}" r="2.8" fill="${ink}" stroke="none"/><circle cx="${sh[3][0]+8}" cy="${sh[3][1]}" r="2.8" fill="${ink}" stroke="none"/><path d="M${sh[3][0]-4} ${sh[3][1]+6}q4 4 8 0" fill="none" stroke="${ink}" stroke-width="2.4"/><circle cx="${sh[3][0]-13}" cy="${sh[3][1]+5}" r="3" fill="#ff7a9c" opacity=".55" stroke="none"/><circle cx="${sh[3][0]+13}" cy="${sh[3][1]+5}" r="3" fill="#ff7a9c" opacity=".55" stroke="none"/>`:'';
+  const foil=o.rar>=1?`<linearGradient id="g${k}" x1="0" y1="0" x2="1" y2="1"><stop offset=".3" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".8"/><stop offset=".7" stop-color="#fff" stop-opacity="0"/></linearGradient><clipPath id="c${k}"><g transform="${tf}">${body}</g></clipPath>`:'';
+  const spark=o.rar>=1?`<path d="M86 12l2.2 5.4 5.4 2.2-5.4 2.2-2.2 5.4-2.2-5.4-5.4-2.2 5.4-2.2z" fill="#fff" stroke="${ink}" stroke-width="1.6"/>${gold?'<path d="M10 70l1.8 4.2 4.2 1.8-4.2 1.8L10 82l-1.8-4.2L4 76l4.2-1.8z" fill="#fff" stroke="#231a2e" stroke-width="1.4"/>':''}`:'';
+  const ribbon=cap?`<rect x="12" y="70" width="76" height="22" rx="11" fill="#fff" stroke="${ink}" stroke-width="2.4"/><text x="50" y="85.5" text-anchor="middle" font-family="Bricolage Grotesque,Figtree,sans-serif" font-weight="800" font-size="14" fill="${ink}">${cap}</text>`:'';
+  return`<svg width="${n}" height="${n}" viewBox="0 0 100 100" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><defs>${foil}</defs>
+  <g transform="${tf}"><g fill="${edge}" stroke="${edge}" stroke-width="11">${body}</g><g fill="${pal[0]}" stroke="${ink}" stroke-width="2.6">${body}</g>${det?`<g fill="${pal[1]}" stroke="${ink}" stroke-width="2.2">${det}</g>`:''}${fx}</g>
+  ${o.rar>=1?`<g clip-path="url(#c${k})"><rect width="100" height="100" fill="url(#g${k})"/></g>`:''}${ribbon}${spark}</svg>`;
+}
+function genId(){
+  const r=Math.random(),rar=r<.03?2:r<.18?1:0;
+  return'g:'+[rnd(SHAPES.length),rnd(PALS.length),Math.random()<.45?-1:rnd(CAPS.length),rar,Math.random()<.5?1:0].join('.');
+}
+function stk(id,n=56,cls=''){
+  if(!id)return'';
+  const rot=(hash(id)%29)-14;
+  if(id[0]==='e'){const em=id.slice(2);return`<span class="stk ${cls}" style="--r:${rot}deg"><span class="emo" style="width:${n}px;height:${n}px;font-size:${Math.round(n*.58)}px">${esc(em)}</span></span>`}
+  if(id[0]==='u'){
+    const u=(S.mySt||[]).find(x=>x.id===id.slice(2));
+    if(u)return`<span class="stk up ${cls}" style="--r:${rot}deg"><img src="${esc(u.url)}" width="${n}" height="${n}" alt=""></span>`;
+    id='g:'+[hash(id)%SHAPES.length,hash(id)%PALS.length,-1,0,0].join('.');
   }
-  const b=STICKER_BY_ID[ref.id];
-  return b?{kind:'builtin',id:b.id,name:b.name,set:b.set,emoji:b.emoji}:null;
-}
-function stickerHtml(ref,size='md',extra=''){
-  const st=resolveSticker(ref);if(!st)return'';
-  const rot=(hash(st.id||st.name)%9)-4;
-  return`<span class="sticker ${size}" style="--rot:${rot}deg;${extra}" role="img" aria-label="${esc(st.name)}" title="${esc(st.name)}">${st.src?`<img src="${esc(st.src)}" alt="">`:`<span class="sticker-emoji">${st.emoji}</span>`}</span>`;
-}
-function ownedStickerIds(){
-  const own=new Set();
-  S.stickers.earned.forEach(e=>{if(e.sticker&&e.sticker.kind==='builtin')own.add(e.sticker.id)});
-  S.tasks.forEach(t=>{if(t.sticker&&t.sticker.kind==='builtin')own.add(t.sticker.id)});
-  return own;
-}
-const stDate=at=>{const d=new Date(Number(at)||Date.now());return isNaN(d.getTime())?fmt(todayStr()):d.toLocaleDateString(undefined,{day:'numeric',month:'short'})};
-
-function lastEarnedFor(taskId){
-  for(let i=S.stickers.earned.length-1;i>=0;i--)if(S.stickers.earned[i].taskId===taskId)return S.stickers.earned[i];
-  return null;
+  const o=parseGen(id);
+  return`<span class="stk r${o.rar} ${cls}" style="--r:${rot}deg">${genSvg(o,n)}</span>`;
 }
 function pickSticker(){
-  const own=ownedStickerIds();
-  const fresh=STICKERS.filter(s=>!own.has(s.id));
-  let pool=fresh.length?fresh:STICKERS;
-  const last=S.stickers.earned[S.stickers.earned.length-1];
-  if(last&&last.sticker&&last.sticker.kind==='builtin'){
-    const diff=pool.filter(s=>s.id!==last.sticker.id);
-    if(diff.length)pool=diff;
+  const mine=(S.mySt||[]).map(u=>'u:'+u.id),pool=S.prefs.pool;
+  if(mine.length&&(pool==='mine'||Math.random()<.3))return mine[rnd(mine.length)];
+  const used=new Set((S.book||[]).slice(0,60).map(b=>b.sid));
+  let id;for(let i=0;i<6;i++){id=genId();if(!used.has(id))break}
+  return id;
+}
+function slap(rect,sid){
+  if(!sid||!rect||calm())return;
+  const d=document.createElement('div');d.className='slap';d.innerHTML=stk(sid,88);
+  d.style.left=(rect.left+rect.width/2-44)+'px';d.style.top=(rect.top+rect.height/2-44)+'px';
+  document.body.appendChild(d);
+  d.animate([{transform:'scale(3.4) rotate(-28deg)',opacity:0},{transform:'scale(.88) rotate(6deg)',opacity:1,offset:.4},{transform:'scale(1.06) rotate(-3deg)',offset:.55},{transform:'scale(1) rotate(0)',opacity:1,offset:.7},{transform:'scale(1) translateY(-10px)',opacity:0}],{duration:1500,easing:'cubic-bezier(.2,.8,.3,1)'}).onfinish=()=>d.remove();
+}
+function logBook(t){
+  S.book=(S.book||[]).filter(b=>b.tid!==t.id);
+  const s=site(t.siteId);
+  S.book.unshift({id:uid(),tid:t.id,text:t.text,site:s?s.name:'',color:s?s.color:'#ff7a9c',sid:t.sticker,at:t.doneAt||Date.now()});
+  if(S.book.length>1500)S.book.length=1500;
+  const n=S.book.length;
+  if(MILES.includes(n)&&!(S.badges||[]).some(b=>b.n===n)){
+    (S.badges=S.badges||[]).push({n,sid:`g:10.${n%PALS.length}.m${n}.2.0`,at:Date.now()});
+    setTimeout(()=>toast(n===1?'First sticker!':n+' stickers. Milestone unlocked'),700);
   }
-  const pick=pool[Math.floor(Math.random()*pool.length)];
-  return{kind:'builtin',id:pick.id};
 }
-function awardSticker(t,ref){
-  const st=stickerRef(ref)||pickSticker();
-  const s=site(t.siteId),c=s&&s.cats.find(x=>x.id===t.catId),at=Date.now();
-  t.sticker=st;t.stickerAt=at;
-  S.stickers.earned.push({id:uid(),taskId:t.id,text:t.text||'Untitled',sticker:st,siteId:t.siteId,catId:t.catId,siteName:s?s.name:'',catName:c?c.name:'',at});
-  save();
-  return st;
+const unlog=t=>{S.book=(S.book||[]).filter(b=>b.tid!==t.id)};
+function finishTask(t,el){
+  t.status='done';t.doneAt=Date.now();
+  const r=el&&el.getBoundingClientRect(),s=site(t.siteId);
+  if(r)burst(r.left+r.width/2,r.top+r.height/2,s?s.color:'#ff7a9c');
+  const mode=S.prefs.reward||'surprise';
+  if(mode==='off')return;
+  if(t.sticker){logBook(t);slap(r,t.sticker);return}
+  if(mode==='choose'){
+    openTray('Pick a sticker for this one',id=>{t.sticker=id;logBook(t);slap(r,id);render()},()=>{t.sticker=pickSticker();logBook(t);render()});
+    return;
+  }
+  t.sticker=mode==='favourite'&&S.prefs.fav?S.prefs.fav:pickSticker();
+  logBook(t);slap(r,t.sticker);
 }
-function setTaskSticker(t,ref){
-  const st=stickerRef(ref);if(!t||!st)return;
-  const rec=lastEarnedFor(t.id);
-  t.sticker=st;
-  if(rec){rec.sticker=st;t.stickerAt=rec.at||Date.now()}
-  else{t.stickerAt=Date.now();awardSticker(t,st);return}
-  save();
-}
-function syncEarnedStickers(){
-  let changed=false;
-  S.tasks.forEach(t=>{
-    if(t.status!=='done')return;
-    const rec=lastEarnedFor(t.id);
-    if(!t.sticker&&rec){t.sticker=rec.sticker;t.stickerAt=t.stickerAt||rec.at;changed=true}
-    else if(t.sticker&&!rec){
-      const st=stickerRef(t.sticker);
-      if(!st)return;
-      const s=site(t.siteId),c=s&&s.cats.find(x=>x.id===t.catId);
-      t.stickerAt=t.stickerAt||t.doneAt||Date.now();
-      S.stickers.earned.push({id:uid(),taskId:t.id,text:t.text||'Untitled',sticker:st,siteId:t.siteId,catId:t.catId,siteName:s?s.name:'',catName:c?c.name:'',at:t.stickerAt});
-      changed=true;
-    }
-  });
-  if(changed)save();
-}
-function showReward(ref,sub){
-  const st=resolveSticker(ref);if(!st)return;
-  document.querySelectorAll('.reward-pop').forEach(n=>n.remove());
-  const el=document.createElement('div');el.className='reward-pop';el.setAttribute('role','status');
-  el.innerHTML=`${stickerHtml(ref,'md')}<div><b>Sticker earned!</b><small>${esc(st.name)}${sub?' · '+esc(sub):''}</small></div>`;
-  el.onclick=()=>{el.remove();location.hash='#/stickers'};
-  document.body.appendChild(el);
-  setTimeout(()=>{if(!el.isConnected)return;el.classList.add('out');setTimeout(()=>el.remove(),300)},3200);
-}
-function openStickerUpload(after){
-  const inp=document.createElement('input');inp.type='file';inp.accept='image/*';inp.style.display='none';
-  document.body.appendChild(inp);
-  inp.onchange=()=>{
-    const f=inp.files&&inp.files[0];if(!f)return;
-    if(!/^image\//.test(f.type)){toast('That is not an image.');inp.remove();return}
-    const fr=new FileReader();
-    fr.onload=()=>{
-      const img=new Image();
-      img.onload=()=>{
-        const max=240,scale=Math.min(1,max/Math.max(img.width,img.height));
-        const cv=document.createElement('canvas');
-        cv.width=Math.max(1,Math.round(img.width*scale));cv.height=Math.max(1,Math.round(img.height*scale));
-        cv.getContext('2d').drawImage(img,0,0,cv.width,cv.height);
-        let src='';try{src=cv.toDataURL('image/webp',.86)}catch(e){src=''}
-        if(src.indexOf('data:image/webp')!==0)src=cv.toDataURL('image/png');
-        const rec={id:uid(),name:(f.name.replace(/\.[^.]+$/,'')||'My sticker').slice(0,24),src,at:Date.now()};
-        S.stickers.custom.push(rec);
-        if(!save()){S.stickers.custom=S.stickers.custom.filter(x=>x.id!==rec.id);inp.remove();toast('That image is too big to save.');return}
-        if(after)after({kind:'custom',id:rec.id});else render();
-        inp.remove();
-        toast('Sticker added');
-      };
-      img.onerror=()=>{inp.remove();toast('That image could not be read.')};
-      img.src=fr.result;
-    };
-    fr.onerror=()=>{inp.remove();toast('That image could not be read.')};
-    fr.readAsDataURL(f);
+function reopenTask(t){t.status='todo';t.doneAt=0;unlog(t)}
+function setDone(t,on,el){on?finishTask(t,el):reopenTask(t)}
+function openTray(title,onPick,onSkip){
+  document.querySelectorAll('.tray').forEach(x=>{const f=x._skip;x.remove();if(f)f()});
+  const tr=document.createElement('div');tr.className='tray';tr._skip=onSkip;let ids=[];
+  const draw=()=>{
+    ids=(S.mySt||[]).slice(0,3).map(u=>'u:'+u.id);
+    while(ids.length<8)ids.push(genId());
+    tr.innerHTML=`<h3>${esc(title)}</h3><div class="tgrid">${ids.map((id,i)=>`<button type="button" class="tpick" data-i="${i}" aria-label="Sticker">${stk(id,62)}</button>`).join('')}</div><div class="tfoot2"><button type="button" class="ghost sm" data-shuf>Shuffle</button>${onSkip?'<button type="button" class="txtbtn" data-skip>Surprise me</button>':'<button type="button" class="txtbtn" data-cancel>Cancel</button>'}</div>`;
   };
-  inp.click();
+  draw();document.body.appendChild(tr);
+  tr.onclick=e=>{
+    const p=e.target.closest('.tpick');
+    if(p){const id=ids[+p.dataset.i];tr._skip=null;tr.remove();onPick(id);return}
+    if(e.target.closest('[data-shuf]'))return draw();
+    if(e.target.closest('[data-skip]')){tr._skip=null;tr.remove();onSkip();return}
+    if(e.target.closest('[data-cancel]'))tr.remove();
+  };
 }
-function backfillStickers(){
-  const missing=S.tasks.filter(t=>t.status==='done'&&!resolveSticker(t.sticker));
-  if(!missing.length){toast('Every finished to-do has a sticker');return}
-  let last=null;
-  missing.forEach(t=>{last=awardSticker(t)});
-  render();
-  if(last)showReward(last,plural(missing.length,'to-do')+' caught up');
+let capWarned=false;
+function addStickers(files){
+  [...files].forEach(f=>{
+    if(!/^image\//.test(f.type))return;
+    const fr=new FileReader();
+    fr.onload=()=>{const im=new Image();im.onload=()=>{
+      if((S.mySt||[]).length>=30){if(!capWarned){capWarned=true;toast('That is the limit of 30 uploaded stickers');setTimeout(()=>capWarned=false,3000)}return}
+      const m=Math.min(1,140/Math.max(im.width,im.height)),c=document.createElement('canvas');
+      c.width=Math.max(1,Math.round(im.width*m));c.height=Math.max(1,Math.round(im.height*m));
+      c.getContext('2d').drawImage(im,0,0,c.width,c.height);
+      let url=c.toDataURL('image/webp',.88);if(url.indexOf('data:image/webp')!==0)url=c.toDataURL('image/png');
+      (S.mySt=S.mySt||[]).push({id:uid(),url,name:f.name.replace(/\.[^.]+$/,'')});
+      render();toast('Sticker added');
+    };im.src=fr.result};
+    fr.readAsDataURL(f);
+  });
 }
-function rewardStrip(){
-  const earned=S.stickers.earned;
-  if(!earned.length)return'';
-  const wins=[...earned].slice(-5).reverse();
-  return`<div class="reward-strip"><div class="strip-head"><p class="eyebrow">Recent wins</p><a class="pillbtn" href="#/stickers">Sticker book ${IC.arrow}</a></div>
-    <div class="qrow">${wins.map(e=>{
-      const t=e.taskId&&S.tasks.find(x=>x.id===e.taskId);
-      const href=t?`#/quests/${t.siteId}/${t.catId}/${t.id}`:'#/stickers';
-      return`<a class="winchip" href="${href}">${stickerHtml(e.sticker,'xs')}<span>${esc(t?t.text:e.text||'A done to-do')}</span></a>`;
-    }).join('')}</div></div>`;
+function recentStickers(){
+  const bk=(S.book||[]).slice(0,7);if(!bk.length)return'';
+  return`<div class="quick"><p class="eyebrow">Recent stickers</p><a class="srow" href="#/stickers">${bk.map(b=>stk(b.sid,52)).join('')}<span class="srow-more">Open book ${IC.arrow}</span></a></div>`;
 }
-function stickerBookPage(){
-  const hdrArt=getDoodle('stickerHeader');
-  const own=ownedStickerIds();
-  const earned=[...S.stickers.earned].sort((a,b)=>b.at-a.at);
-  const missing=S.tasks.filter(t=>t.status==='done'&&!resolveSticker(t.sticker)).length;
-  const wins=earned.slice(0,9);
-  const winHtml=wins.length?wins.map(e=>{
-    const t=e.taskId&&S.tasks.find(x=>x.id===e.taskId);
-    const inner=`${stickerHtml(e.sticker,'sm')}<span class="t"><b>${esc(t?t.text:e.text||'A done to-do')}</b><small>${esc(e.catName||e.siteName||'To-do')} · ${esc(stDate(e.at))}</small></span>`;
-    return t?`<a class="earned" href="#/quests/${t.siteId}/${t.catId}/${t.id}">${inner}</a>`:`<div class="earned">${inner}</div>`;
-  }).join(''):'<p class="sb-empty">Finish a to-do and to see your first sticker.</p>';
-  const sets=STICKER_SETS.map(set=>{
-    const got=set.items.filter((_,i)=>own.has(set.id+'-'+(i+1))).length;
-    const cells=set.items.map(([emoji,name],i)=>{
-      const id=set.id+'-'+(i+1),has=own.has(id);
-      return`<div class="stash ${has?'':'locked'}" title="${esc(has?name:'Not collected yet')}">${stickerHtml({kind:'builtin',id},'sm')}<span>${esc(has?name:'—')}</span></div>`;
-    }).join('');
-    return`<div class="set"><h3>${esc(set.name)}<span>${got}/${set.items.length}</span></h3><div class="stash-grid">${cells}</div></div>`;
-  }).join('');
-  const customs=S.stickers.custom.map(c=>`<div class="custom">${stickerHtml({kind:'custom',id:c.id},'lg')}<span>${esc(c.name)}</span><button class="del" data-act="delcustom" data-id="${c.id}" title="Remove ${esc(c.name)}">${IC.x}</button></div>`).join('');
+let peek=[];
+function stickersPage(){
+  const bk=S.book||[],t0=today().getTime(),total=bk.length;
+  const wk=bk.filter(b=>b.at>=t0-6*864e5),days=new Set(wk.map(b=>dstr(b.at))).size;
+  const todayN=bk.filter(b=>b.at>=t0).length,nextM=MILES.find(m=>m>total);
+  const groups=[['Today',bk.filter(b=>b.at>=t0)],['Earlier this week',bk.filter(b=>b.at<t0&&b.at>=t0-6*864e5)],['Earlier',bk.filter(b=>b.at<t0-6*864e5)]].filter(g=>g[1].length);
+  const card=b=>`<div class="scard" style="--c:${b.color}">${stk(b.sid,78)}<b>${esc(b.text)}</b><small>${esc(b.site)}${b.site?' · ':''}${ago(dstr(b.at))}</small></div>`;
+  const mls=MILES.map(m=>{const ok=total>=m||(S.badges||[]).some(x=>x.n===m);return`<div class="ml ${ok?'':'lock'}">${stk(`g:10.${m%PALS.length}.m${m}.2.0`,62)}<div>${m}</div></div>`}).join('');
+  const mine=(S.mySt||[]).map(u=>`<div class="scard mine">${stk('u:'+u.id,72)}<small>${esc(u.name)}</small><button class="ib rm" data-act="rmst" data-id="${u.id}" title="Remove">${IC.x}</button></div>`).join('');
+  if(!peek.length)peek=Array.from({length:12},genId);
   return{crumbs:[['Home','#/']],body:`
-    <div class="head"><div class="head-main">${hdrArt?`<div class="head-art" aria-hidden="true">${hdrArt}</div>`:''}<div><p class="eyebrow">Album</p><h1>Sticker book</h1></div></div>
-      <div class="acts"><button class="primary sm" data-act="uploadsticker">${IC.plus} Add your own</button></div></div>
-    <div class="sb-stats">
-      <div class="sb-stat"><b>${S.stickers.earned.length}</b><span>stickers earned</span></div>
-      <div class="sb-stat"><b>${own.size}/${STICKERS.length}</b><span>built-in collection</span><div class="bar"><i style="width:${own.size/STICKERS.length*100}%"></i></div></div>
-      <div class="sb-stat"><b>${S.stickers.custom.length}</b><span>photos in your stash</span></div>
-    </div>
-    ${missing?`<div class="reward-card"><div class="reward-empty">${mk(STAR,26,'currentColor')}</div><div class="reward-copy"><b>${plural(missing,'finished to-do')} without a sticker</b><p>Give the wins from before the sticker book their badge.</p><button class="ghost sm" data-act="backfill">Catch them up</button></div></div>`:''}
-    <div class="sb-sec"><h2>Recent wins</h2><div class="earned-grid">${winHtml}</div></div>
-    <div class="sb-sec"><h2>The built-in stash</h2><p class="sb-sub">You can change your favourites on any finished to-do.</p><div class="sets">${sets}</div></div>
-    <div class="sb-sec"><h2>Your photos</h2><p class="sb-sub">Upload a picture to create your own sticker.</p>
-      <div class="custom-grid">${customs}<button class="custom" data-act="uploadsticker" style="border-style:dashed;justify-content:center;min-height:96px">${IC.plus}<span>Add photo</span></button></div>
-    </div>
-    <p class="sb-empty">These are saved separately from your to-dos, so clearing completed to-dos never clears the album.</p>`};
-}
-function openStickerPicker(t){
-  if(!t)return;
-  const own=ownedStickerIds(),cur=t.sticker||null;
-  const ov=document.createElement('div');ov.className='ov';
-  const groups=STICKER_SETS.map(set=>{
-    const btns=set.items.map(([emoji,name],i)=>{
-      const id=set.id+'-'+(i+1),unlocked=own.has(id),on=cur&&cur.kind==='builtin'&&cur.id===id;
-      return`<button type="button" class="pickst ${on?'on':''}" data-st="${id}" ${unlocked?'':'disabled'} title="${esc(unlocked?name:'Finish more to-dos to unlock')}" aria-label="${esc(name)}">${stickerHtml({kind:'builtin',id},'sm')}</button>`;
-    }).join('');
-    return`<div class="picker-set"><h3>${esc(set.name)}</h3><div class="picker-grid">${btns}</div></div>`;
-  }).join('');
-  const customs=S.stickers.custom.length?`<div class="picker-set"><h3>Your photos</h3><div class="picker-grid">${S.stickers.custom.map(c=>`<button type="button" class="pickst ${cur&&cur.kind==='custom'&&cur.id===c.id?'on':''}" data-cs="${c.id}" title="${esc(c.name)}" aria-label="${esc(c.name)}">${stickerHtml({kind:'custom',id:c.id},'sm')}</button>`).join('')}</div></div>`:'';
-  ov.innerHTML=`<div class="modal wide"><h2>Pick a sticker</h2><p class="sb-sub">Choose from the stickers you have collected.</p>${groups}${customs}
-    <div class="mrow"><button type="button" class="ghost sm" data-up>${IC.plus} Add a photo</button><span class="sp"></span><button type="button" class="ghost" data-x>Done</button></div></div>`;
-  document.body.appendChild(ov);
-  const onKey=e=>{if(e.key==='Escape')shut()};
-  const shut=()=>{ov.remove();document.removeEventListener('keydown',onKey)};
-  document.addEventListener('keydown',onKey);
-  ov.onmousedown=e=>{if(e.target===ov)shut()};
-  ov.querySelector('[data-x]').onclick=shut;
-  ov.querySelectorAll('[data-st]').forEach(b=>b.onclick=()=>{setTaskSticker(t,{kind:'builtin',id:b.dataset.st});shut();render();toast('Sticker changed')});
-  ov.querySelectorAll('[data-cs]').forEach(b=>b.onclick=()=>{setTaskSticker(t,{kind:'custom',id:b.dataset.cs});shut();render();toast('Sticker changed')});
-  ov.querySelector('[data-up]').onclick=()=>openStickerUpload(ref=>{setTaskSticker(t,ref);shut();render();toast('Sticker changed')});
+    <div class="head"><div class="head-main">${getDoodle('stickersHeader')?`<div class="head-art" aria-hidden="true">${getDoodle('stickersHeader')}</div>`:''}<div><p class="eyebrow">Rewards</p><h1>Sticker book</h1></div></div>
+      <div class="acts"><button class="ghost sm" data-act="upsticker">${IC.plus} Upload a sticker</button><input type="file" id="stfile" accept="image/*" multiple hidden></div></div>
+    <div class="sstats"><div class="sstat"><b>${total}</b>collected</div><div class="sstat"><b>${todayN}</b>today</div><div class="sstat"><b>${days}/7</b>days this week</div></div>
+    ${nextM?`<div class="snext"><span>${nextM-total} more for the next milestone (${nextM})</span><div class="bar"><i style="width:${Math.min(100,total/nextM*100)}%"></i></div></div>`:''}
+    <h2 class="sect">Milestones</h2><div class="mls">${mls}</div>
+    <h2 class="sect">Collection</h2>
+    ${groups.length?groups.map(([n,a])=>`<p class="grp">${n}</p><div class="sgrid">${a.map(card).join('')}</div>`).join(''):`<div class="empty">${getDoodle('empty_done')}<span>Finish a to-do to earn your first sticker.</span></div>`}
+    <h2 class="sect">My stickers</h2>
+    ${mine?`<div class="sgrid">${mine}</div>`:'<p class="sub" style="margin:0">Upload your own art, screenshots or photos. They mix in with the built-in stash.</p>'}
+    <details class="more"><summary>Peek at the stash</summary><div class="sgrid" style="margin-top:18px">${peek.map(id=>`<div class="scard">${stk(id,70)}</div>`).join('')}</div><div style="margin-top:16px"><button class="ghost sm" data-act="shuffle">Shuffle</button></div></details>`};
 }
 
-/* Preset Aesthetic Banners (pure data-URI SVGs so zero external image breakage) */
 const BANNER_PRESETS={
   sunset:{
     label:'Warm Dusk',
@@ -1292,6 +1311,118 @@ function resolveBannerUrl(){
   if(!b)return'';
   if(BANNER_PRESETS[b])return BANNER_PRESETS[b].url;
   return fixUrl(b);
+}
+
+/* theme-aware banners: they pick up whichever palette is active */
+const bnRand=seed=>{let s=seed;return()=>(s=(s*16807)%2147483647)/2147483647};
+const BANNER_ART={
+  waves:()=>'<rect width="900" height="220" fill="var(--surface2)"/><circle cx="740" cy="52" r="24" fill="var(--pop)"/><path d="M0 120C90 80 180 80 270 120S450 160 540 120 720 80 810 120 900 140 900 140V220H0z" fill="var(--a2)"/><path d="M0 150C100 120 200 120 300 150S500 180 600 150 800 120 900 150V220H0z" fill="var(--a1)"/><path d="M0 186C120 166 240 166 360 186S600 206 720 186 840 170 900 180V220H0z" fill="var(--a3)"/>',
+  hills:()=>'<rect width="900" height="220" fill="var(--surface2)"/><circle cx="170" cy="60" r="28" fill="var(--pop)"/><path d="M0 170C120 90 240 90 360 150S600 120 720 100 860 130 900 150V220H0z" fill="var(--a3)"/><path d="M0 200C150 140 300 150 450 185S750 150 900 175V220H0z" fill="var(--a2)"/><g stroke="var(--edge)" stroke-width="2.4"><path d="M610 112v-28" /><circle cx="610" cy="76" r="14" fill="var(--a1)"/><path d="M690 106v-20"/><circle cx="690" cy="80" r="10" fill="var(--a1)"/></g>',
+  confetti:()=>{const r=bnRand(7),c=['var(--a1)','var(--a2)','var(--a3)','var(--pop)'];let o='<rect width="900" height="220" fill="var(--surface2)"/>';for(let i=0;i<46;i++){const x=r()*900|0,y=r()*220|0,k=i%3,rot=r()*180|0,f=c[i%4];o+=k===0?`<circle cx="${x}" cy="${y}" r="${5+r()*7|0}" fill="${f}"/>`:k===1?`<rect x="${x}" y="${y}" width="${10+r()*10|0}" height="${6+r()*5|0}" rx="2" fill="${f}" transform="rotate(${rot} ${x} ${y})"/>`:`<path d="M${x} ${y}l12 4-6 10z" fill="${f}" transform="rotate(${rot} ${x} ${y})"/>`}return o},
+  skyline:()=>{let o='<rect width="900" height="220" fill="var(--surface2)"/><circle cx="780" cy="48" r="22" fill="var(--pop)"/>';const r=bnRand(11),c=['var(--a2)','var(--a1)','var(--a3)'];let x=0,i=0;while(x<900){const w=44+r()*40|0,h=70+r()*110|0;o+=`<rect x="${x}" y="${220-h}" width="${w}" height="${h}" fill="${c[i%3]}" stroke="var(--edge)" stroke-width="2.4"/>`;for(let wy=220-h+14;wy<206;wy+=22)for(let wx=x+9;wx<x+w-10;wx+=16)o+=`<rect x="${wx}" y="${wy}" width="7" height="10" rx="1.5" fill="var(--surface)"/>`;x+=w;i++}return o},
+  shelf:()=>{let o='<rect width="900" height="220" fill="var(--surface2)"/>';const r=bnRand(5),c=['var(--a1)','var(--a2)','var(--a3)','var(--pop)'];[[0,110],[1,206]].forEach(([row,y])=>{let x=20+row*30,i=row;while(x<860){const w=22+r()*20|0,h=52+r()*34|0;o+=`<rect x="${x}" y="${y-h}" width="${w}" height="${h}" rx="3" fill="${c[i%4]}" stroke="var(--edge)" stroke-width="2.4"/><path d="M${x+5} ${y-h+14}h${w-10}" stroke="var(--edge)" stroke-width="2"/>`;x+=w+3;i++}o+=`<rect x="0" y="${y}" width="900" height="8" fill="var(--edge)"/>`});return o},
+  stars:()=>{const r=bnRand(3);let o='<rect width="900" height="220" fill="var(--ink)"/>';for(let i=0;i<60;i++)o+=`<circle cx="${r()*900|0}" cy="${r()*220|0}" r="${(1+r()*2).toFixed(1)}" fill="${i%7?'var(--bg)':'var(--pop)'}"/>`;return o+'<path d="M790 30a34 34 0 1 0 22 58 28 28 0 0 1-22-58z" fill="var(--pop)"/>'},
+  blobs:()=>'<rect width="900" height="220" fill="var(--surface2)"/><path d="M-20 60C60 0 160 20 200 90S120 230 20 200-100 120-20 60z" fill="var(--a1)"/><path d="M300 -10C400 -20 480 40 460 120S340 230 270 170 220 10 300 -10z" fill="var(--a2)"/><path d="M620 40C720 0 820 30 840 110S760 240 660 200 540 80 620 40z" fill="var(--a3)"/><circle cx="560" cy="170" r="34" fill="var(--pop)"/>',
+  stripes:()=>'<defs><pattern id="bs" width="46" height="46" patternUnits="userSpaceOnUse" patternTransform="rotate(35)"><rect width="46" height="46" fill="var(--a1)"/><rect width="23" height="46" fill="var(--a2)"/></pattern></defs><rect width="900" height="220" fill="url(#bs)"/>'
+};
+const BANNER_LABELS={waves:'Waves',hills:'Hills',confetti:'Confetti',skyline:'Skyline',shelf:'Bookshelf',stars:'Starfield',blobs:'Blobs',stripes:'Stripes'};
+/* ---------- extra doodle sets ---------- */
+Object.assign(SZ,{homeHero:96,homeDoor1:64,homeDoor2:64});
+DOODLES.cozy={};DOODLES.seaside={};
+const CAT='<path d="M10 86c-2-20 6-32 18-32s20 12 18 32z" fill="var(--pop)"/><circle cx="28" cy="44" r="12" fill="var(--pop)"/><path d="M18 37l-3-13 11 6zM38 37l3-13-11 6z" fill="var(--pop)"/><path d="M23 44q2 2.4 4 0M31 44q2 2.4 4 0"/><path d="M27 49h2l-1 1.6z" fill="var(--a1)"/><path d="M10 82c-9 0-13-7-9-13"/>';
+Object.assign(ART,{
+cozy:{
+  homeHero:CAT+'<path d="M52 58h30v20a8 8 0 0 1-8 8H60a8 8 0 0 1-8-8z" fill="var(--a1)"/><path d="M82 64h3a6 6 0 0 1 0 12h-3"/><path d="M52 66h30" stroke-dasharray="2 4"/><path d="M60 52c-3-4 3-6 0-11M68 52c-3-4 3-6 0-11M76 52c-3-4 3-6 0-11"/><path d="M78 20l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="var(--a2)" stroke="none"/>',
+  homeDoor1:'<rect x="16" y="12" width="52" height="72" rx="7" fill="var(--surface)"/><rect x="16" y="12" width="10" height="72" rx="4" fill="var(--a2)"/><circle cx="38" cy="30" r="5" fill="var(--a3)"/><path d="M36 30l1.6 1.6 3-3"/><path d="M48 30h14"/><circle cx="38" cy="46" r="5" fill="var(--pop)"/><path d="M48 46h14"/><circle cx="38" cy="62" r="5" fill="var(--surface2)"/><path d="M48 62h10"/><path d="M64 70l18-18 6 6-18 18-8 2z" fill="var(--a1)"/><path d="M76 58l6 6"/>',
+  homeDoor2:'<rect x="12" y="62" width="62" height="14" rx="3" fill="var(--a1)"/><rect x="18" y="48" width="52" height="14" rx="3" fill="var(--a2)"/><rect x="14" y="34" width="56" height="14" rx="3" fill="var(--a3)"/><path d="M22 69h46M26 55h38M22 41h46"/><rect x="40" y="14" width="10" height="20" rx="2" fill="var(--surface)"/><path d="M45 14c-3-4 3-6 0-9"/><path d="M45 14c2-2 2-4 0-6"/><path d="M78 80c-6 0-10-4-10-9 6 0 10 4 10 9zM78 80c6 0 10-4 10-9-6 0-10 4-10 9z" fill="var(--a3)"/>',
+  sitesHeader:'<rect x="14" y="14" width="68" height="62" rx="6" fill="var(--surface)"/><path d="M48 14v62M14 45h68"/><path d="M14 14c12 8 12 26 8 44H14zM82 14c-12 8-12 26-8 44h8z" fill="var(--a1)"/><path d="M22 76h52"/><path d="M52 76V62l6-6 6 6v14" fill="var(--a3)"/><circle cx="66" cy="28" r="6" fill="var(--pop)"/>',
+  siteDetailHeader:'<path d="M28 44h40l-5 40H33z" fill="var(--a1)"/><path d="M28 52h40"/><path d="M33 84c0-6 4-8 15-8s15 2 15 8" fill="var(--a2)"/><path d="M48 44V30"/><path d="M48 30c-4-6 0-10 0-14 4 4 4 8 0 14z" fill="var(--pop)"/><path d="M20 20l2 5 5 2-5 2-2 5-2-5-5-2 5-2zM76 14l1.6 4 4 1.6-4 1.6L76 26l-1.6-4.8-4-1.6 4-1.6z" fill="var(--a3)" stroke="none"/>',
+  sec_threads:'<circle cx="48" cy="52" r="30" fill="var(--a1)"/><path d="M22 44c18 8 34 8 52 0M20 54c20 10 38 10 56 0M24 64c18 8 32 8 48 0M34 28c10 6 18 6 28 0"/><path d="M70 74c8 4 14 10 14 16" stroke="var(--a1)" stroke-width="3"/><path d="M70 74c10 2 6 10 12 14"/><path d="M14 70l22 8M82 14l-18 20" stroke-width="3"/>',
+  sec_character:'<circle cx="48" cy="40" r="22" fill="var(--pop)"/><path d="M30 26l-4-16 14 8zM66 26l4-16-14 8z" fill="var(--pop)"/><path d="M38 38q3 3 6 0M52 38q3 3 6 0"/><path d="M46 47h4l-2 2.4z" fill="var(--a1)"/><path d="M48 50v4M44 56q4 3 8 0"/><path d="M26 44l-12-2M26 49l-12 3M70 44l12-2M70 49l12 3"/><path d="M30 86c0-14 8-20 18-20s18 6 18 20z" fill="var(--a2)"/>',
+  sec_oog:'<path d="M12 40h58l-8 46H20z" fill="var(--surface)"/><path d="M12 40h58"/><path d="M26 52h34M28 62h30M30 72h24"/><path d="M60 16l20 8-24 36z" fill="var(--a1)"/><path d="M60 16l-4 44 8-10"/><path d="M80 24l4 14-12-4" fill="var(--pop)"/><path d="M20 24l1.8 4.4 4.4 1.8-4.4 1.8L20 36.4l-1.8-4.4-4.4-1.8 4.4-1.8z" fill="var(--a3)" stroke="none"/>',
+  sec_generic:'<path d="M20 56a28 28 0 0 1 56 0v26H20z" fill="var(--a2)"/><path d="M20 56h56M48 28v54M34 34v48M62 34v48"/><circle cx="48" cy="24" r="6" fill="var(--pop)"/><path d="M14 82h68"/>',
+  taskStamp:'<rect x="12" y="12" width="72" height="72" rx="3" fill="var(--surface)" stroke-dasharray="3 5"/><rect x="26" y="40" width="44" height="30" rx="8" fill="var(--a1)"/><path d="M70 48h4a6 6 0 0 1 0 12h-4"/><path d="M36 34c-3-4 3-6 0-10M46 34c-3-4 3-6 0-10M56 34c-3-4 3-6 0-10"/><path d="M26 52h44" stroke-dasharray="2 4"/>',
+  taskFlourish:'<path d="M48 80C20 62 14 40 28 28c10-8 20-2 20 8 0-10 10-16 20-8 14 12 8 34-20 52z" fill="var(--a1)"/><path d="M34 40c2-4 6-6 10-5"/>',
+  libraryHeader:'<rect x="10" y="62" width="76" height="20" rx="3" fill="var(--a2)"/><rect x="16" y="42" width="64" height="20" rx="3" fill="var(--a1)"/><rect x="22" y="24" width="52" height="18" rx="3" fill="var(--a3)"/><path d="M18 72h60M24 52h48M28 33h40"/><path d="M60 24c0-8 6-10 6-16" stroke-width="2.2"/><circle cx="66" cy="8" r="2.4" fill="var(--pop)" stroke="none"/>',
+  libFolder:'<path d="M14 80V40l34-22 34 22v40z" fill="var(--surface)"/><path d="M14 40h68M34 28v52M62 28v52"/><rect x="38" y="48" width="20" height="32" rx="2" fill="var(--a1)"/><circle cx="54" cy="66" r="1.8" fill="var(--pop)" stroke="none"/><path d="M48 18V8h8" />',
+  empty_todo:CAT.replace(/translate/g,'translate'),
+  empty_waiting:'<path d="M20 82c0-24 10-40 28-40s28 16 28 40z" fill="var(--a2)"/><path d="M20 82h56"/><path d="M48 42V30M40 42l-4-10M56 42l4-10"/><circle cx="48" cy="22" r="10" fill="var(--surface)"/><path d="M48 16v7l4 3"/><path d="M30 62c6-4 10-4 18 0s12 4 18 0"/>',
+  empty_done:'<path d="M34 34h28v24a14 14 0 0 1-28 0z" fill="var(--pop)"/><path d="M34 40h-8a6 6 0 0 0 0 12h8M62 40h8a6 6 0 0 1 0 12h-8"/><path d="M48 72v10M36 84h24"/><path d="M42 44l4 4 8-8" stroke="var(--surface)" stroke-width="3"/><path d="M20 22l2 5 5 2-5 2-2 5-2-5-5-2 5-2zM76 16l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="var(--a1)" stroke="none"/>',
+  empty_lib:'<path d="M36 18h24l-2 10c8 4 12 12 12 24v22a8 8 0 0 1-8 8H34a8 8 0 0 1-8-8V52c0-12 4-20 12-24z" fill="var(--surface)"/><path d="M34 18h28"/><path d="M26 62h44" stroke-dasharray="2 4"/><path d="M42 44q6 4 12 0" /><circle cx="42" cy="38" r="1.8" fill="currentColor" stroke="none"/><circle cx="54" cy="38" r="1.8" fill="currentColor" stroke="none"/><path d="M62 10l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="var(--a1)" stroke="none"/>',
+  stickersHeader:'<rect x="14" y="14" width="64" height="68" rx="8" fill="var(--surface)"/><path d="M56 82l22-26v26z" fill="var(--surface2)"/><path d="M30 60c-6-6-6-14 0-18 4-2 8 0 10 4 2-4 6-6 10-4 6 4 6 12 0 18l-10 10z" fill="var(--a1)"/><circle cx="60" cy="32" r="9" fill="var(--pop)"/>'
+},
+seaside:{
+  homeHero:'<path d="M0 78c10-6 20-6 30 0s20 6 30 0 20-6 36 0v18H0z" fill="var(--a2)"/><path d="M0 88c10-5 20-5 30 0s20 5 30 0 20-5 36 0v8H0z" fill="var(--a3)"/><path d="M34 80l6-44h16l6 44z" fill="var(--surface)"/><path d="M38 56h22M36 68h26" stroke="var(--a1)" stroke-width="5"/><path d="M38 36h20l-2-8H40z" fill="var(--a1)"/><path d="M40 28l8-10 8 10"/><path d="M48 18v-8"/><path d="M26 80h44"/><path d="M62 28l24-8M62 32l26 2" stroke="var(--pop)" stroke-width="3"/><circle cx="80" cy="52" r="8" fill="var(--pop)"/>',
+  homeDoor1:'<path d="M10 52h50l-8 18H20z" fill="var(--a1)"/><path d="M34 12v38"/><path d="M34 14l-18 32h18z" fill="var(--surface)"/><path d="M38 20l16 26H38z" fill="var(--pop)"/><path d="M34 12l8 3-8 3"/><path d="M4 76c8-5 16-5 24 0s16 5 24 0 16-5 24 0" /><path d="M10 84c8-4 16-4 24 0s16 4 24 0" stroke-width="1.8"/><circle cx="80" cy="22" r="5" fill="var(--a3)" stroke="none"/>',
+  homeDoor2:'<path d="M32 26h18v10c10 6 14 14 14 28v6a8 8 0 0 1-8 8H26a8 8 0 0 1-8-8v-6c0-14 4-22 14-28z" fill="var(--a3)" opacity=".85"/><path d="M30 26h22"/><rect x="34" y="14" width="14" height="12" rx="2" fill="var(--pop)"/><rect x="28" y="52" width="26" height="22" rx="3" fill="var(--surface)"/><path d="M33 59h16M33 65h12"/><path d="M70 40l4 8 8 2-6 6 2 8-8-4-8 4 2-8-6-6 8-2z" fill="var(--a1)"/>',
+  sitesHeader:'<path d="M8 66c8-5 16-5 24 0s16 5 24 0 16-5 24 0 16 5 16 0V84H8z" fill="var(--a2)"/><path d="M26 22v36M26 22l-14 30h14z" fill="var(--surface)"/><path d="M26 22l14 30H26z" fill="var(--pop)"/><path d="M14 58h26l-4 8H18z" fill="var(--a1)"/><path d="M66 34v22M66 34l-10 20h10z" fill="var(--surface)"/><path d="M66 34l10 20H66z" fill="var(--a3)"/><path d="M58 56h20l-3 6H61z" fill="var(--a1)"/>',
+  siteDetailHeader:'<circle cx="48" cy="48" r="26" fill="var(--surface)"/><circle cx="48" cy="48" r="9" fill="var(--a1)"/><path d="M48 14v20M48 62v20M14 48h20M62 48h20M24 24l14 14M58 58l14 14M72 24L58 38M38 58L24 72"/><circle cx="48" cy="14" r="4" fill="var(--pop)"/><circle cx="48" cy="82" r="4" fill="var(--pop)"/><circle cx="14" cy="48" r="4" fill="var(--pop)"/><circle cx="82" cy="48" r="4" fill="var(--pop)"/>',
+  sec_threads:'<path d="M48 14v68M30 34h36"/><circle cx="48" cy="14" r="6" fill="var(--surface)"/><path d="M20 62c0 14 12 24 28 24s28-10 28-24M20 62l-8 6M76 62l8 6"/><path d="M26 28c-8 0-12 8-6 14M70 28c8 0 12 8 6 14" stroke="var(--a1)" stroke-width="3.5"/><path d="M14 46c6 6 16 6 22 0M60 46c6 6 16 6 22 0" stroke="var(--a2)" stroke-width="3.5"/>',
+  sec_character:'<path d="M48 8l9 22 24 4-16 16 6 24-23-11-23 11 6-24L15 34l24-4z" fill="var(--a1)"/><circle cx="40" cy="38" r="2.4" fill="currentColor" stroke="none"/><circle cx="56" cy="38" r="2.4" fill="currentColor" stroke="none"/><path d="M42 46q6 5 12 0"/><circle cx="36" cy="44" r="3" fill="var(--pop)" stroke="none"/><circle cx="60" cy="44" r="3" fill="var(--pop)" stroke="none"/><path d="M14 84c10-6 20-6 30 0s20 6 38 0" stroke-width="2"/>',
+  sec_oog:'<path d="M34 34h28v8c8 6 12 12 12 24v8a8 8 0 0 1-8 8H30a8 8 0 0 1-8-8v-8c0-12 4-18 12-24z" fill="var(--a3)" opacity=".85"/><rect x="38" y="22" width="20" height="12" rx="2" fill="var(--pop)"/><rect x="32" y="54" width="32" height="24" rx="3" fill="var(--surface)"/><path d="M38 61h20M38 67h14M38 73h18"/><path d="M70 18c6-6 12-4 16 2-6 2-10 2-14 6z" fill="var(--a1)"/><path d="M70 18l-10 24"/>',
+  sec_generic:'<path d="M48 14v62M34 34h28"/><circle cx="48" cy="18" r="6" fill="var(--surface)"/><path d="M18 56c0 16 14 26 30 26s30-10 30-26M18 56l-6-8M78 56l6-8" /><path d="M10 84c8-4 16-4 24 0" stroke-width="2" stroke="var(--a2)"/>',
+  taskStamp:'<rect x="12" y="12" width="72" height="72" rx="3" fill="var(--surface)" stroke-dasharray="3 5"/><circle cx="48" cy="48" r="23" fill="var(--a1)"/><circle cx="48" cy="48" r="11" fill="var(--surface)"/><path d="M48 25v12M48 59v12M25 48h12M59 48h12" stroke="var(--surface)" stroke-width="7"/><path d="M48 25v12M48 59v12M25 48h12M59 48h12"/>',
+  taskFlourish:'<path d="M48 82C20 76 12 46 30 28c8-8 18-8 18-8s10 0 18 8c18 18 10 48-18 54z" fill="var(--pop)"/><path d="M48 24v56M36 28c0 22 4 42 12 54M60 28c0 22-4 42-12 54"/>',
+  libraryHeader:'<path d="M32 84l6-48h20l6 48z" fill="var(--surface)"/><path d="M36 58h24M34 72h28" stroke="var(--a1)" stroke-width="6"/><path d="M36 36h24l-3-10H39z" fill="var(--a1)"/><path d="M40 26l8-12 8 12"/><circle cx="48" cy="48" r="2" fill="currentColor" stroke="none"/><path d="M60 28l22-10M60 32l24 2" stroke="var(--pop)" stroke-width="3"/><path d="M20 84h56"/>',
+  libFolder:'<rect x="14" y="36" width="68" height="46" rx="6" fill="var(--a2)"/><path d="M14 52h68"/><path d="M14 36c0-14 14-22 34-22s34 8 34 22z" fill="var(--a1)"/><rect x="40" y="46" width="16" height="14" rx="3" fill="var(--pop)"/><circle cx="48" cy="53" r="2" fill="currentColor" stroke="none"/><path d="M22 36v46M74 36v46"/>',
+  empty_todo:'<path d="M14 80h68l-8-26H22z" fill="var(--pop)"/><path d="M22 54h52l-4-10H26z" fill="var(--pop)"/><path d="M30 44V32h12v12M54 44V32h12v12" fill="var(--pop)"/><path d="M26 32l4-6 4 6M36 32l4-6 4 6" /><path d="M52 14v18M52 14l12 4-12 4" fill="var(--a1)"/><path d="M60 80V66a6 6 0 0 1 12 0v14" fill="var(--a2)"/><path d="M8 88c10-4 20-4 30 0s20 4 30 0 14-3 20 0" stroke="var(--a3)"/>',
+  empty_waiting:'<path d="M10 64c8-5 16-5 24 0s16 5 24 0 16-5 28 0v20H10z" fill="var(--a2)"/><path d="M14 76c8-4 16-4 24 0s16 4 24 0 14-3 20 0" stroke="var(--surface)"/><path d="M48 24v26"/><circle cx="48" cy="56" r="9" fill="var(--a1)"/><path d="M39 56h18" stroke="var(--surface)" stroke-width="3"/><path d="M48 24c6 0 10-4 14-4" /><circle cx="70" cy="22" r="7" fill="var(--pop)"/>',
+  empty_done:'<circle cx="48" cy="62" r="18" fill="var(--pop)"/><path d="M48 30v8M26 38l6 6M70 38l-6 6M16 62h8M72 62h8"/><path d="M6 66c10-6 20-6 30 0s20 6 30 0 20-6 24 0v22H6z" fill="var(--a2)"/><path d="M10 78c10-5 20-5 30 0s20 5 30 0 12-3 16 0" stroke="var(--surface)"/>',
+  empty_lib:'<path d="M6 76c14-10 26-14 42-14s28 4 42 14v12H6z" fill="var(--pop)" opacity=".7"/><path d="M26 66c0-16 10-28 22-28s22 12 22 28z" fill="var(--surface)"/><path d="M48 38v28M38 42c-2 8-2 16 0 24M58 42c2 8 2 16 0 24"/><path d="M26 66h44"/><path d="M72 22l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="var(--a1)" stroke="none"/><circle cx="20" cy="30" r="3" fill="var(--a3)" stroke="none"/>',
+  stickersHeader:'<rect x="14" y="14" width="64" height="68" rx="8" fill="var(--surface)"/><path d="M56 82l22-26v26z" fill="var(--surface2)"/><path d="M42 24l6 13 14 2-10 10 3 14-13-7-13 7 3-14-10-10 14-2z" fill="var(--a1)" transform="translate(-4 4) scale(.8)"/><path d="M52 62c6-6 14-4 16 2s-2 12-10 12c-6 0-10-6-6-14z" fill="var(--pop)"/><path d="M54 64c4-2 8 0 8 4"/>'
+}
+});
+ART.cozy.empty_todo=CAT.replace('<path d="M10 82c-9 0-13-7-9-13"/>','<path d="M10 82c-9 0-13-7-9-13"/><path d="M60 78l14-3M62 84l16 1" stroke="var(--a2)" stroke-width="3"/><circle cx="74" cy="22" r="3" fill="var(--a1)" stroke="none"/><path d="M70 30l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="var(--a3)" stroke="none"/>');
+MIXSETS.push('cozy','seaside');
+
+/* ---------- extra banner presets ---------- */
+Object.assign(BANNER_ART,{
+  rain:()=>{const r=bnRand(21);let o='<rect width="900" height="220" fill="var(--surface2)"/><g transform="translate(0 38)"><path d="M60 70c0-30 30-46 60-40 10-26 54-30 70-4 34-8 56 20 40 44z" fill="var(--a2)"/><path d="M420 54c0-26 26-40 54-34 10-22 48-26 62-2 30-6 50 18 36 38z" fill="var(--a1)"/><path d="M700 80c0-24 24-38 50-32 10-20 44-24 56-2 28-4 46 18 32 36z" fill="var(--a3)"/></g>';for(let i=0;i<42;i++){const x=r()*900|0,y=130+r()*80|0;o+=`<path d="M${x} ${y}l-6 16" stroke="var(--ink)" stroke-width="2.4" stroke-linecap="round" opacity=".55"/>`}return o},
+  dunes:()=>'<rect width="900" height="220" fill="var(--surface2)"/><circle cx="700" cy="70" r="36" fill="var(--pop)"/><path d="M0 130C140 70 260 100 380 140S640 150 900 100V220H0z" fill="var(--a1)"/><path d="M0 170C160 120 300 150 460 180S760 170 900 150V220H0z" fill="var(--a2)"/><path d="M0 200C200 170 380 200 560 205S800 195 900 190V220H0z" fill="var(--a3)"/><path d="M70 170c40-10 80-8 120 6M520 190c40-10 80-8 120 4" stroke="var(--edge)" stroke-width="2" fill="none" opacity=".5"/>',
+  petals:()=>{const r=bnRand(31),c=['var(--a1)','var(--a2)','var(--pop)','var(--a3)'];let o='<rect width="900" height="220" fill="var(--surface2)"/>';for(let i=0;i<30;i++){const x=r()*900|0,y=r()*220|0,s=10+r()*14|0,a=r()*360|0;o+=`<g transform="translate(${x} ${y}) rotate(${a})"><path d="M0 0C${s} -${s} ${s*2} 0 0 ${s*1.6}C-${s*2} 0 -${s} -${s} 0 0z" fill="${c[i%4]}" stroke="var(--edge)" stroke-width="1.6"/></g>`}return o},
+  mountains:()=>'<rect width="900" height="220" fill="var(--surface2)"/><circle cx="150" cy="60" r="26" fill="var(--pop)"/><path d="M0 200L170 80l120 80 120-110 150 150 130-90 210 90v20H0z" fill="var(--a2)"/><path d="M0 220l140-60 110 40 140-70 170 90 150-50 190 40v20H0z" fill="var(--a3)"/><path d="M410 50l-30 30 18-6 12 14 12-14 18 6z" fill="var(--surface)"/><path d="M170 80l-24 22 14-4 10 10 10-10 14 4z" fill="var(--surface)"/>',
+  bubbles:()=>{const r=bnRand(41),c=['var(--a1)','var(--a2)','var(--a3)','var(--pop)'];let o='<rect width="900" height="220" fill="var(--surface2)"/>';for(let i=0;i<26;i++){const x=r()*900|0,y=r()*220|0,s=8+r()*30|0;o+=`<circle cx="${x}" cy="${y}" r="${s}" fill="${c[i%4]}" fill-opacity=".55" stroke="var(--edge)" stroke-width="2"/><path d="M${x-s*.5} ${y-s*.2}a${s*.55} ${s*.55} 0 0 1 ${s*.4} -${s*.4}" stroke="var(--surface)" stroke-width="2.5" fill="none" stroke-linecap="round"/>`}return o},
+  zigzag:()=>'<defs><pattern id="bz" width="60" height="40" patternUnits="userSpaceOnUse"><rect width="60" height="40" fill="var(--surface2)"/><path d="M0 28l15-16 15 16 15-16 15 16" fill="none" stroke="var(--a1)" stroke-width="7" stroke-linejoin="round"/><path d="M0 40l15-16 15 16 15-16 15 16" fill="none" stroke="var(--a2)" stroke-width="7" stroke-linejoin="round"/></pattern></defs><rect width="900" height="220" fill="url(#bz)"/>'
+});
+Object.assign(BANNER_LABELS,{rain:'Rainy day',dunes:'Dunes',petals:'Petals',mountains:'Mountains',bubbles:'Bubbles',zigzag:'Zigzag'});
+
+function bannerInner(k){
+  k=k===undefined?(S.look.banner||''):k;
+  if(!k)return'';
+  const fy={top:'YMin',bottom:'YMax'}[S.look.bannerF]||'YMid';
+  if(BANNER_ART[k])return`<svg viewBox="0 0 900 220" preserveAspectRatio="xMid${fy} slice" aria-hidden="true">${BANNER_ART[k]()}</svg>`;
+  const url=k==='upload'?S.look.bannerImg:BANNER_PRESETS[k]?BANNER_PRESETS[k].url:fixUrl(k);
+  return url?`<img src="${esc(url)}" alt="" onerror="this.parentElement.style.display='none'">`:'';
+}
+function bannerHtml(home){
+  const inner=bannerInner();
+  if(!inner||(!home&&S.look.bannerWhere!=='all'))return'';
+  return`<div class="banner-wrap ${home?'':'sub'}" data-bh="${S.look.bannerH||'regular'}" data-bs="${S.look.bannerS||'full'}" data-bf="${S.look.bannerF||'middle'}" aria-hidden="true">${inner}</div>`;
+}
+function uploadHomePic(file){
+  if(!file||!/^image\//.test(file.type))return;
+  const fr=new FileReader();
+  fr.onload=()=>{const im=new Image();im.onload=()=>{
+    const s=Math.min(im.width,im.height),c=document.createElement('canvas');c.width=c.height=320;
+    c.getContext('2d').drawImage(im,(im.width-s)/2,(im.height-s)/2,s,s,0,0,320,320);
+    S.look.homePic=c.toDataURL('image/jpeg',.85);
+    if(!save())toast('Storage is full. Try a smaller picture.');
+    render();toast('Picture set');
+  };im.src=fr.result};
+  fr.readAsDataURL(file);
+}
+function uploadBanner(file){
+  if(!file||!/^image\//.test(file.type))return;
+  const fr=new FileReader();
+  fr.onload=()=>{const im=new Image();im.onload=()=>{
+    const m=Math.min(1,1400/im.width),c=document.createElement('canvas');
+    c.width=Math.max(1,Math.round(im.width*m));c.height=Math.max(1,Math.round(im.height*m));
+    c.getContext('2d').drawImage(im,0,0,c.width,c.height);
+    S.look.bannerImg=c.toDataURL('image/jpeg',.82);S.look.banner='upload';
+    if(!save())toast('Storage is full. Try a smaller picture.');
+    render();toast('Banner set');
+  };im.src=fr.result};
+  fr.readAsDataURL(file);
 }
 
 const P={
@@ -1346,7 +1477,7 @@ function toast(m){
   document.body.appendChild(e);setTimeout(()=>e.remove(),2000);
 }
 function burst(x,y,color){
-  if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  if(calm())return;
   const cols=[color,color,'#ffd978','#fff'];
   for(let i=0;i<14;i++){
     const p=document.createElement('div');p.className='dot';p.style.background=cols[i%cols.length];p.style.left=x+'px';p.style.top=y+'px';
@@ -1379,7 +1510,12 @@ function applyLook(){
   const doc=document.documentElement;
   doc.dataset.theme=({midnight:'night',dawn:'paper'})[S.theme]||S.theme||'paper';
   doc.dataset.font=lk.font||'grotesk';
+  doc.dataset.dsize=lk.dsize||'medium';
+  doc.dataset.dstyle=lk.dstyle||'colour';
   doc.dataset.style=lk.style||'brutal';
+  doc.dataset.danim=lk.danim||'still';
+  doc.dataset.ts=lk.tsize||'normal';
+  doc.dataset.motion=lk.motion||'full';
   document.body.dataset.bg=lk.bg||'dots';
 }
 
@@ -1406,13 +1542,13 @@ function render(){
     const f=r[1]?libItem(r[1]):null;
     if(!r[1]||(f&&f.type==='folder'))page=libPage(f);
   }else if(r[0]==='stickers'){
-    page=stickerBookPage();
+    page=stickersPage();
   }
   if(!page){location.hash='#/';return}
   const trail=page.crumbs.length?`<nav class="trail"><a class="back" href="${page.crumbs[page.crumbs.length-1][1]}">${IC.back}Back</a>
     <div class="crumbs">${page.crumbs.map(([l,h])=>`<a href="${h}">${esc(l)}</a>`).join('<i>/</i>')}</div></nav>`:'';
   const fresh=location.hash!==lastKey;lastKey=location.hash;
-  const earned=S.stickers.earned.length;
+  const earned=(S.book||[]).length;
   app.innerHTML=`<header class="top">
     <a class="logo" href="#/">inkwell<span></span></a>
     <div class="top-acts">
@@ -1420,7 +1556,7 @@ function render(){
       <button class="pillbtn" data-act="look" title="Customize look & themes" aria-label="Customize look and themes">${IC.palette} <span class="lb">Look</span></button>
       <button class="txtbtn" data-act="settings">Settings</button>
     </div>
-  </header>${trail}<main class="${fresh?'enter':''}">${page.body}</main>`;
+  </header>${trail}<main class="${fresh?'enter':''}">${bannerHtml(!r.length)}${page.body}</main>`;
   if(fresh)window.scrollTo(0,0);
   save();
   if(refocus){const e=document.querySelector(refocus);if(e)e.focus();refocus=null}
@@ -1455,12 +1591,10 @@ function homePage(){
   const open=S.tasks.filter(isOpen).length,soon=S.tasks.filter(isSoon).length;
   const dt=S.tasks.filter(t=>t.status==='done'&&t.doneAt>=today().getTime()).length;
   const day=new Date().toLocaleDateString(undefined,{weekday:'long',day:'numeric',month:'long'});
-  const bannerUrl=resolveBannerUrl();
-  const heroDoodle=getDoodle('homeHero');
+  const heroDoodle=S.look.homePic?`<img class="homepic" src="${esc(S.look.homePic)}" alt="">`:getDoodle('homeHero');
   const d1=getDoodle('homeDoor1'),d2=getDoodle('homeDoor2');
 
   return{crumbs:[],body:`
-  ${bannerUrl?`<div class="banner-wrap"><img src="${esc(bannerUrl)}" alt="Header banner" onerror="this.parentElement.style.display='none'"></div>`:''}
   <div class="hello">
     <div class="hello-text"><p class="eyebrow">${day}</p><h1>${greet()}</h1></div>
     ${heroDoodle?`<div class="doodle-hero" aria-hidden="true">${heroDoodle}</div>`:''}
@@ -1476,7 +1610,7 @@ function homePage(){
       <div><h2>Library</h2><p>Files and folders</p></div>
       <div class="foot"><span>${plural(S.lib.length,'item')}</span><span class="go">${IC.arrow}</span></div>
     </a>
-  </div>${quickLinks()}${rewardStrip()}`};
+  </div>${quickLinks()}${recentStickers()}`};
 }
 
 function sitesPage(){
@@ -1505,23 +1639,32 @@ function sitePage(s){
     <div class="doors">${doors}</div>`};
 }
 
+function rowLinks(t){
+  const out=[],li=t.libId&&libItem(t.libId);
+  if(li){
+    const nm=esc(li.name);
+    if(li.type==='folder')out.push(`<a class="rlink" style="--c:${colorFor(li)}" href="#/lib/${li.id}" data-lib="${li.id}" title="Open folder">${svg('folder',15)}<span>${nm}</span></a>`);
+    else if(li.url)out.push(`<a class="rlink" style="--c:${kindColor(li)}" href="${esc(fixUrl(li.url))}" target="_blank" rel="noopener" data-lib="${li.id}" title="Open ${nm}">${svg(kindOf(li),15)}<span>${nm}</span>${IC.ext}</a>`);
+  }
+  if(t.url){const k=detectKind(t.url)||'web';out.push(`<a class="rlink" style="--c:${KINDS[k][1]}" href="${esc(fixUrl(t.url))}" target="_blank" rel="noopener" title="${esc(t.url)}">${svg(k,15)}<span>${esc(hostOf(t.url))}</span>${IC.ext}</a>`)}
+  return out.length?`<div class="rowlinks">${out.join('')}</div>`:'';
+}
 function sectionPage(s,c){
-  const hdrArt=getDoodle('sectionHeader');
+  const hdrArt=getDoodle('sec_'+secKey(c.name));
   const all=S.tasks.filter(t=>t.siteId===s.id&&t.catId===c.id);
   const f={active:t=>t.status==='todo'||t.status==='doing',waiting:t=>t.status==='waiting',done:t=>t.status==='done'}[filter];
   const ts=all.filter(f).sort((a,b)=>(a.due||'9999').localeCompare(b.due||'9999'));
   const cnt={active:all.filter(t=>t.status==='todo'||t.status==='doing').length,waiting:all.filter(t=>t.status==='waiting').length,done:all.filter(t=>t.status==='done').length};
   const seg=[['active','To do'],['waiting','Waiting'],['done','Done']].map(([k,l])=>`<button class="${filter===k?'on':''}" data-act="filter" data-v="${k}">${l} ${cnt[k]}</button>`).join('');
   const rows=ts.map(t=>{
-    const di=dueInfo(t),linked=t.libId||t.url,st=t.steps||[],sd=st.filter(x=>x.done).length;
+    const di=dueInfo(t),st=t.steps||[],sd=st.filter(x=>x.done).length;
     return`<div class="row ${t.status==='done'?'isdone':''}" style="--c:${s.color}" data-row="${t.id}">
       <button class="chk ${t.status==='done'?'on':''}" data-act="toggle" data-id="${t.id}" aria-label="Toggle done">${IC.check}</button>
-      <a class="rowmain" href="#/quests/${s.id}/${c.id}/${t.id}"><b>${esc(t.text)}</b>
-        <div class="meta">${t.status==='doing'||t.status==='waiting'?`<span class="pill p-${t.status}">${STATUS[t.status]}</span>`:''}${di?`<span class="pill ${di.cls}">${di.txt}</span>`:''}${st.length?`<span class="pill">${sd}/${st.length} steps</span>`:''}${linked?'<span class="pill">Linked</span>':''}</div></a>
-      ${t.status==='done'&&resolveSticker(t.sticker)?`<span class="rowsticker">${stickerHtml(t.sticker,'xs')}</span>`:''}
-      <span class="rowgo">${IC.arrow}</span></div>`}).join('');
+      <div class="rowbody"><a class="rowmain" href="#/quests/${s.id}/${c.id}/${t.id}"><b>${esc(t.text)}</b>
+        <div class="meta">${t.status==='doing'||t.status==='waiting'?`<span class="pill p-${t.status}">${STATUS[t.status]}</span>`:''}${di?`<span class="pill ${di.cls}">${di.txt}</span>`:''}${st.length?`<span class="pill">${sd}/${st.length} steps</span>`:''}</div></a>${rowLinks(t)}</div>
+      ${t.status==='done'&&t.sticker?stk(t.sticker,44):''}<span class="rowgo">${IC.arrow}</span></div>`}).join('');
   const empty={active:'Nothing here yet.',waiting:'Nothing waiting.',done:'Nothing done yet.'}[filter];
-  const emptyArt=getDoodle('empty');
+  const emptyArt=getDoodle('empty_'+({active:'todo',waiting:'waiting',done:'done'}[filter]));
   return{crumbs:[['Home','#/'],['Sites','#/quests'],[s.name,'#/quests/'+s.id]],body:`
     <div class="head" style="--c:${s.color}"><div class="head-main">${hdrArt?`<div class="head-art" aria-hidden="true">${hdrArt}</div>`:''}<div><p class="eyebrow">${esc(s.name)}</p><h1>${esc(c.name)}</h1></div></div></div>
     <div class="addrow"><input id="qa" placeholder="New to-do" autocomplete="off"><button class="primary" data-act="qadd">Add</button></div>
@@ -1540,10 +1683,7 @@ function taskPage(s,c,t){
   const done=t.status==='done';
   const stampArt=getDoodle('taskStamp');
   const flourishArt=getDoodle('taskFlourish');
-  const gotSticker=done?resolveSticker(t.sticker):null;
-  const rewardCard=done?(gotSticker
-    ?`<div class="reward-card">${stickerHtml(t.sticker,'lg')}<div class="reward-copy"><b>Sticker earned</b><p>${esc(gotSticker.name)} · ${esc(stDate(t.stickerAt||t.doneAt))}</p></div><button class="ghost sm" data-act="picksticker">Change sticker</button></div>`
-    :`<div class="reward-card"><div class="reward-empty">${mk(STAR,26,'currentColor')}</div><div class="reward-copy"><b>This win needs a sticker</b><p>Claim one from your collection.</p><button class="ghost sm" data-act="picksticker">Claim sticker</button></div></div>`):'';
+  const doneCard=done&&(t.sticker||S.prefs.reward!=='off')?`<div class="donecard">${t.sticker?stk(t.sticker,92):''}<div><b>Completed ${ago(dstr(t.doneAt||Date.now()))}</b><small>Nice work.</small><button class="ghost sm" data-act="restick" data-id="${t.id}">${t.sticker?'Change sticker':'Add a sticker'}</button></div></div>`:'';
   const defMin=Number((S.prefs&&S.prefs.timer)||25);
   const timerOpts=[...new Set([15,25,45,defMin])].sort((a,b)=>a-b);
   return{crumbs:[['Home','#/'],['Sites','#/quests'],[s.name,'#/quests/'+s.id],[c.name,`#/quests/${s.id}/${c.id}`]],body:`
@@ -1567,8 +1707,8 @@ function taskPage(s,c,t){
       <div class="blk-head"><label>Focus timer</label>${flourishArt?`<span class="mini-art" aria-hidden="true">${flourishArt}</span>`:''}</div>
       <div class="seg">${timerOpts.map(m=>`<button class="${m===defMin?'on':''}" data-act="timer" data-v="${m}">${m} min${m===defMin?' &bull; default':''}</button>`).join('')}</div>
     </div>
-    ${rewardCard}
-    <div class="bigdone"><button class="primary" data-act="finish">${done?'Reopen':'Mark done'}</button>${done?'':`<span class="reward-hint">${IC.star} Sticker when complete</span>`}</div>
+    ${doneCard}
+    <div class="bigdone"><button class="primary" data-act="finish">${done?'Reopen':'Mark done'}</button></div>
     <details class="more"><summary>More</summary>
       <div class="blk" style="margin-top:16px"><label>Move to section</label><select data-f="catId" style="max-width:300px">${s.cats.map(x=>`<option value="${x.id}" ${x.id===c.id?'selected':''}>${esc(x.name)}</option>`).join('')}</select></div>
       <button class="ghost danger" data-act="deltask">Delete this to-do</button></details>
@@ -1581,7 +1721,7 @@ const todayStr=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMo
 const ago=d=>{if(!d)return'';const n=-daysTo(d);return n<=0?'today':n===1?'yesterday':n<30?n+' days ago':fmt(d)};
 
 function libPage(f){
-  const hdrArt=getDoodle('libraryHeader');
+  const hdrArt=getDoodle(f?'libFolder':'libraryHeader');
   const anc=f?ancestry(f.id):[];
   const crumbs=[['Home','#/'],['Library','#/lib'],...anc.slice(0,-1).map(a=>[a.name,'#/lib/'+a.id])];
   const body=`
@@ -1602,7 +1742,7 @@ function libResults(f){
   const stR=k=>k?Object.keys(LST).indexOf(k):99;
   const items=(lkind?base.filter(l=>kindOf(l)===lkind):base).slice().sort((a,b)=>(b.pin?1:0)-(a.pin?1:0)||(a.type===b.type?0:a.type==='folder'?-1:1)||(lsort==='worked'?(b.worked||'').localeCompare(a.worked||''):lsort==='status'?stR(a.status)-stR(b.status):0)||a.name.localeCompare(b.name));
   const chips=base.length>=6&&kinds.length>=2?`<div class="fchips"><button class="fc ${lkind?'':'on'}" data-act="lkind" data-v="">All</button>${kinds.map(k=>`<button class="fc ${lkind===k?'on':''}" data-act="lkind" data-v="${k}">${KINDS[k][0]}</button>`).join('')}</div>`:'';
-  const emptyArt=getDoodle('empty');
+  const emptyArt=getDoodle('empty_lib');
   if(!items.length)return chips+`<div class="empty">${emptyArt}<span>${s?'Nothing matches.':'Empty here.'}</span></div>`;
   return chips+`<div class="tiles">${items.map(l=>{
     const k=kindOf(l),kids=S.lib.filter(x=>x.parent===l.id).length;
@@ -1773,97 +1913,78 @@ function openLookModal(){
   const ov=document.createElement('div');ov.className='ov';
   const cur=document.documentElement.dataset.theme;
   const lk=S.look;
-  const doodleOpts=[['inkwell','Inkwell & Quill'],['botanical','Botanical'],['celestial','Celestial'],['none','None']];
-  const bgOpts=[['dots','Polka dots'],['grid','Graph grid'],['clean','Clean paper']];
-  const fontOpts=[['grotesk','Playful Grotesk'],['editorial','Editorial Serif'],['mono','Cozy Mono']];
-  const styleOpts=[['brutal','Tactile Crisp'],['soft','Soft Rounded']];
-
-  ov.innerHTML=`<div class="modal wide">
-    <h2>Look &amp; feel</h2>
-    <div class="fld">
-      <label>Theme (${THEMES.length} palettes)</label>
-      <div id="th-wrap">${themeGridHtml(cur)}</div>
-    </div>
-    <div class="fld">
-      <label>Doodles</label>
-      <div class="opt-grid" data-lk="doodles">
-        ${doodleOpts.map(([k,l])=>`<button type="button" class="opt-btn ${lk.doodles===k?'on':''}" data-v="${k}">${l}</button>`).join('')}
-      </div>
-    </div>
-    <div class="fld">
-      <label>Home banner</label>
-      <input id="banner-in" value="${esc(BANNER_PRESETS[lk.banner]?'':lk.banner)}" placeholder="Paste an image URL, or pick a preset below" autocomplete="off">
-      <div class="banner-presets">
-        <button type="button" class="bpre ${!lk.banner?'on':''}" data-bp="">Off</button>
-        ${Object.entries(BANNER_PRESETS).map(([k,v])=>`<button type="button" class="bpre ${lk.banner===k?'on':''}" data-bp="${k}">${v.label}</button>`).join('')}
-      </div>
-    </div>
-    <div class="fld">
-      <label>Typography</label>
-      <div class="opt-grid" data-lk="font">
-        ${fontOpts.map(([k,l])=>`<button type="button" class="opt-btn ${lk.font===k?'on':''}" data-v="${k}">${l}</button>`).join('')}
-      </div>
-    </div>
-    <div class="fld">
-      <label>Paper texture &amp; cards</label>
-      <div class="opt-grid" data-lk="bg" style="margin-bottom:8px">
-        ${bgOpts.map(([k,l])=>`<button type="button" class="opt-btn ${lk.bg===k?'on':''}" data-v="${k}">${l}</button>`).join('')}
-      </div>
-      <div class="opt-grid" data-lk="style">
-        ${styleOpts.map(([k,l])=>`<button type="button" class="opt-btn ${lk.style===k?'on':''}" data-v="${k}">${l}</button>`).join('')}
-      </div>
-    </div>
-    <div class="mrow">
-      <span class="sp"></span>
-      <button type="button" class="primary" data-x>Done</button>
-    </div>
-  </div>`;
+  const O=(key,opts)=>`<div class="opt-grid" data-lk="${key}">${opts.map(([k,l])=>`<button type="button" class="opt-btn ${lk[key]===k?'on':''}" data-v="${k}">${l}</button>`).join('')}</div>`;
+  const bthumb=(k,label,inner)=>`<button type="button" class="bthumb ${(lk.banner||'')===k?'on':''}" data-bp="${k}"><span class="bt">${inner}</span>${label}</button>`;
+  const bgrid=()=>`<div class="bgrid">${bthumb('','Off','None')}${lk.bannerImg?bthumb('upload','Your picture',`<img src="${esc(lk.bannerImg)}" alt="">`):''}${Object.keys(BANNER_ART).map(k=>bthumb(k,BANNER_LABELS[k],bannerInner(k))).join('')}${Object.entries(BANNER_PRESETS).map(([k,v])=>bthumb(k,v.label,bannerInner(k))).join('')}</div>`;
+  const panels={
+    colour:`<div class="fld"><label>Theme (${THEMES.length} palettes)</label><div id="th-wrap">${themeGridHtml(cur)}</div></div>`,
+    art:`<p class="lksub" style="margin-top:6px">Doodles</p>
+      <div class="fld">${O('doodles',[['inkwell','Inkwell & Quill'],['botanical','Botanical'],['celestial','Celestial'],['cozy','Cozy corner'],['seaside','Seaside'],['mix','Mix of all'],['none','None']])}</div>
+      <div class="fld"><label>Size</label>${O('dsize',[['small','Small'],['medium','Medium'],['large','Large']])}</div>
+      <details class="lkmore"><summary>Fine-tune doodles</summary>
+        <div class="fld"><label>Style</label>${O('dstyle',[['colour','Full colour'],['line','Line art'],['soft','Soft']])}</div>
+        <div class="fld"><label>Show on</label>${O('dwhere',[['all','Every page'],['headers','Headers and home'],['home','Home only']])}</div>
+        <div class="fld"><label>Movement</label>${O('danim',[['still','Still'],['float','Gentle float']])}</div>
+        <div class="fld"><label>Your own picture on Home</label>
+          <div class="picrow"><span class="picpv" id="hp-pv">${lk.homePic?`<img src="${esc(lk.homePic)}" alt="">`:'None'}</span><button type="button" class="ghost sm" data-hpup>Upload picture</button>${lk.homePic?'<button type="button" class="ghost sm" data-hpdel>Remove</button>':''}<input type="file" accept="image/*" id="hpfile" hidden></div>
+          <small>Replaces the doodle at the top of Home.</small></div>
+      </details>
+      <p class="lksub">Banner</p>
+      <div class="fld" id="bgwrap">${bgrid()}
+        <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap"><input id="banner-in" style="flex:1 1 200px" value="${esc((BANNER_ART[lk.banner]||BANNER_PRESETS[lk.banner]||lk.banner==='upload')?'':lk.banner||'')}" placeholder="Or paste an image link" autocomplete="off"><button type="button" class="ghost sm" data-bupload>Upload picture</button><input type="file" accept="image/*" id="bfile" hidden></div></div>
+      <details class="lkmore"><summary>Fine-tune banner</summary>
+        <div class="fld"><label>Banner on</label>${O('bannerWhere',[['home','Home only'],['all','Every page']])}</div>
+        <div class="fld"><label>Height</label>${O('bannerH',[['slim','Slim'],['regular','Regular'],['tall','Tall']])}</div>
+        <div class="fld"><label>Look</label>${O('bannerS',[['full','Full colour'],['soft','Soft'],['fade','Fading edge']])}</div>
+        <div class="fld"><label>Picture focus</label>${O('bannerF',[['top','Top'],['middle','Middle'],['bottom','Bottom']])}</div>
+      </details>`,
+    type:`<div class="fld"><label>Typography</label>${O('font',[['grotesk','Playful Grotesk'],['editorial','Editorial Serif'],['mono','Cozy Mono']])}</div>
+      <div class="fld"><label>Paper texture</label>${O('bg',[['dots','Polka dots'],['grid','Graph grid'],['clean','Clean paper']])}</div>
+      <div class="fld"><label>Cards</label>${O('style',[['brutal','Tactile Crisp'],['soft','Soft Rounded']])}</div>
+      <div class="fld"><label>Text size</label>${O('tsize',[['normal','Normal'],['large','Large'],['xl','Extra large']])}</div>
+      <div class="fld"><label>Motion</label>${O('motion',[['full','Lively'],['calm','Calm']])}</div>`
+  };
+  ov.innerHTML=`<div class="modal wide"><h2>Look &amp; feel</h2>
+    <div class="seg" id="lktabs" style="margin-bottom:6px">${[['colour','Colours'],['art','Doodles & banner'],['type','Type & comfort']].map(([k,l],i)=>`<button type="button" class="${i?'':'on'}" data-tab="${k}">${l}</button>`).join('')}</div>
+    ${Object.entries(panels).map(([k,h],i)=>`<div class="lkpanel" data-panel="${k}" ${i?'hidden':''}>${h}</div>`).join('')}
+    <div class="mrow"><span class="sp"></span><button type="button" class="primary" data-x>Done</button></div></div>`;
   document.body.appendChild(ov);
-
   const onKey=e=>{if(e.key==='Escape')close()};
   const close=()=>{ov.remove();document.removeEventListener('keydown',onKey)};
   document.addEventListener('keydown',onKey);
   ov.onmousedown=e=>{if(e.target===ov)close()};
   ov.querySelector('[data-x]').onclick=close;
-
-  const bindThemes=()=>{
-    ov.querySelectorAll('[data-th]').forEach(b=>b.onclick=()=>{
-      S.theme=b.dataset.th;
-      render();
-      ov.querySelector('#th-wrap').innerHTML=themeGridHtml(S.theme);
-      bindThemes();
-    });
-  };
+  ov.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{
+    ov.querySelectorAll('[data-tab]').forEach(x=>x.classList.toggle('on',x===b));
+    ov.querySelectorAll('[data-panel]').forEach(p=>p.hidden=p.dataset.panel!==b.dataset.tab);
+  });
+  const bindThemes=()=>ov.querySelectorAll('[data-th]').forEach(b=>b.onclick=()=>{
+    S.theme=b.dataset.th;render();ov.querySelector('#th-wrap').innerHTML=themeGridHtml(S.theme);bindThemes();
+  });
   bindThemes();
-
   ov.querySelectorAll('[data-lk]').forEach(grp=>{
     const key=grp.dataset.lk;
-    grp.querySelectorAll('.opt-btn').forEach(btn=>{
-      btn.onclick=()=>{
-        S.look[key]=btn.dataset.v;
-        grp.querySelectorAll('.opt-btn').forEach(x=>x.classList.toggle('on',x===btn));
-        render();
-      };
+    grp.querySelectorAll('.opt-btn').forEach(btn=>btn.onclick=()=>{
+      S.look[key]=btn.dataset.v;
+      grp.querySelectorAll('.opt-btn').forEach(x=>x.classList.toggle('on',x===btn));
+      render();
     });
   });
-
-  const bannerIn=ov.querySelector('#banner-in');
-  const syncBannerBtns=()=>{
-    ov.querySelectorAll('.bpre').forEach(b=>b.classList.toggle('on',b.dataset.bp===(S.look.banner||'')));
-  };
-  bannerIn.oninput=()=>{
-    S.look.banner=bannerIn.value.trim();
-    syncBannerBtns();
-    render();
-  };
-  ov.querySelectorAll('.bpre').forEach(btn=>{
-    btn.onclick=()=>{
-      S.look.banner=btn.dataset.bp;
-      bannerIn.value='';
-      syncBannerBtns();
-      render();
-    };
+  const bannerIn=ov.querySelector('#banner-in'),bw=ov.querySelector('#bgwrap');
+  const bindB=()=>bw.querySelectorAll('[data-bp]').forEach(btn=>btn.onclick=()=>{
+    S.look.banner=btn.dataset.bp;bannerIn.value='';
+    bw.querySelectorAll('[data-bp]').forEach(x=>x.classList.toggle('on',x===btn));render();
   });
+  bindB();
+  bannerIn.oninput=()=>{S.look.banner=bannerIn.value.trim();bw.querySelectorAll('[data-bp]').forEach(x=>x.classList.toggle('on',x.dataset.bp===(S.look.banner||'')));render()};
+  const hpf=ov.querySelector('#hpfile');
+  ov.querySelector('[data-hpup]').onclick=()=>hpf.click();
+  hpf.onchange=()=>{uploadHomePic(hpf.files[0]);setTimeout(()=>{const pv=ov.querySelector('#hp-pv');if(pv&&S.look.homePic)pv.innerHTML=`<img src="${esc(S.look.homePic)}" alt="">`},900)};
+  const hpd=ov.querySelector('[data-hpdel]');
+  if(hpd)hpd.onclick=()=>{S.look.homePic='';render();ov.querySelector('#hp-pv').textContent='None';hpd.remove()};
+  const bf=ov.querySelector('#bfile');
+  ov.querySelector('[data-bupload]').onclick=()=>bf.click();
+  bf.onchange=()=>{uploadBanner(bf.files[0]);setTimeout(()=>{const g=bw.querySelector('.bgrid');if(g){g.outerHTML=bgrid();bindB()}},900)};
 }
 
 /* ---------- Settings Modal (Clean & Practical, No Theme Picker) ---------- */
@@ -1893,6 +2014,14 @@ function settings(){
       </div>
     </div>
     <div class="fld">
+      <label>Stickers</label>
+      <div class="opt-grid" data-pref="reward">
+        ${[['surprise','Surprise me'],['choose','I choose'],['favourite','Favourite'],['off','Off']].map(([k,l])=>`<button type="button" class="opt-btn ${pr.reward===k?'on':''}" data-v="${k}">${l}</button>`).join('')}
+      </div>
+      <div id="favrow" style="margin-top:10px;display:flex;gap:12px;align-items:center" ${pr.reward==='favourite'?'':'hidden'}><span id="favpv">${pr.fav?stk(pr.fav,44):''}</span><button type="button" class="ghost sm" data-pickfav>Pick favourite</button></div>
+      ${(S.mySt||[]).length?`<div class="opt-grid" data-pref="pool" style="margin-top:10px">${[['all','Built-in + mine'],['mine','Only mine']].map(([k,l])=>`<button type="button" class="opt-btn ${pr.pool===k?'on':''}" data-v="${k}">${l}</button>`).join('')}</div>`:''}
+    </div>
+    <div class="fld">
       <label>Completed to-dos</label>
       <div class="opt-grid" data-pref="cleanup">
         ${cleanOpts.map(([k,l])=>`<button type="button" class="opt-btn ${pr.cleanup===k?'on':''}" data-v="${k}">${l}</button>`).join('')}
@@ -1913,6 +2042,9 @@ function settings(){
   ov.querySelector('#nm').onchange=e=>{S.name=e.target.value.trim();render()};
   const goSt=ov.querySelector('[data-go-stickers]');
   if(goSt)goSt.onclick=e=>{e.preventDefault();close();location.hash='#/stickers'};
+  ov.querySelectorAll('[data-pref="reward"] .opt-btn').forEach(b=>b.addEventListener('click',()=>{ov.querySelector('#favrow').hidden=S.prefs.reward!=='favourite'}));
+  const pf=ov.querySelector('[data-pickfav]');
+  if(pf)pf.onclick=()=>openTray('Pick your favourite',id=>{S.prefs.fav=id;save();ov.querySelector('#favpv').innerHTML=stk(id,44);toast('Favourite set')},null);
 
   ov.querySelectorAll('[data-pref]').forEach(grp=>{
     const key=grp.dataset.pref;
@@ -1947,18 +2079,14 @@ function settings(){
       try{
         const d=JSON.parse(r.result);
         if(!d.sites||!d.tasks||!d.lib)throw 0;
-        d.look={...DEFAULT_LOOK,...(d.look||{})};
-        d.prefs={...DEFAULT_PREFS,...(d.prefs||{})};
-        d.stickers=normalizeStickers(d.stickers);
-        d.recent=Array.isArray(d.recent)?d.recent:[];
-        S=d;close();location.hash='#/';syncEarnedStickers();render();toast('Restored');
+        S=normalize(d);close();location.hash='#/';render();toast('Restored');
       }catch(e){toast('That is not a valid Inkwell backup.')}
     };
     if(fi.files[0])r.readAsText(fi.files[0]);
   };
   ov.querySelector('[data-rs]').onclick=()=>{
     askConfirm('Wipe all sites, to-dos, and library items and start fresh?','Reset',()=>{
-      S=seed();close();location.hash='#/';render();toast('Reset complete');
+      S=normalize(seed());close();location.hash='#/';render();toast('Reset complete');
     });
   };
 }
@@ -1974,16 +2102,6 @@ function addStep(){
   const inp=document.getElementById('stepin');if(!inp)return;const v=inp.value.trim();if(!v)return;
   const t=S.tasks.find(x=>x.id===parse()[3]);if(!t)return;
   (t.steps=t.steps||[]).push({id:uid(),text:v,done:false});refocus='#stepin';render();
-}
-function setDone(t,on,el){
-  if(on){
-    t.status='done';t.doneAt=Date.now();
-    awardSticker(t);
-    if(el){const r=el.getBoundingClientRect(),s=site(t.siteId);burst(r.left+r.width/2,r.top+r.height/2,s?s.color:'#ff7a9c')}
-    showReward(t.sticker,t.text||'');
-  }else{
-    t.status='todo';t.doneAt=0;save();
-  }
 }
 const curFolder=()=>{const r=parse();return r[0]==='lib'&&r[1]?libItem(r[1]):null};
 function pushRecent(id){S.recent=[id,...(S.recent||[]).filter(x=>x!==id)].slice(0,8);save()}
@@ -2026,28 +2144,17 @@ app.addEventListener('click',e=>{
     case 'timer':{const t=task();if(!t)return;startTimer(+el.dataset.v,t.text);return toast('Timer started')}
     case 'toggle':{const t=task();if(!t)return;
       const row=el.closest('.row'),on=t.status!=='done';setDone(t,on,el);
-      if(on){el.classList.add('on');if(row)row.classList.add('fade');setTimeout(render,500)}else render();return}
-    case 'status':{const t=task();if(!t)return;const v=el.dataset.v;
-      if(v==='done'){
-        if(t.status!=='done'){setDone(t,true,null);burst(e.clientX,e.clientY,(site(t.siteId)||{}).color||'#ff7a9c')}
-        return render();
-      }
-      t.status=v;t.doneAt=0;save();return render()}
+      if(on){el.classList.add('on');if(row)row.classList.add('fade');setTimeout(render,900)}else render();return}
+    case 'status':{const t=task();if(!t)return;const nv=el.dataset.v,was=t.status;
+      if(nv==='done'&&was!=='done')finishTask(t,el);
+      else{if(was==='done'&&nv!=='done')unlog(t);t.status=nv;t.doneAt=nv==='done'?(t.doneAt||Date.now()):0}
+      return render()}
     case 'finish':{const t=task();if(!t)return;const on=t.status!=='done';setDone(t,on,el);
       if(on)setTimeout(()=>{location.hash=`#/quests/${t.siteId}/${t.catId}`},1000);else render();return}
-    case 'picksticker':{const t=task();if(!t)return;return openStickerPicker(t)}
-    case 'uploadsticker':return openStickerUpload();
-    case 'backfill':return backfillStickers();
-    case 'delcustom':{
-      const c=customSticker(el.dataset.id);if(!c)return;
-      askConfirm(`Remove “${c.name}” from your stickers? It will disappear from the album too.`,'Remove',()=>{
-        S.stickers.custom=S.stickers.custom.filter(x=>x.id!==c.id);
-        S.stickers.earned=S.stickers.earned.filter(x=>!(x.sticker&&x.sticker.kind==='custom'&&x.sticker.id===c.id));
-        S.tasks.forEach(t=>{if(t.sticker&&t.sticker.kind==='custom'&&t.sticker.id===c.id){t.sticker=null;t.stickerAt=0}});
-        save();render();toast('Sticker removed');
-      });
-      return;
-    }
+    case 'upsticker':{const f=document.getElementById('stfile');if(f)f.click();return}
+    case 'rmst':return askConfirm('This sticker will be removed from your own stash. Stickers already earned with it stay in the book as a stand-in.','Remove',()=>{S.mySt=(S.mySt||[]).filter(u=>u.id!==el.dataset.id);render()});
+    case 'shuffle':peek=[];return render();
+    case 'restick':{const t=task(),r=el.getBoundingClientRect();return openTray('Pick a different sticker',id=>{t.sticker=id;logBook(t);slap(r,id);render()},null)}
     case 'deltask':{
       askConfirm('Delete this to-do?','Delete',()=>{
         const t=task();S.tasks=S.tasks.filter(x=>x.id!==t.id);location.hash=`#/quests/${t.siteId}/${t.catId}`;
@@ -2065,6 +2172,7 @@ app.addEventListener('input',e=>{
   if(e.target.id==='libq'){q=e.target.value;document.getElementById('libres').innerHTML=libResults(curFolder())}
 });
 app.addEventListener('change',e=>{
+  if(e.target.id==='stfile'){addStickers(e.target.files);return}
   if(e.target.id==='lsort'){lsort=e.target.value;document.getElementById('libres').innerHTML=libResults(curFolder());return}
   const f=e.target.dataset.f;if(!f)return;
   const box=e.target.closest('[data-id]'),t=S.tasks.find(x=>x.id===box.dataset.id);if(!t)return;
@@ -2075,7 +2183,6 @@ app.addEventListener('change',e=>{
   if(f==='libId'||f==='url')render();
 });
 
-syncEarnedStickers();
 render();
 </script>
 </body>
