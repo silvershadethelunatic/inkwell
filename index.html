@@ -4,9 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>inkwell</title>
-<link rel="icon" type="image/png" href="favicon.ico">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Patrick+Hand&display=swap" rel="stylesheet">
 <style>
 /* ---------- theme tokens (15 curated palettes) ---------- */
 :root{
@@ -103,7 +104,9 @@ h1,h2,.logo,.title-in,.modal h2{font-family:var(--font-head)}
 
 /* ---------- top bar & navigation ---------- */
 .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:26px;gap:12px}
-.logo{font-weight:800;font-size:1.55rem;text-decoration:none;letter-spacing:-.03em;display:inline-flex;align-items:baseline}
+.logo{font-weight:800;font-size:1.55rem;text-decoration:none;letter-spacing:-.03em;display:inline-flex;align-items:center}
+.logo svg{width:30px;height:30px;flex:0 0 auto;margin-right:8px;transition:transform .2s ease}
+.logo:hover svg{transform:rotate(-4deg) scale(1.05)}
 .logo span{display:inline-block;width:.36em;height:.36em;border-radius:50%;background:var(--a1);margin-left:3px}
 .top-acts{display:flex;align-items:center;gap:6px}
 .txtbtn{color:var(--muted);font-weight:600;padding:8px 14px;border-radius:99px;transition:.15s;display:inline-flex;align-items:center;gap:6px}
@@ -174,7 +177,18 @@ h1{font-weight:800;font-size:clamp(2.1rem,5.5vw,3.2rem);line-height:1.08;letter-
 .door:hover{transform:translate(-2px,-2px);box-shadow:var(--sh-door-h)}
 .door:active{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--edge)}
 .door h2{font-weight:800;font-size:1.75rem;letter-spacing:-.02em;line-height:1.15;position:relative;z-index:1}
-.door p{opacity:.82;position:relative;z-index:1}
+.door p{
+  position:relative;z-index:1;max-width:34ch;
+  font-family:'Fraunces',Georgia,serif;font-style:italic;font-weight:600;
+  font-size:.96rem;line-height:1.5;letter-spacing:.003em;
+  color:color-mix(in srgb,var(--ink) 78%,var(--c,var(--a2)));opacity:.92;
+}
+.door p::before,.door p::after{
+  font-family:var(--font-head);font-style:normal;font-weight:800;font-size:1.85rem;line-height:0;
+  color:color-mix(in srgb,var(--c,var(--a2)) 55%,var(--ink));opacity:.6;
+}
+.door p::before{content:'\201C';vertical-align:-.36em;margin-right:.05em}
+.door p::after{content:'\201D';vertical-align:-.36em;margin-left:.05em}
 .door .foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;padding-top:18px;font-weight:500;position:relative;z-index:1}
 .door .go{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--ink);color:var(--bg)}
 .door-art{position:absolute;right:14px;top:14px;opacity:.22;pointer-events:none;color:var(--ink);transition:transform .25s ease,opacity .25s ease}
@@ -187,6 +201,7 @@ h1{font-weight:800;font-size:clamp(2.1rem,5.5vw,3.2rem);line-height:1.08;letter-
 
 /* ---------- to-dos ---------- */
 .addrow{display:flex;gap:10px;margin-bottom:20px}
+.addrow .primary{white-space:nowrap}
 .addrow input{padding:13px 20px;border-radius:99px}
 .seg{display:inline-flex;gap:4px;padding:4px;background:var(--surface);border:2px solid var(--edge);border-radius:99px;flex-wrap:wrap}
 .seg button{padding:7px 17px;border-radius:99px;font-weight:600;font-size:.93rem;color:var(--muted);transition:.15s}
@@ -378,6 +393,7 @@ a.pillbtn{text-decoration:none;color:inherit}
 [data-dsize="small"]{--dz:.78}
 [data-dsize="large"]{--dz:1.3}
 .head-art,.door-art,.doodle-hero,.empty>svg{zoom:var(--dz,1)}
+.sticker-art{filter:drop-shadow(0 1.5px 0 var(--edge)) drop-shadow(0 3px 3px rgba(35,26,46,.22))}
 [data-dstyle="line"] :is(.head-art,.door-art,.doodle-hero,.empty) svg *:not([stroke="none"]){fill:none!important}
 [data-dstyle="soft"] :is(.head-art,.door-art,.doodle-hero,.empty) svg{opacity:.5;filter:saturate(.6)}
 .lksub{font-family:var(--font-head);font-weight:800;font-size:1.1rem;margin:26px 0 2px}
@@ -475,6 +491,22 @@ html[data-danim="float"] :is(.head-art,.door-art,.doodle-hero,.empty>svg){animat
 html[data-ts="large"]{font-size:18px}html[data-ts="large"] body{font-size:19px}
 html[data-ts="xl"]{font-size:20px}html[data-ts="xl"] body{font-size:21.5px}
 html[data-motion="calm"] *,html[data-motion="calm"] *::before,html[data-motion="calm"] *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+
+/* ---------- left off + idea jar ---------- */
+.leftnote{font-size:.88rem;color:var(--muted);margin-top:3px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.jar{display:block;overflow:visible}
+.jdrop{animation:jdrop .75s cubic-bezier(.3,.7,.4,1) both}
+@keyframes jdrop{from{transform:translateY(-96px) rotate(50deg);opacity:0}55%{opacity:1}}
+.slips{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:26px 22px;margin-top:30px}
+.slip{position:relative;display:flex;flex-direction:column;gap:12px;min-height:128px;padding:24px 16px 12px;text-align:left;color:var(--ink);
+  background:color-mix(in srgb,var(--sc) var(--mix),var(--surface));border:2px solid var(--edge);border-radius:6px 6px 16px 6px;
+  box-shadow:3px 3px 0 var(--edge);transform:rotate(var(--rot,0deg));transition:transform .15s,box-shadow .15s}
+.slip::before{content:'';position:absolute;top:-10px;left:50%;width:56px;height:17px;margin-left:-28px;transform:rotate(-3deg);
+  background:color-mix(in srgb,var(--pop) 65%,var(--surface));border:1.5px solid var(--edge);opacity:.9}
+.slip:hover{transform:rotate(0) translate(-2px,-3px);box-shadow:6px 6px 0 var(--edge)}
+.slip:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--edge)}
+.slip-txt{font-family:'Patrick Hand','Segoe Print','Comic Sans MS',cursive;font-size:1.32rem;line-height:1.25;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;overflow:hidden}
+.slip-foot{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:.8rem;opacity:.85}
 </style>
 </head>
 <body>
@@ -569,7 +601,7 @@ function dstrN(n){const d=new Date(Date.now()+n*864e5);return d.getFullYear()+'-
 const LEGACY_EMO={"ink-1": "🖋️", "ink-2": "🖊️", "ink-3": "✒️", "ink-4": "📝", "ink-5": "📖", "ink-6": "📚", "ink-7": "🌟", "ink-8": "⭐", "ink-9": "✨", "ink-10": "🌙", "ink-11": "🪶", "ink-12": "💫", "garden-1": "🌸", "garden-2": "🌼", "garden-3": "🌷", "garden-4": "🌻", "garden-5": "🌿", "garden-6": "🍀", "garden-7": "🌱", "garden-8": "🪴", "garden-9": "🍄", "garden-10": "🌺", "garden-11": "💐", "garden-12": "🌾", "desk-1": "☕", "desk-2": "🍵", "desk-3": "🕯️", "desk-4": "🧸", "desk-5": "📔", "desk-6": "📎", "desk-7": "🖌️", "desk-8": "🎧", "desk-9": "🫖", "desk-10": "🪔", "desk-11": "🧵", "desk-12": "✂️", "critters-1": "🐈", "critters-2": "🐈\u200d⬛", "critters-3": "🦊", "critters-4": "🐰", "critters-5": "🐝", "critters-6": "🦋", "critters-7": "🐢", "critters-8": "🦉", "critters-9": "🐧", "critters-10": "🐿️", "critters-11": "🐌", "critters-12": "🦔", "hearts-1": "💖", "hearts-2": "💗", "hearts-3": "💓", "hearts-4": "💞", "hearts-5": "💕", "hearts-6": "💘", "hearts-7": "🫶", "hearts-8": "🥰", "hearts-9": "😊", "hearts-10": "🌈", "hearts-11": "🎀", "hearts-12": "🩷", "weather-1": "☀️", "weather-2": "🌤️", "weather-3": "⛅", "weather-4": "🌧️", "weather-5": "⛈️", "weather-6": "❄️", "weather-7": "🍂", "weather-8": "🍁", "weather-9": "🍃", "weather-10": "🌊", "weather-11": "🌪️", "weather-12": "🌠"};
 /* brings older saved data (emoji stickers from the earlier sticker book) into the current shape */
 function normalize(d){
-  d.recent=Array.isArray(d.recent)?d.recent:[];d.book=Array.isArray(d.book)?d.book:[];d.badges=Array.isArray(d.badges)?d.badges:[];d.mySt=Array.isArray(d.mySt)?d.mySt:[];
+  d.recent=Array.isArray(d.recent)?d.recent:[];d.ideas=Array.isArray(d.ideas)?d.ideas.filter(i=>i&&i.id&&i.text):[];d.book=Array.isArray(d.book)?d.book:[];d.badges=Array.isArray(d.badges)?d.badges:[];d.mySt=Array.isArray(d.mySt)?d.mySt:[];
   d.look={...DEFAULT_LOOK,...(d.look||{})};d.prefs={...DEFAULT_PREFS,...(d.prefs||{})};
   const old=d.stickers;
   if(old&&typeof old==='object'){
@@ -636,481 +668,297 @@ Object.assign(IC,{
   palette:mk('<circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.9 0 1.6-.7 1.6-1.6 0-.4-.2-.8-.4-1.1-.3-.3-.4-.7-.4-1.1 0-.9.7-1.6 1.6-1.6H16c3.3 0 6-2.7 6-6 0-4.9-4.5-8.6-10-8.6z"/>',16)
 });
 
-/* Editorial Doodles (3 distinct sets: inkwell, botanical, celestial) */
-const DOODLES={
-  inkwell:{
-    homeHero:`<svg width="96" height="96" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M42 74h36l5 22c1 4-2 8-6 8H43c-4 0-7-4-6-8l5-22z" fill="var(--surface)"/>
-      <rect x="47" y="64" width="26" height="10" rx="3" fill="var(--a2)"/>
-      <path d="M62 64C68 44 82 26 98 16c-3 18-13 33-28 42l-8 6z" fill="var(--pop)"/>
-      <path d="M60 66L92 22"/>
-      <path d="M24 38l3-7 3 7 7 3-7 3-3 7-3-7-7-3 7-3z" fill="var(--a1)" stroke="none"/>
-      <circle cx="94" cy="78" r="3.5" fill="var(--a3)" stroke="none"/>
-    </svg>`,
-    homeDoor1:`<svg width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <rect x="13" y="12" width="38" height="43" rx="7" fill="var(--surface)"/>
-      <rect x="23" y="7" width="18" height="9" rx="3.5" fill="var(--a2)"/>
-      <circle cx="32" cy="11.5" r="1.6" fill="var(--surface)"/>
-      <circle cx="21" cy="27" r="3.4" fill="var(--a3)"/>
-      <path d="M19.5 27l1.2 1.2 2.2-2.2" stroke="var(--surface)"/>
-      <path d="M28 27h12"/>
-      <circle cx="21" cy="37" r="3.4" fill="var(--surface2)"/>
-      <path d="M28 37h15"/>
-      <circle cx="21" cy="47" r="3.4" fill="var(--pop)"/>
-      <path d="M19.5 47l1.2 1.2 2.2-2.2" stroke="var(--surface)"/>
-      <path d="M28 47h9"/>
-      <circle cx="49" cy="50" r="7" fill="var(--a1)"/>
-      <path d="M46 50l2 2 4-4" stroke="var(--surface)" stroke-width="2.4"/>
-    </svg>`,
-    homeDoor2:`<svg width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <rect x="10" y="48" width="44" height="8" rx="2.5" fill="var(--a2)"/>
-      <path d="M10 52h44"/>
-      <rect x="14" y="39" width="36" height="8" rx="2.5" fill="var(--a1)"/>
-      <path d="M14 43h36"/>
-      <rect x="20" y="22" width="11" height="16" rx="2" fill="var(--a3)"/>
-      <path d="M25.5 22v16"/>
-      <rect x="33" y="20" width="10" height="18" rx="2" fill="var(--pop)"/>
-      <path d="M38 20v18"/>
-      <path d="M38 20v-5l2.5 1.8L43 15v5" fill="var(--a1)"/>
-      <circle cx="15" cy="17" r="2.5" fill="var(--a1)" stroke="none"/>
-      <path d="M49 20l1.5-4 1.5 4 4 1.5-4 1.5-1.5 4-1.5-4-4-1.5 4-1.5z" fill="var(--a2)" stroke="none"/>
-      <circle cx="42" cy="57" r="3.2"/>
-      <circle cx="52" cy="57" r="3.2"/>
-      <path d="M45 57h4M38.8 57h-.8"/>
-    </svg>`,
-    sitesHeader:`<svg width="46" height="46" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M4 55h56"/>
-      <path d="M30 19h8l3 4h13a3 3 0 0 1 3 3v23H30z" fill="var(--a2)"/>
-      <path d="M30 26h27"/>
-      <rect x="10" y="26" width="20" height="24" rx="2" fill="var(--surface)"/>
-      <path d="M10 32h20M14 36h12M14 41h14M14 46h10"/>
-      <path d="M45 40h8v10a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2z" fill="var(--a3)"/>
-      <rect x="46" y="36" width="6" height="4" rx="1" fill="var(--surface2)"/>
-      <path d="M48 36C52 27 57 21 61 17c-1 6-4 12-10 17" fill="var(--pop)"/>
-      <path d="M16 12l1.5-4 1.5 4 4 1.5-4 1.5-1.5 4-1.5-4-4-1.5 4-1.5z" fill="var(--a1)" stroke="none"/>
-    </svg>`,
-    siteDetailHeader:`<svg width="46" height="46" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M10 18h22v28c-8 2-15 2-22 0z" fill="var(--surface)"/>
-      <path d="M54 18H32v28c8 2 15 2 22 0z" fill="var(--surface)"/>
-      <path d="M32 18v30"/>
-      <path d="M15 26h12M15 32h10M15 38h12M37 26h12M37 32h9M37 38h12"/>
-      <path d="M32 14v12l-3-2-3 2V14z" fill="var(--a1)"/>
-      <path d="M44 50l10-10 4 4-10 10-5 1z" fill="var(--pop)"/>
-      <path d="M44 50l-1 5 5-1"/>
-      <path d="M54 40l4 4"/>
-      <circle cx="16" cy="48" r="2" fill="var(--a3)" stroke="none"/>
-      <path d="M16 10l1.5-4 1.5 4 4 1.5-4 1.5-1.5 4-1.5-4-4-1.5 4-1.5z" fill="var(--a2)" stroke="none"/>
-    </svg>`,
-    sectionHeader:`<svg width="46" height="46" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M14 8h28l8 8v38H14z" fill="var(--surface)"/>
-      <path d="M42 8v8h8"/>
-      <path d="M22 24h16M22 31h20M22 38h12"/>
-      <path d="M24 12v10a4 4 0 0 0 8 0V14a2.5 2.5 0 0 0-5 0v10a6 6 0 0 0 12 0V12"/>
-      <circle cx="46" cy="47" r="7" fill="var(--a3)"/>
-      <path d="M43 47l2 2 4-4" stroke="var(--surface)" stroke-width="2.3"/>
-      <path d="M10 16l1.5-4 1.5 4 4 1.5-4 1.5-1.5 4-1.5-4-4-1.5 4-1.5z" fill="var(--a1)" stroke="none"/>
-    </svg>`,
-    taskStamp:`<svg width="38" height="38" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M15 29l-4 13 7-3 3 7 5-14" fill="var(--a2)"/>
-      <path d="M33 29l4 13-7-3-3 7-5-14" fill="var(--a1)"/>
-      <path d="M24 7c3 0 5 2 6 4 3-1 6 1 7 4 3 1 4 4 3 7 2 2 1 6-1 8 1 3-1 6-4 7-1 3-4 4-7 3-2 2-6 2-8 0-3 1-6 0-7-3-3-1-5-4-4-7-2-2-3-6-1-8-1-3 0-6 3-7 1-3 4-5 7-4 2-2 4-4 6-4z" fill="var(--a1)"/>
-      <circle cx="24" cy="22" r="8.5" fill="var(--surface2)"/>
-      <path d="M20 22l2.8 2.8L29 19" stroke="var(--a2)" stroke-width="2.6"/>
-      <path d="M24 31l1-2 1 2 2 1-2 1-1 2-1-2-2-1 2-1z" fill="var(--pop)" stroke="none"/>
-    </svg>`,
-    taskFlourish:`<svg width="24" height="24" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M8 8l11 11-4 5-6-4z" fill="var(--surface2)"/>
-      <path d="M8 8l7 14"/>
-      <circle cx="13" cy="15" r="1.3" fill="var(--ink)" stroke="none"/>
-      <path d="M25 17c2.5 3.5 4 6 4 7.6a4 4 0 0 1-8 0c0-1.6 1.5-4.1 4-7.6z" fill="var(--a1)"/>
-      <path d="M27 6l1-3 1 3 3 1-3 1-1 3-1-3-3-1 3-1z" fill="var(--a2)" stroke="none"/>
-    </svg>`,
-    libraryHeader:`<svg width="46" height="46" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
-      <rect x="11" y="28" width="8" height="24" rx="1.5" fill="var(--a1)"/>
-      <rect x="20" y="22" width="7" height="30" rx="1.5" fill="var(--a3)"/>
-      <rect x="28" y="30" width="9" height="22" rx="1.5" fill="var(--a2)"/>
-      <g transform="rotate(12 43 42)"><rect x="39" y="24" width="7" height="28" rx="1.5" fill="var(--pop)"/><path d="M42.5 28v20"/></g>
-      <path d="M8 52h46"/>
-      <path d="M53 52v-9"/>
-      <path d="M53 46c-5-1-7-4-6-8 4 1 6 4 6 8z" fill="var(--a3)"/>
-      <path d="M53 43c5-1 7-4 6-8-4 1-6 4-6 8z" fill="var(--pop)"/>
-      <path d="M50 52h6l-1-6h-4z" fill="var(--a1)"/>
-      <path d="M20 14l1.5-4 1.5 4 4 1.5-4 1.5-1.5 4-1.5-4-4-1.5 4-1.5z" fill="var(--a2)" stroke="none"/>
-    </svg>`,
-    empty:`<svg width="56" height="56" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <ellipse cx="32" cy="52" rx="16" ry="4" fill="var(--surface2)"/>
-      <g transform="rotate(-18 24 38)">
-        <rect x="14" y="28" width="18" height="18" rx="4" fill="var(--surface)"/>
-        <rect x="30" y="31" width="7" height="6" rx="2" fill="var(--a2)"/>
-        <path d="M18 34h10"/>
-      </g>
-      <path d="M31 40c6-10 14-16 22-19-2 8-7 15-15 20" fill="var(--pop)"/>
-      <path d="M31 40l15-12"/>
-      <path d="M52 10l1.5-4 1.5 4 4 1.5-4 1.5-1.5 4-1.5-4-4-1.5 4-1.5z" fill="var(--a1)" stroke="none"/>
-    </svg>`,
-    stickerHeader:`<svg width="46" height="46" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
-      <g transform="rotate(-5 32 32)">
-        <rect x="11" y="9" width="42" height="46" rx="5" fill="var(--surface)"/>
-        <circle cx="24" cy="24" r="7.5" fill="var(--a1)"/>
-        <path d="M24 18l1.8 4.2 4.2 1.8-4.2 1.8L24 30l-1.8-4.2L18 24l4.2-1.8z" fill="var(--surface)"/>
-        <circle cx="42" cy="21" r="6.5" fill="var(--a2)"/>
-        <path d="M44 17a4 4 0 1 0 3 7 3.5 3.5 0 0 1-3-7z" fill="var(--surface)"/>
-        <circle cx="24" cy="43" r="7.5" fill="var(--a3)"/>
-        <path d="M24 38c2 2 2 5 0 7-2-2-2-5 0-7z" fill="var(--surface)"/>
-        <circle cx="42" cy="41" r="7" fill="var(--pop)"/>
-        <path d="M39 41l2 2 4-4" stroke="var(--surface)" stroke-width="2.2"/>
-      </g>
-      <path d="M48 8l3 8 8 3-8 3-3 8-3-8-8-3 8-3z" fill="var(--pop)" stroke="var(--surface)" stroke-width="4"/>
-      <path d="M48 8l3 8 8 3-8 3-3 8-3-8-8-3 8-3z" fill="var(--pop)"/>
-      <circle cx="10" cy="46" r="2" fill="var(--a2)" stroke="none"/>
-    </svg>`
-  },
-  botanical:{
-    homeHero:`<svg width="96" height="96" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M60 102V34"/>
-      <path d="M60 82c-16-2-26-14-24-28 14 2 24 12 24 28z" fill="var(--a3)"/>
-      <path d="M60 66c16-2 26-14 24-28-14 2-24 12-24 28z" fill="var(--a2)"/>
-      <path d="M60 48c-14-3-22-14-19-26 12 3 19 12 19 26z" fill="var(--pop)"/>
-      <circle cx="60" cy="24" r="7" fill="var(--a1)"/>
-      <circle cx="32" cy="30" r="3" fill="var(--a1)" stroke="none"/>
-      <circle cx="88" cy="84" r="3.5" fill="var(--pop)" stroke="none"/>
-    </svg>`,
-    homeDoor1:`<svg width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M32 44V18"/>
-      <path d="M32 34c-8-1-12-5-11-11 6 1 10 5 11 11z" fill="var(--a3)"/>
-      <path d="M32 28c8-1 12-5 11-11-6 1-10 5-11 11z" fill="var(--a2)"/>
-      <path d="M32 20c-3-3-3-7 0-10 3 3 3 7 0 10z" fill="var(--pop)"/>
-      <path d="M21 44h22l-3 14H24z" fill="var(--a1)"/>
-      <rect x="18" y="40" width="28" height="6" rx="2" fill="var(--surface2)"/>
-      <path d="M34 30l8 3"/>
-      <rect x="40" y="30" width="13" height="16" rx="3" fill="var(--surface)"/>
-      <path d="M44 35h5M44 39h5M44 43h3"/>
-      <path d="M22 18l1.5-4 1.5 4 4 1.5-4 1.5-1.5 4-1.5-4-4-1.5 4-1.5z" fill="var(--a2)" stroke="none"/>
-    </svg>`,
-    homeDoor2:`<svg width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <rect x="10" y="46" width="44" height="9" rx="2.5" fill="var(--a1)"/>
-      <path d="M10 50.5h44"/>
-      <rect x="14" y="37" width="36" height="9" rx="2.5" fill="var(--a2)"/>
-      <path d="M14 41.5h36"/>
-      <rect x="9" y="28" width="42" height="9" rx="2.5" fill="var(--a3)"/>
-      <path d="M9 32.5h42"/>
-      <path d="M52 46c6-8 5-17 1-24"/>
-      <path d="M53 40c-5 0-8-3-8-8 5 0 8 3 8 8z" fill="var(--a3)"/>
-      <path d="M53 34c5 0 8-3 8-8-5 0-8 3-8 8z" fill="var(--pop)"/>
-      <path d="M54 27c-4-1-6-4-5-8 4 1 6 4 5 8z" fill="var(--a2)"/>
-      <circle cx="19" cy="22" r="4" fill="var(--pop)"/>
-      <path d="M19 18c0-4 3-7 7-7-1 4-4 7-7 7z" fill="var(--a1)"/>
-      <circle cx="15" cy="15" r="2" fill="var(--a2)" stroke="none"/>
-    </svg>`,
-    sitesHeader:`<svg width="46" height="46" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M6 53h52"/>
-      <path d="M9 42h12l-2 11H11z" fill="var(--a1)"/>
-      <path d="M15 42V28"/>
-      <path d="M15 34c-6 0-9-3-9-8 5 0 9 3 9 8z" fill="var(--a3)"/>
-      <path d="M15 30c6 0 9-3 9-8-5 0-9 3-9 8z" fill="var(--a2)"/>
-      <path d="M25 38h16l-3 15H28z" fill="var(--a3)"/>
-      <path d="M33 38V20"/>
-      <path d="M33 28c-8-1-12-5-11-11 6 1 10 5 11 11z" fill="var(--a2)"/>
-      <path d="M33 24c8-1 12-5 11-11-6 1-10 5-11 11z" fill="var(--pop)"/>
-      <circle cx="33" cy="16" r="4" fill="var(--a1)"/>
-      <path d="M45 43h10l-2 10H47z" fill="var(--a2)"/>
-      <path d="M50 43c0-4 2-7 5-8 0 4-2 7-5 8z" fill="var(--a3)"/>
-      <path d="M50 38c-4 0-6-2-6-5 3 0 5 2 5 5z" fill="var(--pop)"/>
-      <path d="M8 8c0 6 0 11 3 16"/>
-      <path d="M10 13c-3 0-5-2-5-5 3 0 5 2 5 5z" fill="var(--a3)"/>
-      <path d="M11 18c3 0 5-2 5-5-3 0-5 2-5 5z" fill="var(--a2)"/>
-    </svg>`,
-    siteDetailHeader:`<svg width="46" height="46" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M32 10a22 22 0 0 1 22 22"/>
-      <path d="M32 54a22 22 0 0 1-22-22"/>
-      <path d="M17 16c-6-1-10-5-9-11 6 1 10 5 9 11z" fill="var(--a3)"/>
-      <path d="M11 28c-6 1-11-2-12-8 6-1 11 2 12 8z" fill="var(--a2)"/>
-      <path d="M12 40c-5 2-11 0-13-5 5-2 10 0 13 5z" fill="var(--a3)"/>
-      <path d="M20 49c-3 5-8 7-13 5 2-5 7-7 13-5z" fill="var(--pop)"/>
-      <path d="M47 16c6-1 10-5 9-11-6 1-10 5-9 11z" fill="var(--a2)"/>
-      <path d="M53 28c6 1 11-2 12-8-6-1-11 2-12 8z" fill="var(--a3)"/>
-      <path d="M52 40c5 2 11 0 13-5-5-2-10 0-13 5z" fill="var(--pop)"/>
-      <path d="M44 49c3 5 8 7 13 5-2-5-7-7-13-5z" fill="var(--a3)"/>
-      <circle cx="18" cy="23" r="2.5" fill="var(--a1)" stroke="none"/>
-      <circle cx="46" cy="23" r="2.5" fill="var(--a1)" stroke="none"/>
-      <circle cx="18" cy="37" r="2" fill="var(--a1)" stroke="none"/>
-      <circle cx="46" cy="37" r="2" fill="var(--a1)" stroke="none"/>
-      <path d="M32 22v-6"/>
-      <rect x="24" y="28" width="16" height="12" rx="2.5" fill="var(--surface)"/>
-      <path d="M28 32h8M28 36h5"/>
-      <path d="M32 40l-4 5M32 40l4 5"/>
-    </svg>`,
-    sectionHeader:`<svg width="46" height="46" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M8 55C20 42 32 28 56 10"/>
-      <path d="M22 42c-7-2-10-7-8-14 6 2 9 7 8 14z" fill="var(--a3)"/>
-      <path d="M28 35c7 1 11-2 12-9-6-1-11 2-12 9z" fill="var(--pop)"/>
-      <path d="M38 26c-6-2-8-7-6-13 5 2 8 7 6 13z" fill="var(--a2)"/>
-      <path d="M44 20c6 1 10-2 11-8-6-1-10 2-11 8z" fill="var(--a3)"/>
-      <path d="M52 12l-2 6"/>
-      <path d="M52 28v6"/>
-      <rect x="45" y="34" width="14" height="16" rx="2.5" fill="var(--surface)"/>
-      <path d="M49 40l2 2 4-4"/>
-      <path d="M49 46h6"/>
-      <circle cx="34" cy="12" r="2.5" fill="var(--a1)" stroke="none"/>
-      <circle cx="15" cy="50" r="2" fill="var(--a2)" stroke="none"/>
-    </svg>`,
-    taskStamp:`<svg width="38" height="38" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="24" cy="23" r="15" fill="var(--surface2)"/>
-      <ellipse cx="24" cy="12" rx="4.5" ry="6" fill="var(--a1)"/>
-      <ellipse cx="24" cy="12" rx="4.5" ry="6" fill="var(--a2)" transform="rotate(45 24 23)"/>
-      <ellipse cx="24" cy="12" rx="4.5" ry="6" fill="var(--a1)" transform="rotate(90 24 23)"/>
-      <ellipse cx="24" cy="12" rx="4.5" ry="6" fill="var(--a2)" transform="rotate(135 24 23)"/>
-      <ellipse cx="24" cy="12" rx="4.5" ry="6" fill="var(--a1)" transform="rotate(180 24 23)"/>
-      <ellipse cx="24" cy="12" rx="4.5" ry="6" fill="var(--a2)" transform="rotate(225 24 23)"/>
-      <ellipse cx="24" cy="12" rx="4.5" ry="6" fill="var(--a1)" transform="rotate(270 24 23)"/>
-      <ellipse cx="24" cy="12" rx="4.5" ry="6" fill="var(--a2)" transform="rotate(315 24 23)"/>
-      <circle cx="24" cy="23" r="5" fill="var(--pop)"/>
-      <path d="M24 38c-8 1-12-3-12-9 5 1 9 4 12 9z" fill="var(--a3)"/>
-      <path d="M24 38c8 1 12-3 12-9-5 1-9 4-12 9z" fill="var(--a3)"/>
-      <circle cx="13" cy="12" r="2" fill="var(--a1)" stroke="none"/>
-      <circle cx="35" cy="12" r="2" fill="var(--pop)" stroke="none"/>
-    </svg>`,
-    taskFlourish:`<svg width="24" height="24" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M6 26C12 18 19 12 28 8"/>
-      <path d="M12 21C8 17 8 12 12 8c4 3 4 8 0 13z" fill="var(--a3)"/>
-      <path d="M17 15c4 0 7-3 8-8-4 0-7 3-8 8z" fill="var(--a2)"/>
-      <circle cx="25" cy="8" r="3.5" fill="var(--a1)"/>
-      <circle cx="21" cy="18" r="2" fill="var(--pop)" stroke="none"/>
-    </svg>`,
-    libraryHeader:`<svg width="46" height="46" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
-      <rect x="8" y="26" width="8" height="24" rx="1.5" fill="var(--a1)"/>
-      <rect x="17" y="20" width="7" height="30" rx="1.5" fill="var(--a2)"/>
-      <rect x="25" y="28" width="9" height="22" rx="1.5" fill="var(--a3)"/>
-      <g transform="rotate(10 39 40)"><rect x="35" y="22" width="7" height="28" rx="1.5" fill="var(--pop)"/></g>
-      <path d="M6 50h52"/>
-      <path d="M52 50V36"/>
-      <path d="M52 42c-6-1-9-4-8-10 5 1 8 4 8 10z" fill="var(--a3)"/>
-      <path d="M52 38c6-1 9-4 8-10-5 1-8 4-8 10z" fill="var(--a2)"/>
-      <path d="M49 50h6l-1-8h-4z" fill="var(--a1)"/>
-      <path d="M53 50c0 4-1 7-4 9"/>
-      <path d="M51 54c-3 0-5-2-5-5 3 0 5 2 5 5z" fill="var(--pop)"/>
-      <path d="M14 13l1.5-4 1.5 4 4 1.5-4 1.5-1.5 4-1.5-4-4-1.5 4-1.5z" fill="var(--a3)" stroke="none"/>
-    </svg>`,
-    empty:`<svg width="56" height="56" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M12 50c8-6 32-6 40 0v4H12z" fill="var(--surface2)"/>
-      <path d="M32 50V28"/>
-      <path d="M32 40c-8-1-12-5-11-11 6 1 10 5 11 11z" fill="var(--a3)"/>
-      <path d="M32 34c8-1 12-5 11-11-6 1-10 5-11 11z" fill="var(--pop)"/>
-      <path d="M32 26c-2-3-2-6 0-8 2 2 2 5 0 8z" fill="var(--a2)"/>
-      <path d="M46 16c2 3 3 5 3 6.5a3 3 0 0 1-6 0c0-1.5 1-3.5 3-6.5z" fill="var(--a1)"/>
-      <path d="M14 24c4 4 6 8 6 12" stroke-dasharray="3 5"/>
-      <circle cx="48" cy="42" r="2" fill="var(--a2)" stroke="none"/>
-    </svg>`,
-    stickerHeader:`<svg width="46" height="46" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
-      <g transform="rotate(-5 32 32)">
-        <rect x="11" y="9" width="42" height="46" rx="5" fill="var(--surface)"/>
-        <circle cx="23" cy="23" r="7.5" fill="var(--a3)"/>
-        <path d="M23 29c-5-2-7-6-5-11 5 2 7 6 5 11z" fill="var(--surface)"/>
-        <circle cx="42" cy="21" r="6.5" fill="var(--a1)"/>
-        <circle cx="42" cy="21" r="2.5" fill="var(--pop)"/>
-        <circle cx="23" cy="43" r="7.5" fill="var(--a2)"/>
-        <path d="M19 43c2-4 6-4 8 0-2 4-6 4-8 0z" fill="var(--surface)"/>
-        <circle cx="42" cy="41" r="7" fill="var(--pop)"/>
-        <path d="M42 36c3 2 3 6 0 10-3-4-3-8 0-10z" fill="var(--a3)"/>
-      </g>
-      <path d="M58 8c-8 0-13 5-13 12 8 0 13-5 13-12z" fill="var(--a3)" stroke="var(--surface)" stroke-width="4"/>
-      <path d="M58 8c-8 0-13 5-13 12 8 0 13-5 13-12z" fill="var(--a3)"/>
-      <path d="M45 20l10-9"/>
-      <circle cx="10" cy="46" r="2" fill="var(--a2)" stroke="none"/>
-    </svg>`
-  },
-  celestial:{
-    homeHero:`<svg width="96" height="96" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M72 24a34 34 0 1 0 24 58A28 28 0 0 1 72 24z" fill="var(--pop)"/>
-      <path d="M34 26l4-10 4 10 10 4-10 4-4 10-4-10-10-4 10-4z" fill="var(--a1)"/>
-      <path d="M88 32l2.5-6 2.5 6 6 2.5-6 2.5-2.5 6-2.5-6-6-2.5 6-2.5z" fill="var(--a2)"/>
-      <circle cx="28" cy="76" r="3.5" fill="var(--a3)" stroke="none"/>
-    </svg>`,
-    homeDoor1:`<svg width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <g transform="rotate(-28 30 34)">
-        <rect x="12" y="28" width="30" height="11" rx="5.5" fill="var(--a2)"/>
-        <rect x="40" y="25" width="9" height="17" rx="4" fill="var(--a3)"/>
-        <path d="M16 33h20"/>
-      </g>
-      <path d="M28 40l-7 16M34 40l7 16M31 47v9"/>
-      <rect x="38" y="40" width="18" height="16" rx="3" fill="var(--surface)"/>
-      <path d="M43 45l1.5-3 1.5 3 3 1.5-3 1.5-1.5 3-1.5-3-3-1.5 3-1.5z" fill="var(--pop)"/>
-      <path d="M48 51h5M43 51h2"/>
-      <path d="M50 12l2-5 2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="var(--a1)" stroke="none"/>
-      <circle cx="12" cy="18" r="2" fill="var(--a3)" stroke="none"/>
-    </svg>`,
-    homeDoor2:`<svg width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M8 38c8-4 16-4 24 0 8-4 16-4 24 0v14c-8-4-16-4-24 0-8-4-16-4-24 0z" fill="var(--surface)"/>
-      <path d="M32 38v14M14 42c5-2 10-2 14 0M36 42c5-2 10-2 14 0"/>
-      <path d="M20 20l2.5 6 6 2.5-6 2.5L20 37l-2.5-6-6-2.5 6-2.5z" fill="var(--pop)"/>
-      <path d="M42 14l1.8 4.2 4.2 1.8-4.2 1.8L42 26l-1.8-4.2L36 20l4.2-1.8z" fill="var(--a2)"/>
-      <path d="M24 30l8-6 10 4 6-8" stroke-dasharray="2 4"/>
-      <circle cx="24" cy="30" r="1.8" fill="var(--a1)" stroke="none"/>
-      <circle cx="32" cy="24" r="2" fill="var(--a1)" stroke="none"/>
-      <circle cx="42" cy="28" r="1.8" fill="var(--a1)" stroke="none"/>
-      <circle cx="48" cy="20" r="2" fill="var(--a1)" stroke="none"/>
-      <circle cx="13" cy="14" r="1.5" fill="var(--a3)" stroke="none"/>
-    </svg>`,
-    sitesHeader:`<svg width="46" height="46" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
-      <ellipse cx="32" cy="32" rx="24" ry="9" transform="rotate(-25 32 32)"/>
-      <ellipse cx="32" cy="32" rx="17" ry="23" transform="rotate(25 32 32)"/>
-      <circle cx="32" cy="32" r="7" fill="var(--pop)"/>
-      <ellipse cx="32" cy="32" rx="12" ry="4" transform="rotate(-20 32 32)"/>
-      <circle cx="50" cy="18" r="3.5" fill="var(--a1)"/>
-      <circle cx="14" cy="45" r="3" fill="var(--a2)"/>
-      <circle cx="24" cy="13" r="2.5" fill="var(--a3)"/>
-      <circle cx="47" cy="46" r="2" fill="var(--a3)"/>
-      <path d="M45 16l1.5-3 1.5 3 3 1.5-3 1.5-1.5 3-1.5-3-3-1.5 3-1.5z" fill="var(--a2)" stroke="none"/>
-      <circle cx="32" cy="32" r="2.5" fill="var(--a1)" stroke="none"/>
-      <circle cx="10" cy="12" r="1.5" fill="var(--a1)" stroke="none"/>
-    </svg>`,
-    siteDetailHeader:`<svg width="46" height="46" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="32" cy="34" r="21" fill="var(--surface2)"/>
-      <circle cx="32" cy="34" r="16"/>
-      <path d="M32 8v4M32 56v4M6 34h4M54 34h4M13 15l3 3M51 53l-3-3M51 15l-3 3M13 53l3-3"/>
-      <path d="M22 38l8-10 10 4 4-8" stroke-dasharray="2 4"/>
-      <circle cx="22" cy="38" r="1.8" fill="var(--a1)" stroke="none"/>
-      <circle cx="30" cy="28" r="2" fill="var(--a2)" stroke="none"/>
-      <circle cx="40" cy="32" r="1.8" fill="var(--a1)" stroke="none"/>
-      <circle cx="44" cy="24" r="2" fill="var(--a3)" stroke="none"/>
-      <path d="M42 42a7 7 0 1 0 5 12 6 6 0 0 1-5-12z" fill="var(--pop)"/>
-      <path d="M20 20l1.5-3 1.5 3 3 1.5-3 1.5-1.5 3-1.5-3-3-1.5 3-1.5z" fill="var(--a1)" stroke="none"/>
-      <circle cx="32" cy="6" r="3"/>
-    </svg>`,
-    sectionHeader:`<svg width="46" height="46" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M10 46l10-12 12 4 8-14 12 6" stroke-dasharray="2 5"/>
-      <circle cx="10" cy="46" r="2.5" fill="var(--a1)"/>
-      <circle cx="20" cy="34" r="2" fill="var(--a2)"/>
-      <circle cx="32" cy="38" r="2.5" fill="var(--a1)"/>
-      <circle cx="40" cy="24" r="2" fill="var(--a2)"/>
-      <circle cx="52" cy="30" r="2.5" fill="var(--a3)"/>
-      <path d="M48 10l2.5 6 6 2.5-6 2.5-2.5 6-2.5-6-6-2.5 6-2.5z" fill="var(--pop)"/>
-      <path d="M16 14a8 8 0 1 0 6 13 7 7 0 0 1-6-13z" fill="var(--a3)"/>
-      <circle cx="54" cy="48" r="3"/>
-      <path d="M51 48h6M54 45v6"/>
-      <circle cx="8" cy="10" r="1.5" fill="var(--a2)" stroke="none"/>
-      <circle cx="24" cy="8" r="1.5" fill="var(--a1)" stroke="none"/>
-    </svg>`,
-    taskStamp:`<svg width="38" height="38" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M18 30l-4 14 8-4 4 8 4-14" fill="var(--a2)"/>
-      <path d="M30 30l4 14 4-8 8 4-4-14" fill="var(--a1)"/>
-      <circle cx="24" cy="22" r="15" fill="var(--surface2)"/>
-      <circle cx="24" cy="22" r="11"/>
-      <path d="M24 13l2.6 6 6.4.8-4.7 4.4 1.1 6.3-5.4-3-5.4 3 1.1-6.3L15 20l6.4-.8z" fill="var(--pop)"/>
-      <path d="M13 22a11 11 0 0 1 22 0" stroke-dasharray="2 4"/>
-      <circle cx="35" cy="13" r="2" fill="var(--a3)" stroke="none"/>
-      <circle cx="24" cy="22" r="2" fill="var(--a1)" stroke="none"/>
-    </svg>`,
-    taskFlourish:`<svg width="24" height="24" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M18 6l2.5 6 6 2.5-6 2.5-2.5 6-2.5-6-6-2.5 6-2.5z" fill="var(--pop)"/>
-      <path d="M25 18a7 7 0 1 0 5 12 6 6 0 0 1-5-12z" fill="var(--a2)"/>
-      <circle cx="10" cy="24" r="1.5" fill="var(--a1)" stroke="none"/>
-      <circle cx="28" cy="8" r="1.5" fill="var(--a3)" stroke="none"/>
-      <circle cx="7" cy="8" r="1" fill="var(--a2)" stroke="none"/>
-    </svg>`,
-    libraryHeader:`<svg width="46" height="46" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
-      <rect x="10" y="26" width="8" height="24" rx="1.5" fill="var(--a2)"/>
-      <rect x="19" y="20" width="7" height="30" rx="1.5" fill="var(--a3)"/>
-      <rect x="27" y="28" width="9" height="22" rx="1.5" fill="var(--a1)"/>
-      <g transform="rotate(10 40 40)"><rect x="36" y="22" width="7" height="28" rx="1.5" fill="var(--pop)"/></g>
-      <path d="M6 51h52"/>
-      <path d="M48 10a9 9 0 1 0 6 15 8 8 0 0 1-6-15z" fill="var(--pop)"/>
-      <circle cx="14" cy="12" r="2" fill="var(--a1)" stroke="none"/>
-      <circle cx="24" cy="8" r="1.5" fill="var(--a3)" stroke="none"/>
-      <circle cx="54" cy="20" r="2" fill="var(--a2)" stroke="none"/>
-      <path d="M40 38l1.5-3 1.5 3 3 1.5-3 1.5-1.5 3-1.5-3-3-1.5 3-1.5z" fill="var(--a2)" stroke="none"/>
-      <circle cx="10" cy="44" r="1.5" fill="var(--a3)" stroke="none"/>
-    </svg>`,
-    empty:`<svg width="56" height="56" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M22 22h20v6l3 4v18a4 4 0 0 1-4 4H23a4 4 0 0 1-4-4V32l3-4z" fill="var(--surface)"/>
-      <rect x="21" y="16" width="22" height="7" rx="2" fill="var(--a2)"/>
-      <path d="M32 28l3 7 7 3-7 3-3 7-3-7-7-3 7-3z" fill="var(--pop)"/>
-      <path d="M15 38c-2 3-2 7 0 10M49 38c2 3 2 7 0 10" stroke-dasharray="2 4"/>
-      <circle cx="16" cy="26" r="1.5" fill="var(--a1)" stroke="none"/>
-      <circle cx="48" cy="28" r="2" fill="var(--a3)" stroke="none"/>
-      <path d="M28 54h8"/>
-      <circle cx="12" cy="10" r="1.5" fill="var(--a2)" stroke="none"/>
-      <circle cx="52" cy="50" r="1.5" fill="var(--a1)" stroke="none"/>
-    </svg>`,
-    stickerHeader:`<svg width="46" height="46" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
-      <g transform="rotate(-5 32 32)">
-        <rect x="11" y="9" width="42" height="46" rx="5" fill="var(--surface)"/>
-        <circle cx="23" cy="23" r="7.5" fill="var(--a2)"/>
-        <path d="M25 18a5 5 0 1 0 3 8 4 4 0 0 1-3-8z" fill="var(--surface)"/>
-        <circle cx="42" cy="21" r="6.5" fill="var(--pop)"/>
-        <path d="M42 16l1.5 3.5 3.5 1.5-3.5 1.5-1.5 3.5-1.5-3.5-3.5-1.5 3.5-1.5z" fill="var(--surface)"/>
-        <circle cx="23" cy="43" r="7.5" fill="var(--a3)"/>
-        <circle cx="23" cy="43" r="2.5" fill="var(--surface)"/>
-        <ellipse cx="23" cy="43" rx="6" ry="2" transform="rotate(-20 23 43)" stroke="var(--surface)"/>
-        <circle cx="42" cy="41" r="7" fill="var(--a1)"/>
-        <path d="M42 36l1.5 3.5L47 41l-3.5 1.5L42 46l-1.5-3.5L37 41l3.5-1.5z" fill="var(--surface)"/>
-      </g>
-      <path d="M48 8l3 8 8 3-8 3-3 8-3-8-8-3 8-3z" fill="var(--pop)" stroke="var(--surface)" stroke-width="4"/>
-      <path d="M48 8l3 8 8 3-8 3-3 8-3-8-8-3 8-3z" fill="var(--pop)"/>
-      <circle cx="10" cy="46" r="2" fill="var(--a3)" stroke="none"/>
-    </svg>`
-  }
-};
+/* Sculptural nib & ink-drop monogram (Warm Tile) — also used for favicon.png/.ico */
+const LOGO_MARK=`<svg viewBox="0 0 256 256" fill="none" aria-hidden="true">
+  <rect x="28" y="28" width="208" height="208" rx="58" fill="#231a2e"/>
+  <rect x="18" y="18" width="208" height="208" rx="58" fill="#fffaf0" stroke="#231a2e" stroke-width="10"/>
+  <path d="M54 156C44 106 86 64 146 66c42 2 62 38 48 76-12 32-52 52-96 46" stroke="#8f7bff" stroke-width="18" stroke-linecap="round" opacity=".95"/>
+  <path d="M54 156C44 106 86 64 146 66c42 2 62 38 48 76" stroke="#231a2e" stroke-width="6" stroke-linecap="round"/>
+  <path d="M188 54c8 0 14 7 12 15-2 7-10 11-17 8-7-3-8-12-3-18 2-3 5-5 8-5Z" fill="#25c2a0" stroke="#231a2e" stroke-width="6"/>
+  <g transform="rotate(-24 128 134)">
+    <path d="M128 52l44 80-18 60H102l-18-60Z" fill="#231a2e" stroke="#231a2e" stroke-width="9" stroke-linejoin="round"/>
+    <rect x="100" y="176" width="56" height="22" rx="7" fill="#ffd24a" stroke="#231a2e" stroke-width="8"/>
+    <path d="M128 62v70" stroke="#fffaf0" stroke-width="7" stroke-linecap="round"/>
+    <circle cx="128" cy="134" r="11" fill="#fffaf0"/>
+  </g>
+  <circle cx="92" cy="64" r="16" fill="#ff6b8a" stroke="#231a2e" stroke-width="8"/>
+</svg>`;
 
-/* Detailed spot art, one distinct picture per page, per doodle set.
-   Home hero and the two home doors live in DOODLES above; everything else is here. */
-const SZ={sitesHeader:68,siteDetailHeader:68,sec_threads:68,sec_character:68,sec_oog:68,sec_generic:68,libraryHeader:68,libFolder:68,stickersHeader:68,taskStamp:56,taskFlourish:28,empty_todo:84,empty_waiting:84,empty_done:84,empty_lib:84};
+/* ---------------- editorial doodles: 18 slots x 5 sets ---------------- */
+/* One clean spot-illustration system: 96 grid, 10-14u margins, ink line 2.4,
+   paper fills, one accent subject + at most one supporting prop. */
+
+const SH=(cy=89,rx=30)=>`<ellipse cx="48" cy="${cy}" rx="${rx}" ry="4" fill="var(--surface2)" stroke="none"/>`;
+const SHEET=(x,y,w,h,fold=8)=>`<path d="M${x} ${y}h${w-fold}l${fold} ${fold}v${h-fold}h-${w}z" fill="var(--surface)"/><path d="M${x+w-fold} ${y}v${fold}h${fold}"/>`;
+const LINES=(x,y,w,n=3,gap=8)=>Array.from({length:n},(_,i)=>`<path d="M${x} ${y+i*gap}h${w}" stroke-width="1.7" opacity=".5"/>`).join('');
+const BOOK=(cy=58,w=60,h=20)=>{
+  const l=48-w/2,r=48+w/2;
+  return `<path d="M${l} ${cy+2}C${l+w*.2} ${cy-3} ${48-w*.07} ${cy-3} 48 ${cy+1}V${cy+h}C${48-w*.07} ${cy+h-4} ${l+w*.2} ${cy+h-4} ${l} ${cy+h-2}Z" fill="var(--surface)"/>`
+    +`<path d="M${r} ${cy+2}C${r-w*.2} ${cy-3} ${48+w*.07} ${cy-3} 48 ${cy+1}V${cy+h}C${48+w*.07} ${cy+h-4} ${r-w*.2} ${cy+h-4} ${r} ${cy+h-2}Z" fill="var(--surface)"/>`
+    +`<path d="M48 ${cy+1}v${h-1}"/>`
+    +`<path d="M${l+7} ${cy+6}h${w/2-13}M${r-7} ${cy+6}h-${w/2-13}" stroke-width="1.6" opacity=".4"/>`;
+};
+const VB=(x,base,w,h,c)=>`<rect x="${x}" y="${base-h}" width="${w}" height="${h}" rx="2" fill="${c}"/>`;
+const CHECKLIST=acc=>`<rect x="22" y="10" width="52" height="70" rx="7" fill="var(--surface)"/>`
+  +`<rect x="36" y="6" width="24" height="10" rx="4" fill="var(--a2)"/><circle cx="48" cy="12" r="2" fill="var(--surface2)" stroke="none"/>`
+  +[0,1,2].map(i=>{const y=28+i*16;return `<circle cx="34" cy="${y}" r="4" fill="${i<2?acc:'var(--surface2)'}" stroke="none"/>`
+    +(i<2?`<path d="M32.4 ${y}l1.2 1.3 2.5-2.6" stroke="var(--surface)" stroke-width="1.7"/>`:'')
+    +`<path d="M43 ${y}h19" stroke-width="2" opacity=".45"/>`}).join('');
+const BUBBLES=acc=>`<path d="M11 16h42a6 6 0 0 1 6 6v20a6 6 0 0 1-6 6H32l-9 9v-9H11a6 6 0 0 1-6-6V22a6 6 0 0 1 6-6z" fill="var(--surface)"/>`
+  +`<path d="M14 26h30M14 34h22" stroke-width="2" opacity=".4"/>`
+  +`<path d="M42 32h43a6 6 0 0 1 6 6v18a6 6 0 0 1-6 6H70v8l-8-8H42a6 6 0 0 1-6-6V38a6 6 0 0 1 6-6z" fill="${acc}"/>`
+  +`<path d="M46 44h30M46 52h22" stroke="var(--surface)" stroke-width="2.2" opacity=".9"/>`;
+const PORTRAIT=(head,body)=>`<rect x="18" y="8" width="60" height="76" rx="8" fill="var(--surface)"/>`
+  +`<rect x="24" y="14" width="48" height="64" rx="5" fill="var(--surface2)"/>`
+  +`<circle cx="48" cy="40" r="11" fill="${head}"/>`
+  +`<path d="M32 78c0-13 7-19 16-19s16 6 16 19z" fill="${body}"/>`;
+const FOLDER=acc=>`<rect x="24" y="18" width="48" height="16" fill="var(--surface)"/>`
+  +`<path d="M28 24h40" stroke-width="1.7" opacity=".45"/>`
+  +`<path d="M12 32h26l6 8h40v38a4 4 0 0 1-4 4H16a4 4 0 0 1-4-4z" fill="${acc}"/>`
+  +`<path d="M24 48h48" stroke="var(--surface)" stroke-width="2" opacity=".5"/>`;
+const STICKERS=(motif)=>`<g transform="rotate(-4 48 48)">`
+  +`<rect x="14" y="10" width="66" height="74" rx="8" fill="var(--surface)"/>`
+  +`<path d="M80 60v16a8 8 0 0 1-8 8H62z" fill="var(--surface2)"/>`
+  +`<circle cx="33" cy="30" r="9" fill="var(--a1)"/>`
+  +STAR5(62,30,9,'var(--pop)')
+  +`<rect x="24" y="48" width="18" height="18" rx="4" fill="var(--a3)"/>`
+  +motif
+  +`</g>`;
+const STAMP=motif=>`<circle cx="48" cy="48" r="28" stroke-dasharray="3 5"/>`+motif;
+const TRAY=acc=>`<rect x="26" y="22" width="44" height="34" rx="3" fill="var(--surface)"/>`
+  +`<path d="M34 32h28M34 40h20" stroke-width="2" opacity=".4"/>`
+  +`<path d="M12 50h72l-7 26a6 6 0 0 1-6 4H25a6 6 0 0 1-6-4z" fill="${acc}"/>`
+  +`<path d="M12 58h72" stroke="var(--surface)" stroke-width="2" opacity=".45"/>`;
+const HOURGLASS=(sand,low)=>`<path d="M32 14h32M32 82h32"/>`
+  +`<path d="M36 14c0 18 12 22 12 30s-12 12-12 30M60 14c0 18-12 22-12 30s12 12 12 30" fill="none"/>`
+  +`<path d="M39 20c1 9 5 12 9 15 4-3 8-6 9-15z" fill="${sand}"/>`
+  +`<path d="M39 78c2-8 6-10 9-13 3 3 7 5 9 13z" fill="${low}"/>`;
+const ENVELOPE=acc=>`<rect x="16" y="28" width="64" height="46" rx="4" fill="var(--surface)"/>`
+  +`<path d="M16 32l32 24 32-24M16 70l24-20M80 70L56 50"/>`
+  +`<circle cx="72" cy="68" r="11" fill="${acc}"/>`
+  +`<path d="M67 68l3.2 3.2 7-7" stroke="var(--surface)" stroke-width="2.6"/>`;
+const BOX=acc=>`<rect x="34" y="26" width="14" height="18" rx="1.5" fill="var(--a1)"/>`
+  +`<rect x="52" y="22" width="14" height="22" rx="1.5" fill="var(--a3)"/>`
+  +`<path d="M12 42h72v36a4 4 0 0 1-4 4H16a4 4 0 0 1-4-4z" fill="${acc}"/>`
+  +`<path d="M12 50h72" stroke="var(--surface)" stroke-width="2" opacity=".5"/>`
+  +`<circle cx="48" cy="64" r="5" fill="var(--pop)"/>`;
+
+const QUILL=(x=24,y=78,rot=-8,s=.8,f='var(--pop)')=>`<g transform="translate(${x} ${y}) rotate(${rot}) scale(${s})">`
+  +`<path d="M0 0C16-22 36-48 52-64C48-42 32-16 0 0Z" fill="${f}"/>`
+  +`<path d="M0 0L48-60" stroke-width="2.2"/></g>`;
+const NIB=(x=48,y=48,s=.9,rot=-18,f='var(--a2)')=>`<g transform="translate(${x} ${y}) rotate(${rot}) scale(${s})">`
+  +`<path d="M0-26l15 26-7 18H-8l-7-18z" fill="${f}"/>`
+  +`<rect x="-11" y="16" width="22" height="8" rx="3" fill="var(--pop)"/>`
+  +`<path d="M0-16v16"/><circle cx="0" cy="8" r="3.4" fill="var(--surface)"/></g>`;
+const INKBOTTLE=(x=48,y=52,s=1)=>`<g transform="translate(${x} ${y}) scale(${s}) translate(-48 -52)">`
+  +`<path d="M36 42h24v6l5 7v19a6 6 0 0 1-6 6H37a6 6 0 0 1-6-6V55l5-7z" fill="var(--a2)"/>`
+  +`<rect x="40" y="32" width="16" height="10" rx="2.5" fill="var(--a1)"/>`
+  +`<rect x="42" y="54" width="12" height="16" rx="2" fill="var(--surface)"/>`
+  +`<path d="M45 59h6M45 63h6M45 67h4" stroke-width="1.5"/></g>`;
+const LEAF=(x,y,rot=0,s=1,f='var(--a3)')=>`<g transform="translate(${x} ${y}) rotate(${rot}) scale(${s})">`
+  +`<path d="M0 0C8-9 18-11 28-9C28-1 18 6 0 0Z" fill="${f}"/>`
+  +`<path d="M2 0L24-8" stroke-width="1.4" opacity=".7"/></g>`;
+const SPRIG=(cx=48,base=84,h=48,s=1,rot=0)=>`<g transform="translate(${cx} ${base}) rotate(${rot}) scale(${s})">`
+  +`<path d="M0 0C2-16 0-32 5-${h}" fill="none" stroke="var(--a3)" stroke-width="2.4"/>`
+  +LEAF(2,-13,200,.55)+LEAF(3,-25,-25,.5)+LEAF(4,-36,200,.44)+LEAF(5,-45,-30,.38)+`</g>`;
+const FLOWER=(cx,cy,r=7,f='var(--a1)')=>{let o='';for(let i=0;i<5;i++){const a=(i*72-90)*Math.PI/180;
+  o+=`<circle cx="${(cx+Math.cos(a)*r*1.3).toFixed(1)}" cy="${(cy+Math.sin(a)*r*1.3).toFixed(1)}" r="${(r*.9).toFixed(1)}" fill="${f}" stroke="none"/>`}
+  return o+`<circle cx="${cx}" cy="${cy}" r="${(r*.66).toFixed(1)}" fill="var(--pop)"/>`};
+const POTPLANT=(cx=48,base=84,s=1)=>`<g transform="translate(${cx} ${base}) scale(${s})">`
+  +`<path d="M0-22V-44" stroke-width="2.4"/>`
+  +LEAF(0,-26,200,.5)+LEAF(0,-34,-20,.46)
+  +FLOWER(0,-52,6,'var(--a1)')
+  +`<path d="M-16-20h32l-4 18a4 4 0 0 1-4 2H-8a4 4 0 0 1-4-2z" fill="var(--a1)"/>`
+  +`<rect x="-19" y="-24" width="38" height="7" rx="2.5" fill="var(--a2)"/></g>`;
+const MOON=(cx=48,cy=46,r=22,f='var(--pop)')=>`<path d="M${cx} ${cy-r}A${r} ${r} 0 1 0 ${cx} ${cy+r}A${r*.8} ${r*.8} 0 0 1 ${cx} ${cy-r}Z" fill="${f}"/>`;
+const STAR5=(cx,cy,r=8,f='var(--pop)')=>{let p=[];for(let i=0;i<10;i++){const rr=i%2?r*.45:r,a=(i*36-90)*Math.PI/180;
+  p.push((cx+rr*Math.cos(a)).toFixed(1)+','+(cy+rr*Math.sin(a)).toFixed(1))}return `<polygon points="${p.join(' ')}" fill="${f}"/>`};
+const MUG=(cx=44,base=76,s=1,f='var(--a1)')=>`<g transform="translate(${cx} ${base}) scale(${s}) translate(-44 -76)">`
+  +`<rect x="28" y="42" width="30" height="34" rx="7" fill="${f}"/>`
+  +`<path d="M58 50h4a10 10 0 0 1 0 20h-4" fill="none"/>`
+  +`<path d="M27 42h32" stroke-width="2.4"/>`
+  +`<path d="M35 34c0-5 5-6 5-11M45 34c0-5 5-6 5-11" stroke-width="2" opacity=".8"/></g>`;
+const CAT=(cx=48,base=84,s=1,f='var(--pop)')=>`<g transform="translate(${cx} ${base}) scale(${s})">`
+  +`<path d="M-18 0c-3-16 4-28 18-28s21 12 18 28z" fill="${f}"/>`
+  +`<path d="M-18-2c-8 1-11-5-9-11" fill="none"/>`
+  +`<circle cx="0" cy="-36" r="14" fill="${f}"/>`
+  +`<path d="M-12-44l-4-13 13 6zM12-44l4-13-13 6z" fill="${f}"/>`
+  +`<path d="M-8-38q3 2.6 6 0M2-38q3 2.6 6 0" stroke-width="2" fill="none"/>`
+  +`<path d="M-1-33h2l-1 2z" fill="var(--a1)" stroke="none"/></g>`;
+const HEART=(cx=48,cy=48,s=1,f='var(--a1)')=>`<g transform="translate(${cx} ${cy}) scale(${s})">`
+  +`<path d="M0 10C-20-4-15-19-6.5-19-2-19 0-15 0-12 0-15 2-19 6.5-19 15-19 20-4 0 10Z" fill="${f}"/></g>`;
+const SHELL=(cx=48,base=80,s=1,f='var(--a1)')=>`<g transform="translate(${cx} ${base}) scale(${s})">`
+  +`<path d="M0 0C-16 0-25-12-23-28c1-7 5-12 10-15l4 10 5-13 4 13 5-13 3 10c6 3 10 8 11 15 2 16-7 28-23 28z" fill="${f}"/>`
+  +`<path d="M0-3v-26M-10-5l-4-22M10-5l4-22" stroke-width="1.5" opacity=".7"/></g>`;
+const LIGHTHOUSE=(cx=48,base=88,s=1)=>`<g transform="translate(${cx} ${base}) scale(${s})">`
+  +`<path d="M-30 0c4-8 12-11 18-8 4-5 13-5 17 0 7-3 15 0 19 8z" fill="var(--surface2)"/>`
+  +`<path d="M-11-8h22l-4-46h-14z" fill="var(--surface)"/>`
+  +`<path d="M-10.5-20h21l-1 8h-19zM-8.6-38h17.2l-1 8h-15.2z" fill="var(--a1)"/>`
+  +`<rect x="-8" y="-62" width="16" height="9" rx="2" fill="var(--pop)"/>`
+  +`<path d="M-10-62l10-8 10 8z" fill="var(--a1)"/>`
+  +`<path d="M8-58l14-6M8-54l14 6" stroke-width="2.2" opacity=".7"/></g>`;
+const MESSAGE=(cx=48,base=82,s=1)=>`<g transform="translate(${cx} ${base}) scale(${s}) rotate(-12)">`
+  +`<path d="M-9-34h18v6l4 8v24a6 6 0 0 1-6 6H-7a6 6 0 0 1-6-6V-20l4-8z" fill="var(--a3)"/>`
+  +`<rect x="-6" y="-42" width="12" height="9" rx="2" fill="var(--pop)"/>`
+  +`<rect x="-8" y="-8" width="16" height="20" rx="2" fill="var(--surface)" transform="rotate(-8 0 2)"/>`
+  +`<path d="M-4-2h8M-4 3h8M-4 8h5" stroke-width="1.3"/></g>`;
+
+const SZ={homeHero:96,homeDoor1:64,homeDoor2:64,sitesHeader:68,siteDetailHeader:68,sec_threads:68,sec_character:68,sec_oog:68,sec_generic:68,libraryHeader:68,libFolder:68,stickersHeader:68,taskStamp:56,taskFlourish:28,empty_todo:84,empty_waiting:84,empty_done:84,empty_lib:84};
+const MIXSETS=['inkwell','botanical','celestial','cozy','seaside'];
+const DOODLES={inkwell:{},botanical:{},celestial:{},cozy:{},seaside:{}};
+
 const ART={
 inkwell:{
-  sitesHeader:'<rect x="10" y="26" width="56" height="44" rx="7" fill="var(--a2)"/><rect x="22" y="16" width="56" height="44" rx="7" fill="var(--surface)"/><path d="M22 30h56"/><circle cx="30" cy="23" r="2.2" fill="var(--a1)" stroke="none"/><circle cx="38" cy="23" r="2.2" fill="var(--pop)" stroke="none"/><circle cx="46" cy="23" r="2.2" fill="var(--a3)" stroke="none"/><path d="M32 40h28M32 49h18"/><path d="M58 56l24 10-10 4-4 10z" fill="var(--pop)"/>',
-  siteDetailHeader:'<path d="M12 30a6 6 0 0 1 6-6h20l8 9h32a6 6 0 0 1 6 6v33a6 6 0 0 1-6 6H18a6 6 0 0 1-6-6z" fill="var(--pop)"/><path d="M12 42h72"/><rect x="22" y="50" width="16" height="10" rx="3" fill="var(--a1)"/><rect x="42" y="50" width="16" height="10" rx="3" fill="var(--a2)"/><rect x="62" y="50" width="12" height="10" rx="3" fill="var(--a3)"/><path d="M72 6l2.6 6.4L81 15l-6.4 2.6L72 24l-2.6-6.4L63 15l6.4-2.6z" fill="var(--a1)" stroke="none"/>',
-  sec_threads:'<rect x="26" y="18" width="40" height="9" rx="3" fill="var(--surface)"/><rect x="26" y="69" width="40" height="9" rx="3" fill="var(--surface)"/><rect x="30" y="27" width="32" height="42" fill="var(--a1)"/><path d="M30 35h32M30 43h32M30 51h32M30 59h32" stroke-width="1.8"/><path d="M62 62c14 0 22 8 14 15s-24 6-34 1"/><path d="M82 14L58 38"/><circle cx="84" cy="12" r="3" fill="var(--pop)"/>',
-  sec_character:'<rect x="18" y="12" width="60" height="72" rx="10" fill="var(--surface)"/><rect x="24" y="18" width="48" height="60" rx="6" fill="var(--surface2)"/><circle cx="48" cy="42" r="11" fill="var(--pop)"/><path d="M36 40c0-14 24-14 24 0-5-5-19-5-24 0z" fill="var(--a1)"/><path d="M28 78c2-13 11-19 20-19s18 6 20 19z" fill="var(--a2)"/><path d="M44 45h.01M52 45h.01" stroke-width="3"/><path d="M72 8l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="var(--a3)" stroke="none"/>',
-  sec_oog:'<path d="M10 30h34a8 8 0 0 1 8 8v40a6 6 0 0 0-6-6H10z" fill="var(--surface)"/><path d="M86 30H52a8 8 0 0 0-8 8v40a6 6 0 0 1 6-6h36z" fill="var(--surface2)"/><path d="M18 42h20M18 52h20M18 62h14M58 42h20M58 52h20"/><path d="M58 8c12-3 24 2 28 12-12 3-22 1-30 8z" fill="var(--a1)"/><path d="M56 30L82 14"/>',
-  sec_generic:'<rect x="22" y="12" width="52" height="72" rx="6" fill="var(--a3)"/><rect x="30" y="12" width="44" height="72" rx="6" fill="var(--surface)"/><path d="M40 12v26l6-5 6 5V12" fill="var(--a1)"/><path d="M40 52h24M40 62h24M40 72h14"/>',
-  taskStamp:'<rect x="12" y="12" width="72" height="72" rx="3" fill="var(--surface)" stroke-dasharray="3 5"/><rect x="20" y="20" width="56" height="56" rx="4" fill="var(--surface2)"/><path d="M48 28l15 24-15 16-15-16z" fill="var(--pop)"/><path d="M48 52V40"/><circle cx="48" cy="55" r="2.5" fill="var(--a1)" stroke="none"/><path d="M32 72h32" stroke-width="2"/>',
-  taskFlourish:'<circle cx="48" cy="54" r="28" fill="var(--surface2)"/><path d="M48 54V36M38 18h20M48 18v8"/><path d="M48 54l12 8"/><circle cx="48" cy="54" r="3.5" fill="var(--a1)" stroke="none"/><path d="M70 28l6-6"/>',
-  libraryHeader:'<rect x="12" y="16" width="72" height="66" rx="6" fill="var(--surface)"/><path d="M12 49h72"/><rect x="20" y="24" width="9" height="25" rx="2" fill="var(--a1)"/><rect x="31" y="29" width="9" height="20" rx="2" fill="var(--a2)"/><rect x="42" y="22" width="9" height="27" rx="2" fill="var(--pop)"/><path d="M56 49l8-25 8 3-8 22z" fill="var(--a3)"/><rect x="20" y="57" width="12" height="18" rx="2" fill="var(--a3)"/><rect x="34" y="61" width="12" height="14" rx="2" fill="var(--pop)"/><rect x="52" y="56" width="14" height="19" rx="2" fill="var(--a1)"/>',
-  libFolder:'<rect x="12" y="18" width="72" height="64" rx="8" fill="var(--surface)"/><path d="M12 50h72"/><rect x="33" y="28" width="30" height="12" rx="4" fill="var(--pop)"/><path d="M41 34h14"/><rect x="33" y="60" width="30" height="12" rx="4" fill="var(--a1)"/><path d="M41 66h14"/><path d="M28 18V9h40v9" fill="var(--surface2)"/>',
-  empty_todo:'<path d="M32 58h32l6 24c1 4-2 8-6 8H32c-4 0-7-4-6-8z" fill="var(--surface)"/><rect x="38" y="48" width="20" height="10" rx="3" fill="var(--a2)"/><path d="M48 48C52 34 64 22 80 14c-2 16-10 27-24 34z" fill="var(--pop)"/><path d="M48 50L74 20"/><circle cx="20" cy="30" r="3" fill="var(--a1)" stroke="none"/><path d="M78 68l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="var(--a3)" stroke="none"/>',
-  empty_waiting:'<path d="M28 12h40M28 84h40"/><path d="M32 12c0 22 16 26 16 36S32 62 32 84M64 12c0 22-16 26-16 36s16 14 16 36"/><path d="M36 18c2 10 8 14 12 18 4-4 10-8 12-18z" fill="var(--pop)"/><path d="M40 80c2-8 6-10 8-14 2 4 6 6 8 14z" fill="var(--a1)"/>',
-  empty_done:'<path d="M30 6h13l7 24-9 6z" fill="var(--a1)"/><path d="M66 6H53l-7 24 9 6z" fill="var(--a2)"/><circle cx="48" cy="60" r="24" fill="var(--pop)"/><circle cx="48" cy="60" r="16" fill="var(--surface)"/><path d="M48 51l3.4 6.8 7.6 1-5.5 5.3 1.3 7.5-6.8-3.6-6.8 3.6 1.3-7.5-5.5-5.3 7.6-1z" fill="var(--a2)" stroke-width="1.6"/>',
-  empty_lib:'<path d="M14 42l34 14 34-14v26L48 82 14 68z" fill="var(--surface2)"/><path d="M14 42l34-14 34 14-34 14z" fill="var(--surface)"/><path d="M48 56v26"/><path d="M30 20l3-8 3 8 8 3-8 3-3 8-3-8-8-3z" fill="var(--pop)" stroke="none"/><circle cx="72" cy="24" r="3.5" fill="var(--a1)" stroke="none"/>',
-  stickersHeader:'<rect x="14" y="14" width="64" height="68" rx="8" fill="var(--surface)"/><path d="M56 82l22-26v26z" fill="var(--surface2)"/><path d="M36 28l5 10 11 2-8 8 2 11-10-6-10 6 2-11-8-8 11-2z" fill="var(--pop)"/><circle cx="62" cy="38" r="9" fill="var(--a1)"/><path d="M22 70h26" stroke-dasharray="2 4"/>'
+  homeHero:SH(90,32)+BOOK(64,60,20)+QUILL(28,74,-6,.92,'var(--pop)')+INKBOTTLE(74,58,.68),
+  homeDoor1:CHECKLIST('var(--a2)'),
+  homeDoor2:SH(88,28)+VB(24,84,52,10,'var(--a2)')+VB(30,74,40,10,'var(--a3)')+NIB(52,52,.55,-10),
+  sitesHeader:VB(16,84,12,44,'var(--a2)')+VB(30,84,14,50,'var(--a3)')+VB(46,84,11,38,'var(--a1)')+`<path d="M12 84h50"/>`+QUILL(62,82,-14,.55),
+  siteDetailHeader:BOOK(58,60,20)+`<path d="M62 46v13l-4-3-4 3V46z" fill="var(--a2)"/>`+NIB(74,30,.5,-22),
+  sec_threads:BUBBLES('var(--a2)'),
+  sec_character:PORTRAIT('var(--a1)','var(--a2)'),
+  sec_oog:SHEET(24,12,46,68)+LINES(32,28,30,3)+QUILL(58,78,-6,.6),
+  sec_generic:FOLDER('var(--a2)'),
+  libraryHeader:VB(14,84,12,42,'var(--a2)')+VB(28,84,10,48,'var(--a1)')+VB(40,84,13,36,'var(--a3)')+VB(55,84,10,44,'var(--pop)')+`<path d="M10 84h70"/>`+INKBOTTLE(78,72,.48),
+  libFolder:FOLDER('var(--a2)'),
+  stickersHeader:STICKERS(NIB(64,58,.42,-16)),
+  taskStamp:STAMP(NIB(48,50,.75)),
+  taskFlourish:QUILL(30,76,-8,.9),
+  empty_todo:TRAY('var(--a2)'),
+  empty_waiting:HOURGLASS('var(--pop)','var(--a1)'),
+  empty_done:ENVELOPE('var(--a3)'),
+  empty_lib:BOX('var(--a2)')
 },
 botanical:{
-  sitesHeader:'<path d="M12 84V46L48 14l36 32v38z" fill="var(--surface)"/><path d="M12 46h72M30 31v53M66 31v53M48 14v70"/><path d="M36 84c0-14 6-20 12-24 6 4 12 10 12 24z" fill="var(--a3)"/><circle cx="48" cy="50" r="5" fill="var(--a1)"/>',
-  siteDetailHeader:'<path d="M28 58h40l-5 28H33z" fill="var(--a1)"/><rect x="24" y="52" width="48" height="9" rx="2" fill="var(--pop)"/><path d="M48 52V28"/><path d="M48 42c-14 0-20-8-18-20 12 0 18 8 18 20z" fill="var(--a3)"/><path d="M48 34c12 0 18-8 16-18-11 0-16 7-16 18z" fill="var(--a2)"/>',
-  sec_threads:'<path d="M20 86V12M76 86V12M20 30h56M20 54h56M20 78h56" stroke-width="2"/><path d="M28 84c12-14-8-24 4-36s26-10 16-26" stroke="var(--a3)" stroke-width="3"/><path d="M32 62c-9-3-11-11-7-17 8 2 11 9 7 17z" fill="var(--a3)"/><path d="M46 44c8-2 12-9 9-16-8 1-12 8-9 16z" fill="var(--pop)"/><circle cx="52" cy="20" r="6" fill="var(--a1)"/>',
-  sec_character:'<path d="M48 90V56"/><path d="M48 76c-12 0-18-6-18-14 10 0 18 5 18 14z" fill="var(--a3)"/><g fill="var(--a1)"><ellipse cx="48" cy="17" rx="8" ry="11"/><ellipse cx="48" cy="17" rx="8" ry="11" transform="rotate(72 48 36)"/><ellipse cx="48" cy="17" rx="8" ry="11" transform="rotate(144 48 36)"/><ellipse cx="48" cy="17" rx="8" ry="11" transform="rotate(216 48 36)"/><ellipse cx="48" cy="17" rx="8" ry="11" transform="rotate(288 48 36)"/></g><circle cx="48" cy="36" r="10" fill="var(--pop)"/><path d="M44 34h.01M52 34h.01" stroke-width="3"/><path d="M44 39q4 3 8 0"/>',
-  sec_oog:'<path d="M10 44h34a8 8 0 0 1 8 8v34a6 6 0 0 0-6-6H10z" fill="var(--surface)"/><path d="M86 44H52a8 8 0 0 0-8 8v34a6 6 0 0 1 6-6h36z" fill="var(--surface2)"/><path d="M48 50V16"/><path d="M48 32c-12-1-16-9-14-18 10 1 14 8 14 18z" fill="var(--a3)"/><path d="M48 26c10-1 15-8 13-16-9 1-13 7-13 16z" fill="var(--pop)"/><path d="M18 58h20M18 68h14M58 58h20"/>',
-  sec_generic:'<path d="M48 90C26 72 26 30 48 8c22 22 22 64 0 82z" fill="var(--a3)"/><path d="M48 90V8M48 32l-12 10M48 32l12 10M48 52l-14 12M48 52l14 12"/><circle cx="74" cy="22" r="6" fill="var(--a1)"/>',
-  taskStamp:'<rect x="12" y="12" width="72" height="72" rx="3" fill="var(--surface)" stroke-dasharray="3 5"/><circle cx="48" cy="48" r="23" fill="var(--surface2)"/><path d="M48 70V32"/><path d="M48 56c-12-1-17-8-15-17 10 1 15 8 15 17z" fill="var(--a3)"/><path d="M48 46c10-1 15-8 13-16-9 1-13 7-13 16z" fill="var(--pop)"/>',
-  taskFlourish:'<path d="M48 82V46"/><path d="M48 62c-14 0-22-8-20-20 12 0 20 8 20 20z" fill="var(--a3)"/><path d="M48 52c12 0 18-8 16-18-11 0-16 7-16 18z" fill="var(--pop)"/><path d="M30 84h36"/>',
-  libraryHeader:'<rect x="14" y="12" width="68" height="72" rx="8" fill="var(--surface)"/><rect x="22" y="20" width="52" height="56" rx="4" fill="var(--surface2)"/><path d="M48 70V40"/><circle cx="48" cy="33" r="8" fill="var(--a1)"/><path d="M48 56c-9-1-13-7-11-14 7 1 11 6 11 14z" fill="var(--a3)"/><path d="M48 62c9-1 13-7 11-14-7 1-11 6-11 14z" fill="var(--pop)"/>',
-  libFolder:'<path d="M22 18h52v68H22z" fill="var(--surface)"/><path d="M22 18l8 9h36l8-9" fill="var(--surface2)"/><circle cx="48" cy="56" r="16" fill="var(--pop)"/><path d="M48 66V48"/><path d="M48 58c-6 0-9-3-8-8 5 0 8 3 8 8z" fill="var(--a3)"/><path d="M34 78h28"/>',
-  empty_todo:'<path d="M28 58h40l-5 28H33z" fill="var(--a1)"/><rect x="24" y="52" width="48" height="9" rx="2" fill="var(--pop)"/><path d="M48 52V36"/><path d="M48 44c-8 0-12-5-11-12 7 0 11 5 11 12z" fill="var(--a3)"/><circle cx="72" cy="24" r="3" fill="var(--a2)" stroke="none"/>',
-  empty_waiting:'<path d="M22 44h40v32a8 8 0 0 1-8 8H30a8 8 0 0 1-8-8z" fill="var(--a2)"/><path d="M62 52l20-14v12L62 64" fill="var(--a2)"/><path d="M22 52h-8a8 8 0 0 0 0 14h8"/><path d="M26 44a16 8 0 0 1 32 0"/><path d="M86 58c3 5 3 8 0 10-3-2-3-5 0-10zM78 70c3 5 3 8 0 10-3-2-3-5 0-10z" fill="var(--a3)"/>',
-  empty_done:'<path d="M48 88V54M48 88L34 58M48 88l14-30"/><circle cx="48" cy="44" r="11" fill="var(--a1)"/><circle cx="31" cy="50" r="8" fill="var(--pop)"/><circle cx="65" cy="50" r="8" fill="var(--a2)"/><path d="M38 84h20l-3 7H41z" fill="var(--a3)"/>',
-  empty_lib:'<path d="M30 20h36v8c10 6 12 14 12 26v22a8 8 0 0 1-8 8H26a8 8 0 0 1-8-8V54c0-12 2-20 12-26z" fill="var(--surface)"/><path d="M26 20h44"/><path d="M34 82c0-12 6-18 14-20 8 2 14 8 14 20z" fill="var(--a3)"/><circle cx="48" cy="52" r="5" fill="var(--a1)"/>',
-  stickersHeader:'<rect x="14" y="14" width="64" height="68" rx="8" fill="var(--surface)"/><path d="M56 82l22-26v26z" fill="var(--surface2)"/><path d="M26 56C28 36 40 26 60 24 60 44 48 56 26 56z" fill="var(--a3)"/><path d="M28 54L52 32"/><circle cx="62" cy="64" r="9" fill="var(--a1)"/><circle cx="62" cy="64" r="3.5" fill="var(--pop)"/>'
+  homeHero:SH(90,32)+BOOK(70,60,20)+POTPLANT(32,84,1),
+  homeDoor1:CHECKLIST('var(--a3)'),
+  homeDoor2:SH(88,28)+VB(24,84,52,10,'var(--a3)')+VB(30,74,40,10,'var(--a1)')+POTPLANT(52,64,.55),
+  sitesHeader:VB(16,84,12,44,'var(--a3)')+VB(30,84,14,50,'var(--a1)')+VB(46,84,11,38,'var(--a2)')+`<path d="M12 84h50"/>`+SPRIG(74,84,46,.8),
+  siteDetailHeader:BOOK(58,60,20)+`<path d="M62 46v13l-4-3-4 3V46z" fill="var(--a3)"/>`+LEAF(66,34,-30,.6),
+  sec_threads:BUBBLES('var(--a3)'),
+  sec_character:PORTRAIT('var(--a3)','var(--a1)'),
+  sec_oog:SHEET(24,12,46,68)+LINES(32,28,30,3)+SPRIG(62,80,50,.72),
+  sec_generic:FOLDER('var(--a3)'),
+  libraryHeader:VB(14,84,12,42,'var(--a3)')+VB(28,84,10,48,'var(--a1)')+VB(40,84,13,36,'var(--a2)')+VB(55,84,10,44,'var(--pop)')+`<path d="M10 84h55"/>`+POTPLANT(76,84,.62),
+  libFolder:FOLDER('var(--a3)'),
+  stickersHeader:STICKERS(FLOWER(62,58,7,'var(--a1)')),
+  taskStamp:STAMP(FLOWER(48,50,9,'var(--a3)')),
+  taskFlourish:LEAF(30,66,-35,1.4,'var(--a3)'),
+  empty_todo:TRAY('var(--a3)'),
+  empty_waiting:HOURGLASS('var(--a3)','var(--pop)'),
+  empty_done:ENVELOPE('var(--a3)'),
+  empty_lib:BOX('var(--a3)')
 },
 celestial:{
-  sitesHeader:'<rect x="10" y="14" width="76" height="68" rx="10" fill="var(--surface)"/><path d="M22 64l16-22 18 12 18-24"/><circle cx="22" cy="64" r="5" fill="var(--a1)"/><circle cx="38" cy="42" r="5" fill="var(--pop)"/><circle cx="56" cy="54" r="5" fill="var(--a2)"/><circle cx="74" cy="30" r="5" fill="var(--a3)"/>',
-  siteDetailHeader:'<path d="M14 42l46-18 8 20-46 18z" fill="var(--a2)"/><path d="M60 24l16-6 8 20-16 6z" fill="var(--pop)"/><path d="M38 62l-8 26M50 58l8 30M44 60v28"/><circle cx="22" cy="22" r="3" fill="var(--a1)" stroke="none"/><path d="M80 72l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="var(--a3)" stroke="none"/>',
-  sec_threads:'<path d="M14 72l22-34 22 24 26-44" stroke-dasharray="1 6" stroke-width="3"/><path d="M14 64l2.6 5.4 5.4.8-4 3.8 1 5.4-5-2.7-5 2.7 1-5.4-4-3.8 5.4-.8z" fill="var(--a1)"/><path d="M36 30l2.6 5.4 5.4.8-4 3.8 1 5.4-5-2.7-5 2.7 1-5.4-4-3.8 5.4-.8z" fill="var(--pop)"/><path d="M58 54l2.6 5.4 5.4.8-4 3.8 1 5.4-5-2.7-5 2.7 1-5.4-4-3.8 5.4-.8z" fill="var(--a2)"/><path d="M84 18l3.4 7 7.6 1-5.5 5.3 1.3 7.5-6.8-3.6-6.8 3.6 1.3-7.5-5.5-5.3 7.6-1z" fill="var(--a3)"/>',
-  sec_character:'<path d="M60 8a40 40 0 1 0 26 66A32 32 0 0 1 60 8z" fill="var(--surface2)"/><circle cx="44" cy="52" r="8" fill="var(--pop)"/><path d="M30 80c1-10 7-15 14-15s13 5 14 15z" fill="var(--a2)"/><path d="M70 16l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="var(--a1)" stroke="none"/><circle cx="24" cy="30" r="2.5" fill="var(--a3)" stroke="none"/>',
-  sec_oog:'<path d="M10 56h34a8 8 0 0 1 8 8v24a6 6 0 0 0-6-6H10z" fill="var(--surface)"/><path d="M86 56H52a8 8 0 0 0-8 8v24a6 6 0 0 1 6-6h36z" fill="var(--surface2)"/><path d="M48 14l5 10 11 1.6-8 7.8 2 11-10-5.4-10 5.4 2-11-8-7.8 11-1.6z" fill="var(--pop)" transform="translate(0 0)"/><path d="M22 36l2.4 4.8 5.2.8-3.8 3.6.9 5.2-4.7-2.5-4.7 2.5.9-5.2-3.8-3.6 5.2-.8z" fill="var(--a1)"/><path d="M76 30l2.4 4.8 5.2.8-3.8 3.6.9 5.2-4.7-2.5-4.7 2.5.9-5.2-3.8-3.6 5.2-.8z" fill="var(--a3)"/>',
-  sec_generic:'<path d="M54 42L10 86 52 62z" fill="var(--a2)"/><path d="M62 46L24 88l34-18z" fill="var(--a1)" opacity=".7"/><circle cx="68" cy="30" r="15" fill="var(--pop)"/><circle cx="64" cy="26" r="3" fill="var(--a1)" stroke="none"/>',
-  taskStamp:'<rect x="12" y="12" width="72" height="72" rx="3" fill="var(--surface)" stroke-dasharray="3 5"/><circle cx="48" cy="48" r="23" fill="var(--surface2)"/><path d="M48 28l6 14 15 2-11 10 3 15-13-8-13 8 3-15-11-10 15-2z" fill="var(--pop)"/>',
-  taskFlourish:'<path d="M58 14a34 34 0 1 0 24 56A28 28 0 0 1 58 14z" fill="var(--pop)"/><circle cx="72" cy="28" r="3.5" fill="var(--a1)" stroke="none"/><circle cx="32" cy="22" r="2.5" fill="var(--a3)" stroke="none"/>',
-  libraryHeader:'<path d="M14 84V58a34 34 0 0 1 68 0v26z" fill="var(--surface)"/><path d="M42 26a22 22 0 0 1 12 0v32H42z" fill="var(--a2)"/><path d="M10 84h76"/><path d="M80 10l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="var(--pop)" stroke="none"/><circle cx="18" cy="24" r="3" fill="var(--a1)" stroke="none"/>',
-  libFolder:'<rect x="16" y="22" width="64" height="52" rx="6" fill="var(--surface)"/><ellipse cx="16" cy="48" rx="6" ry="26" fill="var(--surface2)"/><ellipse cx="80" cy="48" rx="6" ry="26" fill="var(--surface2)"/><path d="M30 58l12-12 10 8 14-16" stroke-dasharray="1 5" stroke-width="3"/><circle cx="30" cy="58" r="4" fill="var(--a1)"/><circle cx="66" cy="38" r="5" fill="var(--pop)"/>',
-  empty_todo:'<path d="M60 12a36 36 0 1 0 24 60A30 30 0 0 1 60 12z" fill="var(--pop)"/><path d="M38 52q4 3 8 0"/><path d="M66 18h10l-10 10h10" stroke-width="2"/><circle cx="20" cy="26" r="3" fill="var(--a1)" stroke="none"/>',
-  empty_waiting:'<circle cx="48" cy="48" r="13" fill="var(--a2)"/><ellipse cx="48" cy="48" rx="36" ry="14" transform="rotate(-20 48 48)"/><circle cx="76" cy="38" r="5" fill="var(--pop)"/><circle cx="20" cy="60" r="3" fill="var(--a1)" stroke="none"/>',
-  empty_done:'<path d="M48 10l9.5 21 23 3-17 16 4.5 23L48 59l-20 14 4.5-23-17-16 23-3z" fill="var(--pop)"/><path d="M34 86h28"/>',
-  empty_lib:'<rect x="18" y="14" width="60" height="70" rx="28" fill="var(--surface)"/><path d="M44 30a13 13 0 1 0 13 19 11 11 0 0 1-13-19z" fill="var(--pop)"/><circle cx="60" cy="34" r="2.5" fill="var(--a1)" stroke="none"/><path d="M18 84h60"/>',
-  stickersHeader:'<rect x="14" y="14" width="64" height="68" rx="8" fill="var(--surface)"/><path d="M56 82l22-26v26z" fill="var(--surface2)"/><path d="M34 26l5 11 12 1.6-9 8 2.4 12-10.4-6-10.4 6 2.4-12-9-8 12-1.6z" fill="var(--pop)" transform="translate(4 2) scale(.9)"/><path d="M64 30a11 11 0 1 0 8 17 9 9 0 0 1-8-17z" fill="var(--a2)"/>'
-}};
+  homeHero:SH(90,32)+BOOK(64,60,20)+MOON(70,30,16)+STAR5(28,28,9,'var(--a1)'),
+  homeDoor1:CHECKLIST('var(--a2)'),
+  homeDoor2:SH(88,28)+VB(24,84,52,10,'var(--a2)')+VB(30,74,40,10,'var(--a1)')+MOON(52,50,14),
+  sitesHeader:VB(16,84,12,44,'var(--a2)')+VB(30,84,14,50,'var(--a1)')+VB(46,84,11,38,'var(--a3)')+`<path d="M12 84h50"/>`+STAR5(74,32,11,'var(--pop)'),
+  siteDetailHeader:BOOK(58,60,20)+`<path d="M62 46v13l-4-3-4 3V46z" fill="var(--a2)"/>`+STAR5(74,28,7,'var(--pop)'),
+  sec_threads:BUBBLES('var(--a2)'),
+  sec_character:PORTRAIT('var(--a2)','var(--a1)'),
+  sec_oog:SHEET(24,12,46,68)+LINES(32,28,30,3)+NIB(62,74,.62,-14,'var(--a2)'),
+  sec_generic:FOLDER('var(--a2)'),
+  libraryHeader:VB(14,84,12,42,'var(--a2)')+VB(28,84,10,48,'var(--a1)')+VB(40,84,13,36,'var(--a3)')+VB(55,84,10,44,'var(--pop)')+`<path d="M10 84h55"/>`+MOON(77,52,13),
+  libFolder:FOLDER('var(--a2)'),
+  stickersHeader:STICKERS(STAR5(62,58,8,'var(--a2)')),
+  taskStamp:STAMP(STAR5(48,48,13,'var(--pop)')),
+  taskFlourish:STAR5(48,48,22,'var(--pop)'),
+  empty_todo:TRAY('var(--a2)'),
+  empty_waiting:HOURGLASS('var(--a2)','var(--pop)'),
+  empty_done:ENVELOPE('var(--a3)'),
+  empty_lib:BOX('var(--a2)')
+},
+cozy:{
+  homeHero:SH(90,32)+VB(20,86,44,10,'var(--a1)')+VB(24,76,36,10,'var(--a3)')+CAT(42,66,.78)+MUG(72,66,.65),
+  homeDoor1:CHECKLIST('var(--a1)'),
+  homeDoor2:SH(88,28)+VB(24,84,52,10,'var(--a1)')+VB(30,74,40,10,'var(--a3)')+MUG(52,64,.6),
+  sitesHeader:VB(16,84,12,44,'var(--a1)')+VB(30,84,14,50,'var(--a3)')+VB(46,84,11,38,'var(--a2)')+`<path d="M12 84h50"/>`+MUG(74,84,.6),
+  siteDetailHeader:BOOK(58,60,20)+`<path d="M62 46v13l-4-3-4 3V46z" fill="var(--a1)"/>`+MUG(74,36,.4),
+  sec_threads:BUBBLES('var(--a1)'),
+  sec_character:PORTRAIT('var(--a1)','var(--a3)'),
+  sec_oog:SHEET(24,12,46,68)+LINES(32,28,30,3)+MUG(76,76,.5),
+  sec_generic:FOLDER('var(--a1)'),
+  libraryHeader:VB(14,84,12,42,'var(--a1)')+VB(28,84,10,48,'var(--a3)')+VB(40,84,13,36,'var(--a2)')+VB(55,84,10,44,'var(--pop)')+`<path d="M10 84h55"/>`+MUG(78,84,.55),
+  libFolder:FOLDER('var(--a1)'),
+  stickersHeader:STICKERS(HEART(62,58,.7,'var(--a1)')),
+  taskStamp:STAMP(MUG(48,56,.55)),
+  taskFlourish:HEART(48,46,1.05,'var(--a1)'),
+  empty_todo:TRAY('var(--a1)'),
+  empty_waiting:HOURGLASS('var(--a1)','var(--pop)'),
+  empty_done:ENVELOPE('var(--a3)'),
+  empty_lib:BOX('var(--a1)')
+},
+seaside:{
+  homeHero:SH(90,36)+LIGHTHOUSE(60,88,.9)+SHELL(24,84,.55),
+  homeDoor1:CHECKLIST('var(--a3)'),
+  homeDoor2:SH(88,28)+VB(24,84,52,10,'var(--a2)')+VB(30,74,40,10,'var(--a1)')+SHELL(52,64,.42),
+  sitesHeader:VB(16,84,12,44,'var(--a2)')+VB(30,84,14,50,'var(--a1)')+VB(46,84,11,38,'var(--a3)')+`<path d="M12 84h50"/>`+SHELL(76,84,.5),
+  siteDetailHeader:BOOK(58,60,20)+`<path d="M62 46v13l-4-3-4 3V46z" fill="var(--a3)"/>`+SHELL(74,34,.4),
+  sec_threads:BUBBLES('var(--a3)'),
+  sec_character:PORTRAIT('var(--a3)','var(--a2)'),
+  sec_oog:SHEET(24,12,44,68)+LINES(32,28,28,3)+MESSAGE(74,78,.72),
+  sec_generic:FOLDER('var(--a3)'),
+  libraryHeader:VB(14,84,12,42,'var(--a2)')+VB(28,84,10,48,'var(--a1)')+VB(40,84,13,36,'var(--a3)')+VB(55,84,10,44,'var(--pop)')+`<path d="M10 84h55"/>`+SHELL(78,84,.55),
+  libFolder:FOLDER('var(--a3)'),
+  stickersHeader:STICKERS(SHELL(62,62,.5)),
+  taskStamp:STAMP(SHELL(48,54,.72)),
+  taskFlourish:SHELL(48,64,.8),
+  empty_todo:TRAY('var(--a3)'),
+  empty_waiting:HOURGLASS('var(--a3)','var(--pop)'),
+  empty_done:ENVELOPE('var(--a3)'),
+  empty_lib:BOX('var(--a3)')
+}
+};
+
+/* angular-only fixes: rounded replacements for hard-edged slots, rest of artdef2 untouched */
+const ROUND = {
+  inkwell: {
+    siteDetailHeader: `<path d="M20 20h50a6 6 0 0 1 6 6v44a6 6 0 0 1-6 6H20a6 6 0 0 1-6-6V26a6 6 0 0 1 6-6z" fill="var(--paper)" stroke="currentColor"/><path d="M24 32h42M24 42h34M24 52h38" stroke="var(--a2)" stroke-linecap="round"/><path d="M30 62c8-10 16-10 24 0" stroke="currentColor" stroke-linecap="round" fill="none"/><circle cx="70" cy="70" r="12" fill="var(--pop)" stroke="currentColor"/><path d="M70 64v12M64 70h12" stroke="currentColor" stroke-linecap="round"/>`,
+    libFolder: `<path d="M14 26h24l6 8h38a6 6 0 0 1 6 6v30a6 6 0 0 1-6 6H14a6 6 0 0 1-6-6V32a6 6 0 0 1 6-6z" fill="var(--pop)" stroke="currentColor"/><path d="M22 46h50M22 56h42" stroke="currentColor" stroke-linecap="round" opacity=".7"/>`,
+    stickersHeader: `<path d="M26 16c14-7 30 1 34 15 13-4 27 5 26 19-1 11-10 17-20 16 3 13-8 23-20 20-9-2-14-9-15-17-11 3-21-6-20-18 1-10 8-16 17-16z" fill="var(--pop)" stroke="currentColor"/><path d="M48 34l4 9 10 1-8 7 2 10-8-5-9 5 2-10-8-7 10-1z" fill="var(--paper)" stroke="currentColor" stroke-linejoin="round"/>`
+  },
+  botanical: {
+    siteDetailHeader: `<path d="M22 18h46a8 8 0 0 1 8 8v44a8 8 0 0 1-8 8H22a8 8 0 0 1-8-8V26a8 8 0 0 1 8-8z" fill="var(--paper)" stroke="currentColor"/><path d="M26 34h38M26 44h32" stroke="var(--a3)" stroke-linecap="round"/><path d="M32 68c8-20 18-20 26 0" stroke="currentColor" stroke-linecap="round" fill="none"/><circle cx="68" cy="70" r="11" fill="var(--pop)" stroke="currentColor"/>`,
+    libFolder: `<path d="M16 26h22l6 8h36a6 6 0 0 1 6 6v30a6 6 0 0 1-6 6H16a6 6 0 0 1-6-6V32a6 6 0 0 1 6-6z" fill="var(--pop)" stroke="currentColor"/><path d="M24 46h48M24 56h40" stroke="currentColor" stroke-linecap="round" opacity=".7"/>`
+  },
+  celestial: {
+    siteDetailHeader: `<path d="M22 18h46a8 8 0 0 1 8 8v44a8 8 0 0 1-8 8H22a8 8 0 0 1-8-8V26a8 8 0 0 1 8-8z" fill="var(--paper)" stroke="currentColor"/><path d="M26 34h38M26 44h32" stroke="var(--a2)" stroke-linecap="round"/><path d="M68 58a14 14 0 1 0 0 28 12 12 0 0 1 0-28z" fill="var(--pop)" stroke="currentColor"/><circle cx="40" cy="68" r="4" fill="var(--a2)"/>`,
+    libFolder: `<path d="M16 26h22l6 8h36a6 6 0 0 1 6 6v30a6 6 0 0 1-6 6H16a6 6 0 0 1-6-6V32a6 6 0 0 1 6-6z" fill="var(--pop)" stroke="currentColor"/><path d="M24 46h48M24 56h40" stroke="currentColor" stroke-linecap="round" opacity=".7"/>`
+  },
+  cozy: {
+    siteDetailHeader: `<path d="M22 18h46a8 8 0 0 1 8 8v44a8 8 0 0 1-8 8H22a8 8 0 0 1-8-8V26a8 8 0 0 1 8-8z" fill="var(--paper)" stroke="currentColor"/><path d="M26 34h38M26 44h32" stroke="var(--a1)" stroke-linecap="round"/><path d="M28 66q16-18 32 0" stroke="currentColor" stroke-linecap="round" fill="none"/><circle cx="68" cy="70" r="11" fill="var(--pop)" stroke="currentColor"/>`,
+    libFolder: `<path d="M16 26h22l6 8h36a6 6 0 0 1 6 6v30a6 6 0 0 1-6 6H16a6 6 0 0 1-6-6V32a6 6 0 0 1 6-6z" fill="var(--pop)" stroke="currentColor"/><path d="M24 46h48M24 56h40" stroke="currentColor" stroke-linecap="round" opacity=".7"/>`
+  },
+  seaside: {
+    siteDetailHeader: `<path d="M22 18h46a8 8 0 0 1 8 8v44a8 8 0 0 1-8 8H22a8 8 0 0 1-8-8V26a8 8 0 0 1 8-8z" fill="var(--paper)" stroke="currentColor"/><path d="M26 34h38M26 44h32" stroke="var(--a3)" stroke-linecap="round"/><path d="M26 64q10-10 20 0t20 0" stroke="currentColor" stroke-linecap="round" fill="none"/><circle cx="70" cy="68" r="11" fill="var(--pop)" stroke="currentColor"/>`,
+    libFolder: `<path d="M16 26h22l6 8h36a6 6 0 0 1 6 6v30a6 6 0 0 1-6 6H16a6 6 0 0 1-6-6V32a6 6 0 0 1 6-6z" fill="var(--pop)" stroke="currentColor"/><path d="M24 46h48M24 56h40" stroke="currentColor" stroke-linecap="round" opacity=".7"/>`
+  }
+};
+for (const set of Object.keys(ROUND)) for (const slot of Object.keys(ROUND[set])) ART[set][slot] = ROUND[set][slot];
+
+/* shared sticker sparkles: quiet accents only, never redrawing the doodle itself */
+const SPK=(x,y,s=1,c='var(--pop)')=>`<path d="M${x} ${y-6*s}Q${x+1.3*s} ${y-1.3*s} ${x+6*s} ${y}Q${x+1.3*s} ${y+1.3*s} ${x} ${y+6*s}Q${x-1.3*s} ${y+1.3*s} ${x-6*s} ${y}Q${x-1.3*s} ${y-1.3*s} ${x} ${y-6*s}Z" fill="${c}" stroke="var(--edge)" stroke-width="1" stroke-linejoin="round"/>`;
+const DOT=(x,y,r=2,c='var(--a1)')=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${c}" stroke="var(--edge)" stroke-width=".9"/>`;
+const spHash=s=>{let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0};
+const SPOTS=[[12,15],[84,17],[82,75],[14,79],[68,12],[28,86],[87,47],[9,48]];
+const SPAL={inkwell:['var(--pop)','var(--a2)'],botanical:['var(--pop)','var(--a3)'],celestial:['var(--pop)','var(--a2)'],cozy:['var(--pop)','var(--a1)'],seaside:['var(--a3)','var(--pop)']};
+for (const set of Object.keys(ART)) {
+  const pal = SPAL[set] || ['var(--pop)','var(--a1)'];
+  for (const slot of Object.keys(ART[set])) {
+    const h = spHash(set+'/'+slot), tiny = (SZ[slot]||64) <= 32;
+    const i1 = h % SPOTS.length, i2 = (i1+2+((h>>>9)%4)) % SPOTS.length;
+    let bits = SPK(SPOTS[i1][0], SPOTS[i1][1], .55+((h>>>5)%3)*.16, pal[0]);
+    if (!tiny) {
+      bits += SPK(SPOTS[i2][0], SPOTS[i2][1], .48+((h>>>13)%3)*.14, pal[1]);
+      bits += DOT(SPOTS[(i2+3)%SPOTS.length][0], SPOTS[(i2+3)%SPOTS.length][1], 1.8+((h>>>17)%2)*.5, pal[1]);
+    }
+    ART[set][slot] += bits;
+  }
+}
+
 const secKey=n=>{n=(n||'').toLowerCase();return /thread|\brp\b|role|repl|ask|post/.test(n)?'threads':/char|\boc\b|develop|bio|backstor/.test(n)?'character':/oog|writ|story|chapter|draft|fic|prose|book/.test(n)?'oog':'generic'};
 
 
-const MIXSETS=['inkwell','botanical','celestial'];
 const calm=()=>matchMedia('(prefers-reduced-motion:reduce)').matches||document.documentElement.dataset.motion==='calm';
 function getDoodle(slot){
   const lk=S.look||{};let v=lk.doodles||'inkwell';
@@ -1120,7 +968,7 @@ function getDoodle(slot){
   if(v==='mix')v=MIXSETS[hash(slot)%MIXSETS.length];
   if(!DOODLES[v])return'';
   const body=ART[v]&&ART[v][slot];
-  if(body){const n=SZ[slot]||64;return`<svg width="${n}" height="${n}" viewBox="0 0 96 96" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">${body}</svg>`}
+  if(body){const n=SZ[slot]||64;return`<svg class="sticker-art" width="${n}" height="${n}" viewBox="0 0 96 96" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">${body}</svg>`}
   return DOODLES[v][slot]||'';
 }
 
@@ -1313,78 +1161,116 @@ function resolveBannerUrl(){
   return fixUrl(b);
 }
 
-/* theme-aware banners: they pick up whichever palette is active */
-const bnRand=seed=>{let s=seed;return()=>(s=(s*16807)%2147483647)/2147483647};
-const BANNER_ART={
-  waves:()=>'<rect width="900" height="220" fill="var(--surface2)"/><circle cx="740" cy="52" r="24" fill="var(--pop)"/><path d="M0 120C90 80 180 80 270 120S450 160 540 120 720 80 810 120 900 140 900 140V220H0z" fill="var(--a2)"/><path d="M0 150C100 120 200 120 300 150S500 180 600 150 800 120 900 150V220H0z" fill="var(--a1)"/><path d="M0 186C120 166 240 166 360 186S600 206 720 186 840 170 900 180V220H0z" fill="var(--a3)"/>',
-  hills:()=>'<rect width="900" height="220" fill="var(--surface2)"/><circle cx="170" cy="60" r="28" fill="var(--pop)"/><path d="M0 170C120 90 240 90 360 150S600 120 720 100 860 130 900 150V220H0z" fill="var(--a3)"/><path d="M0 200C150 140 300 150 450 185S750 150 900 175V220H0z" fill="var(--a2)"/><g stroke="var(--edge)" stroke-width="2.4"><path d="M610 112v-28" /><circle cx="610" cy="76" r="14" fill="var(--a1)"/><path d="M690 106v-20"/><circle cx="690" cy="80" r="10" fill="var(--a1)"/></g>',
-  confetti:()=>{const r=bnRand(7),c=['var(--a1)','var(--a2)','var(--a3)','var(--pop)'];let o='<rect width="900" height="220" fill="var(--surface2)"/>';for(let i=0;i<46;i++){const x=r()*900|0,y=r()*220|0,k=i%3,rot=r()*180|0,f=c[i%4];o+=k===0?`<circle cx="${x}" cy="${y}" r="${5+r()*7|0}" fill="${f}"/>`:k===1?`<rect x="${x}" y="${y}" width="${10+r()*10|0}" height="${6+r()*5|0}" rx="2" fill="${f}" transform="rotate(${rot} ${x} ${y})"/>`:`<path d="M${x} ${y}l12 4-6 10z" fill="${f}" transform="rotate(${rot} ${x} ${y})"/>`}return o},
-  skyline:()=>{let o='<rect width="900" height="220" fill="var(--surface2)"/><circle cx="780" cy="48" r="22" fill="var(--pop)"/>';const r=bnRand(11),c=['var(--a2)','var(--a1)','var(--a3)'];let x=0,i=0;while(x<900){const w=44+r()*40|0,h=70+r()*110|0;o+=`<rect x="${x}" y="${220-h}" width="${w}" height="${h}" fill="${c[i%3]}" stroke="var(--edge)" stroke-width="2.4"/>`;for(let wy=220-h+14;wy<206;wy+=22)for(let wx=x+9;wx<x+w-10;wx+=16)o+=`<rect x="${wx}" y="${wy}" width="7" height="10" rx="1.5" fill="var(--surface)"/>`;x+=w;i++}return o},
-  shelf:()=>{let o='<rect width="900" height="220" fill="var(--surface2)"/>';const r=bnRand(5),c=['var(--a1)','var(--a2)','var(--a3)','var(--pop)'];[[0,110],[1,206]].forEach(([row,y])=>{let x=20+row*30,i=row;while(x<860){const w=22+r()*20|0,h=52+r()*34|0;o+=`<rect x="${x}" y="${y-h}" width="${w}" height="${h}" rx="3" fill="${c[i%4]}" stroke="var(--edge)" stroke-width="2.4"/><path d="M${x+5} ${y-h+14}h${w-10}" stroke="var(--edge)" stroke-width="2"/>`;x+=w+3;i++}o+=`<rect x="0" y="${y}" width="900" height="8" fill="var(--edge)"/>`});return o},
-  stars:()=>{const r=bnRand(3);let o='<rect width="900" height="220" fill="var(--ink)"/>';for(let i=0;i<60;i++)o+=`<circle cx="${r()*900|0}" cy="${r()*220|0}" r="${(1+r()*2).toFixed(1)}" fill="${i%7?'var(--bg)':'var(--pop)'}"/>`;return o+'<path d="M790 30a34 34 0 1 0 22 58 28 28 0 0 1-22-58z" fill="var(--pop)"/>'},
-  blobs:()=>'<rect width="900" height="220" fill="var(--surface2)"/><path d="M-20 60C60 0 160 20 200 90S120 230 20 200-100 120-20 60z" fill="var(--a1)"/><path d="M300 -10C400 -20 480 40 460 120S340 230 270 170 220 10 300 -10z" fill="var(--a2)"/><path d="M620 40C720 0 820 30 840 110S760 240 660 200 540 80 620 40z" fill="var(--a3)"/><circle cx="560" cy="170" r="34" fill="var(--pop)"/>',
-  stripes:()=>'<defs><pattern id="bs" width="46" height="46" patternUnits="userSpaceOnUse" patternTransform="rotate(35)"><rect width="46" height="46" fill="var(--a1)"/><rect width="23" height="46" fill="var(--a2)"/></pattern></defs><rect width="900" height="220" fill="url(#bs)"/>'
+/* soft banners: gradient skies, round forms, gentle curves — no hard corners */
+const SKY={
+  warm:[['0','#ffb482'],['.5','#ff7a9c'],['1','#8f7bff']],
+  night:[['0','#171226'],['.55','#2a1f47'],['1','#192c42']],
+  sage:[['0','#d8e6d1'],['.55','#e8edd8'],['1','#f5d9a8']],
+  rose:[['0','#ffd9e0'],['.5','#ff9fb2'],['1','#b48cff']],
+  cream:[['0','#fff1d6'],['.5','#ffc9a3'],['1','#ff8fa8']],
+  lilac:[['0','#e9d9ff'],['.5','#c3a5ff'],['1','#8f7bff']]
 };
-const BANNER_LABELS={waves:'Waves',hills:'Hills',confetti:'Confetti',skyline:'Skyline',shelf:'Bookshelf',stars:'Starfield',blobs:'Blobs',stripes:'Stripes'};
-/* ---------- extra doodle sets ---------- */
-Object.assign(SZ,{homeHero:96,homeDoor1:64,homeDoor2:64});
-DOODLES.cozy={};DOODLES.seaside={};
-const CAT='<path d="M10 86c-2-20 6-32 18-32s20 12 18 32z" fill="var(--pop)"/><circle cx="28" cy="44" r="12" fill="var(--pop)"/><path d="M18 37l-3-13 11 6zM38 37l3-13-11 6z" fill="var(--pop)"/><path d="M23 44q2 2.4 4 0M31 44q2 2.4 4 0"/><path d="M27 49h2l-1 1.6z" fill="var(--a1)"/><path d="M10 82c-9 0-13-7-9-13"/>';
-Object.assign(ART,{
-cozy:{
-  homeHero:CAT+'<path d="M52 58h30v20a8 8 0 0 1-8 8H60a8 8 0 0 1-8-8z" fill="var(--a1)"/><path d="M82 64h3a6 6 0 0 1 0 12h-3"/><path d="M52 66h30" stroke-dasharray="2 4"/><path d="M60 52c-3-4 3-6 0-11M68 52c-3-4 3-6 0-11M76 52c-3-4 3-6 0-11"/><path d="M78 20l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="var(--a2)" stroke="none"/>',
-  homeDoor1:'<rect x="16" y="12" width="52" height="72" rx="7" fill="var(--surface)"/><rect x="16" y="12" width="10" height="72" rx="4" fill="var(--a2)"/><circle cx="38" cy="30" r="5" fill="var(--a3)"/><path d="M36 30l1.6 1.6 3-3"/><path d="M48 30h14"/><circle cx="38" cy="46" r="5" fill="var(--pop)"/><path d="M48 46h14"/><circle cx="38" cy="62" r="5" fill="var(--surface2)"/><path d="M48 62h10"/><path d="M64 70l18-18 6 6-18 18-8 2z" fill="var(--a1)"/><path d="M76 58l6 6"/>',
-  homeDoor2:'<rect x="12" y="62" width="62" height="14" rx="3" fill="var(--a1)"/><rect x="18" y="48" width="52" height="14" rx="3" fill="var(--a2)"/><rect x="14" y="34" width="56" height="14" rx="3" fill="var(--a3)"/><path d="M22 69h46M26 55h38M22 41h46"/><rect x="40" y="14" width="10" height="20" rx="2" fill="var(--surface)"/><path d="M45 14c-3-4 3-6 0-9"/><path d="M45 14c2-2 2-4 0-6"/><path d="M78 80c-6 0-10-4-10-9 6 0 10 4 10 9zM78 80c6 0 10-4 10-9-6 0-10 4-10 9z" fill="var(--a3)"/>',
-  sitesHeader:'<rect x="14" y="14" width="68" height="62" rx="6" fill="var(--surface)"/><path d="M48 14v62M14 45h68"/><path d="M14 14c12 8 12 26 8 44H14zM82 14c-12 8-12 26-8 44h8z" fill="var(--a1)"/><path d="M22 76h52"/><path d="M52 76V62l6-6 6 6v14" fill="var(--a3)"/><circle cx="66" cy="28" r="6" fill="var(--pop)"/>',
-  siteDetailHeader:'<path d="M28 44h40l-5 40H33z" fill="var(--a1)"/><path d="M28 52h40"/><path d="M33 84c0-6 4-8 15-8s15 2 15 8" fill="var(--a2)"/><path d="M48 44V30"/><path d="M48 30c-4-6 0-10 0-14 4 4 4 8 0 14z" fill="var(--pop)"/><path d="M20 20l2 5 5 2-5 2-2 5-2-5-5-2 5-2zM76 14l1.6 4 4 1.6-4 1.6L76 26l-1.6-4.8-4-1.6 4-1.6z" fill="var(--a3)" stroke="none"/>',
-  sec_threads:'<circle cx="48" cy="52" r="30" fill="var(--a1)"/><path d="M22 44c18 8 34 8 52 0M20 54c20 10 38 10 56 0M24 64c18 8 32 8 48 0M34 28c10 6 18 6 28 0"/><path d="M70 74c8 4 14 10 14 16" stroke="var(--a1)" stroke-width="3"/><path d="M70 74c10 2 6 10 12 14"/><path d="M14 70l22 8M82 14l-18 20" stroke-width="3"/>',
-  sec_character:'<circle cx="48" cy="40" r="22" fill="var(--pop)"/><path d="M30 26l-4-16 14 8zM66 26l4-16-14 8z" fill="var(--pop)"/><path d="M38 38q3 3 6 0M52 38q3 3 6 0"/><path d="M46 47h4l-2 2.4z" fill="var(--a1)"/><path d="M48 50v4M44 56q4 3 8 0"/><path d="M26 44l-12-2M26 49l-12 3M70 44l12-2M70 49l12 3"/><path d="M30 86c0-14 8-20 18-20s18 6 18 20z" fill="var(--a2)"/>',
-  sec_oog:'<path d="M12 40h58l-8 46H20z" fill="var(--surface)"/><path d="M12 40h58"/><path d="M26 52h34M28 62h30M30 72h24"/><path d="M60 16l20 8-24 36z" fill="var(--a1)"/><path d="M60 16l-4 44 8-10"/><path d="M80 24l4 14-12-4" fill="var(--pop)"/><path d="M20 24l1.8 4.4 4.4 1.8-4.4 1.8L20 36.4l-1.8-4.4-4.4-1.8 4.4-1.8z" fill="var(--a3)" stroke="none"/>',
-  sec_generic:'<path d="M20 56a28 28 0 0 1 56 0v26H20z" fill="var(--a2)"/><path d="M20 56h56M48 28v54M34 34v48M62 34v48"/><circle cx="48" cy="24" r="6" fill="var(--pop)"/><path d="M14 82h68"/>',
-  taskStamp:'<rect x="12" y="12" width="72" height="72" rx="3" fill="var(--surface)" stroke-dasharray="3 5"/><rect x="26" y="40" width="44" height="30" rx="8" fill="var(--a1)"/><path d="M70 48h4a6 6 0 0 1 0 12h-4"/><path d="M36 34c-3-4 3-6 0-10M46 34c-3-4 3-6 0-10M56 34c-3-4 3-6 0-10"/><path d="M26 52h44" stroke-dasharray="2 4"/>',
-  taskFlourish:'<path d="M48 80C20 62 14 40 28 28c10-8 20-2 20 8 0-10 10-16 20-8 14 12 8 34-20 52z" fill="var(--a1)"/><path d="M34 40c2-4 6-6 10-5"/>',
-  libraryHeader:'<rect x="10" y="62" width="76" height="20" rx="3" fill="var(--a2)"/><rect x="16" y="42" width="64" height="20" rx="3" fill="var(--a1)"/><rect x="22" y="24" width="52" height="18" rx="3" fill="var(--a3)"/><path d="M18 72h60M24 52h48M28 33h40"/><path d="M60 24c0-8 6-10 6-16" stroke-width="2.2"/><circle cx="66" cy="8" r="2.4" fill="var(--pop)" stroke="none"/>',
-  libFolder:'<path d="M14 80V40l34-22 34 22v40z" fill="var(--surface)"/><path d="M14 40h68M34 28v52M62 28v52"/><rect x="38" y="48" width="20" height="32" rx="2" fill="var(--a1)"/><circle cx="54" cy="66" r="1.8" fill="var(--pop)" stroke="none"/><path d="M48 18V8h8" />',
-  empty_todo:CAT.replace(/translate/g,'translate'),
-  empty_waiting:'<path d="M20 82c0-24 10-40 28-40s28 16 28 40z" fill="var(--a2)"/><path d="M20 82h56"/><path d="M48 42V30M40 42l-4-10M56 42l4-10"/><circle cx="48" cy="22" r="10" fill="var(--surface)"/><path d="M48 16v7l4 3"/><path d="M30 62c6-4 10-4 18 0s12 4 18 0"/>',
-  empty_done:'<path d="M34 34h28v24a14 14 0 0 1-28 0z" fill="var(--pop)"/><path d="M34 40h-8a6 6 0 0 0 0 12h8M62 40h8a6 6 0 0 1 0 12h-8"/><path d="M48 72v10M36 84h24"/><path d="M42 44l4 4 8-8" stroke="var(--surface)" stroke-width="3"/><path d="M20 22l2 5 5 2-5 2-2 5-2-5-5-2 5-2zM76 16l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="var(--a1)" stroke="none"/>',
-  empty_lib:'<path d="M36 18h24l-2 10c8 4 12 12 12 24v22a8 8 0 0 1-8 8H34a8 8 0 0 1-8-8V52c0-12 4-20 12-24z" fill="var(--surface)"/><path d="M34 18h28"/><path d="M26 62h44" stroke-dasharray="2 4"/><path d="M42 44q6 4 12 0" /><circle cx="42" cy="38" r="1.8" fill="currentColor" stroke="none"/><circle cx="54" cy="38" r="1.8" fill="currentColor" stroke="none"/><path d="M62 10l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="var(--a1)" stroke="none"/>',
-  stickersHeader:'<rect x="14" y="14" width="64" height="68" rx="8" fill="var(--surface)"/><path d="M56 82l22-26v26z" fill="var(--surface2)"/><path d="M30 60c-6-6-6-14 0-18 4-2 8 0 10 4 2-4 6-6 10-4 6 4 6 12 0 18l-10 10z" fill="var(--a1)"/><circle cx="60" cy="32" r="9" fill="var(--pop)"/>'
-},
-seaside:{
-  homeHero:'<path d="M0 78c10-6 20-6 30 0s20 6 30 0 20-6 36 0v18H0z" fill="var(--a2)"/><path d="M0 88c10-5 20-5 30 0s20 5 30 0 20-5 36 0v8H0z" fill="var(--a3)"/><path d="M34 80l6-44h16l6 44z" fill="var(--surface)"/><path d="M38 56h22M36 68h26" stroke="var(--a1)" stroke-width="5"/><path d="M38 36h20l-2-8H40z" fill="var(--a1)"/><path d="M40 28l8-10 8 10"/><path d="M48 18v-8"/><path d="M26 80h44"/><path d="M62 28l24-8M62 32l26 2" stroke="var(--pop)" stroke-width="3"/><circle cx="80" cy="52" r="8" fill="var(--pop)"/>',
-  homeDoor1:'<path d="M10 52h50l-8 18H20z" fill="var(--a1)"/><path d="M34 12v38"/><path d="M34 14l-18 32h18z" fill="var(--surface)"/><path d="M38 20l16 26H38z" fill="var(--pop)"/><path d="M34 12l8 3-8 3"/><path d="M4 76c8-5 16-5 24 0s16 5 24 0 16-5 24 0" /><path d="M10 84c8-4 16-4 24 0s16 4 24 0" stroke-width="1.8"/><circle cx="80" cy="22" r="5" fill="var(--a3)" stroke="none"/>',
-  homeDoor2:'<path d="M32 26h18v10c10 6 14 14 14 28v6a8 8 0 0 1-8 8H26a8 8 0 0 1-8-8v-6c0-14 4-22 14-28z" fill="var(--a3)" opacity=".85"/><path d="M30 26h22"/><rect x="34" y="14" width="14" height="12" rx="2" fill="var(--pop)"/><rect x="28" y="52" width="26" height="22" rx="3" fill="var(--surface)"/><path d="M33 59h16M33 65h12"/><path d="M70 40l4 8 8 2-6 6 2 8-8-4-8 4 2-8-6-6 8-2z" fill="var(--a1)"/>',
-  sitesHeader:'<path d="M8 66c8-5 16-5 24 0s16 5 24 0 16-5 24 0 16 5 16 0V84H8z" fill="var(--a2)"/><path d="M26 22v36M26 22l-14 30h14z" fill="var(--surface)"/><path d="M26 22l14 30H26z" fill="var(--pop)"/><path d="M14 58h26l-4 8H18z" fill="var(--a1)"/><path d="M66 34v22M66 34l-10 20h10z" fill="var(--surface)"/><path d="M66 34l10 20H66z" fill="var(--a3)"/><path d="M58 56h20l-3 6H61z" fill="var(--a1)"/>',
-  siteDetailHeader:'<circle cx="48" cy="48" r="26" fill="var(--surface)"/><circle cx="48" cy="48" r="9" fill="var(--a1)"/><path d="M48 14v20M48 62v20M14 48h20M62 48h20M24 24l14 14M58 58l14 14M72 24L58 38M38 58L24 72"/><circle cx="48" cy="14" r="4" fill="var(--pop)"/><circle cx="48" cy="82" r="4" fill="var(--pop)"/><circle cx="14" cy="48" r="4" fill="var(--pop)"/><circle cx="82" cy="48" r="4" fill="var(--pop)"/>',
-  sec_threads:'<path d="M48 14v68M30 34h36"/><circle cx="48" cy="14" r="6" fill="var(--surface)"/><path d="M20 62c0 14 12 24 28 24s28-10 28-24M20 62l-8 6M76 62l8 6"/><path d="M26 28c-8 0-12 8-6 14M70 28c8 0 12 8 6 14" stroke="var(--a1)" stroke-width="3.5"/><path d="M14 46c6 6 16 6 22 0M60 46c6 6 16 6 22 0" stroke="var(--a2)" stroke-width="3.5"/>',
-  sec_character:'<path d="M48 8l9 22 24 4-16 16 6 24-23-11-23 11 6-24L15 34l24-4z" fill="var(--a1)"/><circle cx="40" cy="38" r="2.4" fill="currentColor" stroke="none"/><circle cx="56" cy="38" r="2.4" fill="currentColor" stroke="none"/><path d="M42 46q6 5 12 0"/><circle cx="36" cy="44" r="3" fill="var(--pop)" stroke="none"/><circle cx="60" cy="44" r="3" fill="var(--pop)" stroke="none"/><path d="M14 84c10-6 20-6 30 0s20 6 38 0" stroke-width="2"/>',
-  sec_oog:'<path d="M34 34h28v8c8 6 12 12 12 24v8a8 8 0 0 1-8 8H30a8 8 0 0 1-8-8v-8c0-12 4-18 12-24z" fill="var(--a3)" opacity=".85"/><rect x="38" y="22" width="20" height="12" rx="2" fill="var(--pop)"/><rect x="32" y="54" width="32" height="24" rx="3" fill="var(--surface)"/><path d="M38 61h20M38 67h14M38 73h18"/><path d="M70 18c6-6 12-4 16 2-6 2-10 2-14 6z" fill="var(--a1)"/><path d="M70 18l-10 24"/>',
-  sec_generic:'<path d="M48 14v62M34 34h28"/><circle cx="48" cy="18" r="6" fill="var(--surface)"/><path d="M18 56c0 16 14 26 30 26s30-10 30-26M18 56l-6-8M78 56l6-8" /><path d="M10 84c8-4 16-4 24 0" stroke-width="2" stroke="var(--a2)"/>',
-  taskStamp:'<rect x="12" y="12" width="72" height="72" rx="3" fill="var(--surface)" stroke-dasharray="3 5"/><circle cx="48" cy="48" r="23" fill="var(--a1)"/><circle cx="48" cy="48" r="11" fill="var(--surface)"/><path d="M48 25v12M48 59v12M25 48h12M59 48h12" stroke="var(--surface)" stroke-width="7"/><path d="M48 25v12M48 59v12M25 48h12M59 48h12"/>',
-  taskFlourish:'<path d="M48 82C20 76 12 46 30 28c8-8 18-8 18-8s10 0 18 8c18 18 10 48-18 54z" fill="var(--pop)"/><path d="M48 24v56M36 28c0 22 4 42 12 54M60 28c0 22-4 42-12 54"/>',
-  libraryHeader:'<path d="M32 84l6-48h20l6 48z" fill="var(--surface)"/><path d="M36 58h24M34 72h28" stroke="var(--a1)" stroke-width="6"/><path d="M36 36h24l-3-10H39z" fill="var(--a1)"/><path d="M40 26l8-12 8 12"/><circle cx="48" cy="48" r="2" fill="currentColor" stroke="none"/><path d="M60 28l22-10M60 32l24 2" stroke="var(--pop)" stroke-width="3"/><path d="M20 84h56"/>',
-  libFolder:'<rect x="14" y="36" width="68" height="46" rx="6" fill="var(--a2)"/><path d="M14 52h68"/><path d="M14 36c0-14 14-22 34-22s34 8 34 22z" fill="var(--a1)"/><rect x="40" y="46" width="16" height="14" rx="3" fill="var(--pop)"/><circle cx="48" cy="53" r="2" fill="currentColor" stroke="none"/><path d="M22 36v46M74 36v46"/>',
-  empty_todo:'<path d="M14 80h68l-8-26H22z" fill="var(--pop)"/><path d="M22 54h52l-4-10H26z" fill="var(--pop)"/><path d="M30 44V32h12v12M54 44V32h12v12" fill="var(--pop)"/><path d="M26 32l4-6 4 6M36 32l4-6 4 6" /><path d="M52 14v18M52 14l12 4-12 4" fill="var(--a1)"/><path d="M60 80V66a6 6 0 0 1 12 0v14" fill="var(--a2)"/><path d="M8 88c10-4 20-4 30 0s20 4 30 0 14-3 20 0" stroke="var(--a3)"/>',
-  empty_waiting:'<path d="M10 64c8-5 16-5 24 0s16 5 24 0 16-5 28 0v20H10z" fill="var(--a2)"/><path d="M14 76c8-4 16-4 24 0s16 4 24 0 14-3 20 0" stroke="var(--surface)"/><path d="M48 24v26"/><circle cx="48" cy="56" r="9" fill="var(--a1)"/><path d="M39 56h18" stroke="var(--surface)" stroke-width="3"/><path d="M48 24c6 0 10-4 14-4" /><circle cx="70" cy="22" r="7" fill="var(--pop)"/>',
-  empty_done:'<circle cx="48" cy="62" r="18" fill="var(--pop)"/><path d="M48 30v8M26 38l6 6M70 38l-6 6M16 62h8M72 62h8"/><path d="M6 66c10-6 20-6 30 0s20 6 30 0 20-6 24 0v22H6z" fill="var(--a2)"/><path d="M10 78c10-5 20-5 30 0s20 5 30 0 12-3 16 0" stroke="var(--surface)"/>',
-  empty_lib:'<path d="M6 76c14-10 26-14 42-14s28 4 42 14v12H6z" fill="var(--pop)" opacity=".7"/><path d="M26 66c0-16 10-28 22-28s22 12 22 28z" fill="var(--surface)"/><path d="M48 38v28M38 42c-2 8-2 16 0 24M58 42c2 8 2 16 0 24"/><path d="M26 66h44"/><path d="M72 22l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="var(--a1)" stroke="none"/><circle cx="20" cy="30" r="3" fill="var(--a3)" stroke="none"/>',
-  stickersHeader:'<rect x="14" y="14" width="64" height="68" rx="8" fill="var(--surface)"/><path d="M56 82l22-26v26z" fill="var(--surface2)"/><path d="M42 24l6 13 14 2-10 10 3 14-13-7-13 7 3-14-10-10 14-2z" fill="var(--a1)" transform="translate(-4 4) scale(.8)"/><path d="M52 62c6-6 14-4 16 2s-2 12-10 12c-6 0-10-6-6-14z" fill="var(--pop)"/><path d="M54 64c4-2 8 0 8 4"/>'
-}
-});
-ART.cozy.empty_todo=CAT.replace('<path d="M10 82c-9 0-13-7-9-13"/>','<path d="M10 82c-9 0-13-7-9-13"/><path d="M60 78l14-3M62 84l16 1" stroke="var(--a2)" stroke-width="3"/><circle cx="74" cy="22" r="3" fill="var(--a1)" stroke="none"/><path d="M70 30l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="var(--a3)" stroke="none"/>');
-MIXSETS.push('cozy','seaside');
+const SOFT=(k,kind)=>`<defs><linearGradient id="g_${k}" x1="0" y1="0" x2="1" y2="1">`
+  +SKY[kind].map(([o,c])=>`<stop offset="${o}" stop-color="${c}"/>`).join('')+`</linearGradient></defs>`
+  +`<rect width="900" height="220" fill="url(#g_${k})"/>`;
+const spk=(x,y,r=5,c='#fff4d6',op=.85)=>`<path d="M${x} ${y-r}Q${x+r*.16} ${y-r*.16} ${x+r} ${y}Q${x+r*.16} ${y+r*.16} ${x} ${y+r}Q${x-r*.16} ${y+r*.16} ${x-r} ${y}Q${x-r*.16} ${y-r*.16} ${x} ${y-r}Z" fill="${c}" opacity="${op}"/>`;
+const hill=(a,b,c,op=.25)=>`<path d="M0 ${a}Q225 ${a-90} 450 ${b}T900 ${a-14}V220H0Z" fill="${c}" opacity="${op}"/>`;
+const orb=(x,y,r,c,op=.5)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${c}" opacity="${op}"/>`;
+const twinkle=(n=5,c='#fff4d6')=>{const pts=[[96,44,5],[240,30,4],[404,58,5],[566,34,4],[812,50,5],[152,118,4],[688,116,4]];return pts.slice(0,n).map(([x,y,r])=>spk(x,y,r,c)).join('')};
 
-/* ---------- extra banner presets ---------- */
-Object.assign(BANNER_ART,{
-  rain:()=>{const r=bnRand(21);let o='<rect width="900" height="220" fill="var(--surface2)"/><g transform="translate(0 38)"><path d="M60 70c0-30 30-46 60-40 10-26 54-30 70-4 34-8 56 20 40 44z" fill="var(--a2)"/><path d="M420 54c0-26 26-40 54-34 10-22 48-26 62-2 30-6 50 18 36 38z" fill="var(--a1)"/><path d="M700 80c0-24 24-38 50-32 10-20 44-24 56-2 28-4 46 18 32 36z" fill="var(--a3)"/></g>';for(let i=0;i<42;i++){const x=r()*900|0,y=130+r()*80|0;o+=`<path d="M${x} ${y}l-6 16" stroke="var(--ink)" stroke-width="2.4" stroke-linecap="round" opacity=".55"/>`}return o},
-  dunes:()=>'<rect width="900" height="220" fill="var(--surface2)"/><circle cx="700" cy="70" r="36" fill="var(--pop)"/><path d="M0 130C140 70 260 100 380 140S640 150 900 100V220H0z" fill="var(--a1)"/><path d="M0 170C160 120 300 150 460 180S760 170 900 150V220H0z" fill="var(--a2)"/><path d="M0 200C200 170 380 200 560 205S800 195 900 190V220H0z" fill="var(--a3)"/><path d="M70 170c40-10 80-8 120 6M520 190c40-10 80-8 120 4" stroke="var(--edge)" stroke-width="2" fill="none" opacity=".5"/>',
-  petals:()=>{const r=bnRand(31),c=['var(--a1)','var(--a2)','var(--pop)','var(--a3)'];let o='<rect width="900" height="220" fill="var(--surface2)"/>';for(let i=0;i<30;i++){const x=r()*900|0,y=r()*220|0,s=10+r()*14|0,a=r()*360|0;o+=`<g transform="translate(${x} ${y}) rotate(${a})"><path d="M0 0C${s} -${s} ${s*2} 0 0 ${s*1.6}C-${s*2} 0 -${s} -${s} 0 0z" fill="${c[i%4]}" stroke="var(--edge)" stroke-width="1.6"/></g>`}return o},
-  mountains:()=>'<rect width="900" height="220" fill="var(--surface2)"/><circle cx="150" cy="60" r="26" fill="var(--pop)"/><path d="M0 200L170 80l120 80 120-110 150 150 130-90 210 90v20H0z" fill="var(--a2)"/><path d="M0 220l140-60 110 40 140-70 170 90 150-50 190 40v20H0z" fill="var(--a3)"/><path d="M410 50l-30 30 18-6 12 14 12-14 18 6z" fill="var(--surface)"/><path d="M170 80l-24 22 14-4 10 10 10-10 14 4z" fill="var(--surface)"/>',
-  bubbles:()=>{const r=bnRand(41),c=['var(--a1)','var(--a2)','var(--a3)','var(--pop)'];let o='<rect width="900" height="220" fill="var(--surface2)"/>';for(let i=0;i<26;i++){const x=r()*900|0,y=r()*220|0,s=8+r()*30|0;o+=`<circle cx="${x}" cy="${y}" r="${s}" fill="${c[i%4]}" fill-opacity=".55" stroke="var(--edge)" stroke-width="2"/><path d="M${x-s*.5} ${y-s*.2}a${s*.55} ${s*.55} 0 0 1 ${s*.4} -${s*.4}" stroke="var(--surface)" stroke-width="2.5" fill="none" stroke-linecap="round"/>`}return o},
-  zigzag:()=>'<defs><pattern id="bz" width="60" height="40" patternUnits="userSpaceOnUse"><rect width="60" height="40" fill="var(--surface2)"/><path d="M0 28l15-16 15 16 15-16 15 16" fill="none" stroke="var(--a1)" stroke-width="7" stroke-linejoin="round"/><path d="M0 40l15-16 15 16 15-16 15 16" fill="none" stroke="var(--a2)" stroke-width="7" stroke-linejoin="round"/></pattern></defs><rect width="900" height="220" fill="url(#bz)"/>'
-});
-Object.assign(BANNER_LABELS,{rain:'Rainy day',dunes:'Dunes',petals:'Petals',mountains:'Mountains',bubbles:'Bubbles',zigzag:'Zigzag'});
+const BANNER_ART={
+  waves:()=>SOFT('waves','warm')+orb(724,72,52,'#ffe89e',.8)
+    +hill(128,158,'#231a2e',.2)+hill(164,186,'#231a2e',.3)+hill(198,206,'#231a2e',.4)
+    +'<path d="M0 130Q225 70 450 158T900 114" fill="none" stroke="#fff3df" stroke-width="2.4" opacity=".5"/>'
+    +'<g transform="translate(250 150)"><path d="M-6 0Q18 4 48 0L38 12Q14 16-6 0Z" fill="#fff3df" opacity=".9"/><path d="M22 0V-28" stroke="#fff3df" stroke-width="2.6" stroke-linecap="round"/><path d="M24-26Q40-14 42 0H24Z" fill="#ff8fa8" opacity=".9"/></g>'
+    +twinkle(4),
+  hills:()=>SOFT('hills','warm')+orb(644,104,58,'#ffeaa8',.75)
+    +hill(150,182,'#231a2e',.22)+hill(188,204,'#231a2e',.34)
+    +'<g fill="#231a2e" opacity=".55"><circle cx="132" cy="132" r="20"/><circle cx="172" cy="144" r="14"/><circle cx="206" cy="128" r="23"/><circle cx="808" cy="148" r="17"/></g>'
+    +'<g stroke="#231a2e" stroke-width="5" stroke-linecap="round" opacity=".55"><path d="M132 176v-26M172 182v-24M206 170v-26M808 186v-24"/></g>'
+    +'<ellipse cx="556" cy="162" rx="34" ry="26" fill="#231a2e" opacity=".5"/><ellipse cx="556" cy="140" rx="26" ry="20" fill="#ff8fa8" opacity=".55"/>'
+    +twinkle(4),
+  confetti:()=>SOFT('confetti','rose')+orb(450,110,150,'#fff1c4',.32)
+    +'<path d="M-20 192Q220 142 450 186T920 176" fill="none" stroke="#231a2e" stroke-width="30" stroke-linecap="round" opacity=".22"/>'
+    +'<path d="M-20 192Q220 142 450 186T920 176" fill="none" stroke="#ff8fa8" stroke-width="20" stroke-linecap="round" opacity=".8"/>'
+    +orb(110,64,24,'#ff8fa8',.75)+orb(472,54,20,'#8f7bff',.65)+orb(700,158,25,'#ffc07a',.75)
+    +orb(820,62,18,'#6fe0c0',.7)+orb(300,142,22,'#ffe08a',.8)
+    +'<g fill="none" stroke-linecap="round" stroke-width="16" opacity=".8"><path d="M164 112q14-16 32-4"/><path d="M582 92q16-14 32 2"/><path d="M746 124q14 14 30 0"/></g>'
+    +twinkle(6),
+  skyline:()=>SOFT('skyline','night')+orb(770,58,36,'#ffe08a',.85)
+    +'<path d="M744 54a36 36 0 1 0 0 72 30 30 0 0 1 0-72z" fill="#fff1c4" opacity=".9"/>'
+    +'<g fill="#fff1c4" opacity=".14"><ellipse cx="80" cy="190" rx="52" ry="72"/><ellipse cx="210" cy="200" rx="58" ry="80"/><ellipse cx="360" cy="186" rx="46" ry="66"/><ellipse cx="520" cy="198" rx="62" ry="84"/><ellipse cx="690" cy="190" rx="54" ry="74"/><ellipse cx="850" cy="200" rx="58" ry="78"/></g>'
+    +hill(212,214,'#0e0b1c',.55)
+    +'<g fill="#ffe08a" opacity=".85"><circle cx="92" cy="176" r="5"/><circle cx="124" cy="176" r="5"/><circle cx="212" cy="188" r="5"/><circle cx="244" cy="188" r="5"/><circle cx="360" cy="172" r="5"/><circle cx="520" cy="184" r="5"/><circle cx="552" cy="184" r="5"/><circle cx="690" cy="176" r="5"/><circle cx="850" cy="186" r="5"/></g>'
+    +twinkle(7,'#fff1c4'),
+  shelf:()=>SOFT('shelf','cream')+orb(420,104,140,'#fff1c4',.5)
+    +'<path d="M20 112h860M20 204h860" stroke="#231a2e" stroke-width="10" stroke-linecap="round" opacity=".32"/>'
+    +'<g stroke-linecap="round" stroke-width="22" fill="none" opacity=".85">'
+    +'<path d="M58 106V54"/><path d="M88 106V42"/><path d="M118 106V62"/><path d="M148 106V48"/><path d="M178 106V58"/>'
+    +'<path d="M68 198V150"/><path d="M98 198V142"/><path d="M128 198V156"/></g>'
+    +'<g fill="#231a2e" opacity=".3"><circle cx="58" cy="48" r="11"/><circle cx="88" cy="36" r="11"/><circle cx="118" cy="56" r="11"/><circle cx="148" cy="42" r="11"/><circle cx="178" cy="52" r="11"/></g>'
+    +'<g fill="none" stroke="#231a2e" stroke-width="2.4" stroke-linecap="round" opacity=".5"><path d="M392 70q0-28 0-38"/><path d="M392 56q-22-2-24-22 18 0 24 22zM392 48q22-2 24-22-18 0-24 22z"/></g>'
+    +'<ellipse cx="392" cy="98" rx="28" ry="14" fill="#ff8fa8" opacity=".65"/>'
+    +'<ellipse cx="700" cy="172" rx="26" ry="22" fill="#231a2e" opacity=".28"/>'
+    +'<ellipse cx="700" cy="150" rx="20" ry="16" fill="#6fe0c0" opacity=".6"/>'
+    +twinkle(4,'#fff8e6'),
+  stars:()=>SOFT('stars','night')+orb(700,68,96,'#ffe08a',.16)
+    +'<path d="M700 30a44 44 0 1 0 0 88 36 36 0 0 1 0-88z" fill="#ffe08a" opacity=".95"/>'
+    +'<path d="M0 206Q225 150 450 190T900 178V220H0Z" fill="#0e0b1c" opacity=".6"/>'
+    +'<path d="M0 220Q170 156 320 194T640 182T900 204V220Z" fill="#1b1430" opacity=".75"/>'
+    +'<path d="M160 68q34 6 68 16" stroke="#fff1c4" stroke-width="2.4" stroke-linecap="round" opacity=".7" fill="none"/>'
+    +spk(228,84,9,'#fff1c4')+spk(228,84,4,'#ffe08a')+twinkle(7,'#fff1c4')
+    +'<g fill="#fff1c4" opacity=".75"><circle cx="120" cy="120" r="2"/><circle cx="340" cy="38" r="2.4"/><circle cx="486" cy="96" r="2"/><circle cx="600" cy="42" r="2.2"/><circle cx="840" cy="140" r="2"/></g>',
+  blobs:()=>SOFT('blobs','lilac')+orb(230,88,58,'#ff8fa8',.45)+orb(230,88,30,'#ffe08a',.65)
+    +orb(650,116,42,'#8f7bff',.4)+orb(440,54,26,'#6fe0c0',.38)
+    +'<path d="M0 196Q225 156 450 190T900 180V220H0Z" fill="#231a2e" opacity=".24"/>'
+    +twinkle(6,'#fff8e6'),
+  stripes:()=>SOFT('stripes','lilac')
+    +'<g fill="none" stroke-linecap="round" opacity=".28" stroke-width="34"><path d="M-30 220Q120 80 300-10"/><path d="M250 230Q400 90 580-10"/><path d="M540 230Q690 90 870-10"/></g>'
+    +'<g transform="rotate(-4 704 108)"><ellipse cx="704" cy="108" rx="150" ry="72" fill="#fffaf0" opacity=".85"/><ellipse cx="704" cy="108" rx="141" ry="63" fill="none" stroke="#231a2e" stroke-width="2.4" opacity=".35"/>'
+    +'<path d="M620 90h150M620 110h130M620 130h110" stroke="#231a2e" stroke-width="4" stroke-linecap="round" opacity=".45"/><circle cx="800" cy="136" r="13" fill="#ffd36b" opacity=".9"/></g>'
+    +twinkle(5,'#fff8e6'),
+  rain:()=>SOFT('rain','sage')+orb(710,178,120,'#ffeaa8',.38)
+    +'<g fill="#fffaf0" opacity=".72"><circle cx="150" cy="76" r="36"/><circle cx="196" cy="76" r="30"/><circle cx="240" cy="84" r="26"/><circle cx="620" cy="68" r="30"/><circle cx="658" cy="72" r="24"/></g>'
+    +'<g stroke="#fffaf0" stroke-width="3" stroke-linecap="round" opacity=".65"><path d="M110 122l-8 20M158 132l-8 20M206 128l-8 20M254 136l-8 20M302 124l-8 20M350 138l-8 20M398 126l-8 20M446 136l-8 20M494 126l-8 20M542 138l-8 20M590 124l-8 20M638 130l-8 20M686 124l-8 20M734 132l-8 20M782 126l-8 20"/></g>'
+    +'<path d="M0 196Q225 168 450 198T900 190V220H0Z" fill="#231a2e" opacity=".2"/>'
+    +'<ellipse cx="450" cy="204" rx="128" ry="10" fill="#fffaf0" opacity=".5"/>'
+    +'<g fill="#231a2e" opacity=".35"><ellipse cx="742" cy="192" rx="52" ry="18"/><circle cx="742" cy="156" r="38"/><path d="M742 194v22" stroke="#231a2e" stroke-width="4" stroke-linecap="round"/></g>'
+    +twinkle(3,'#fff8e6'),
+  dunes:()=>SOFT('dunes','warm')+orb(188,76,56,'#ffeaa8',.8)
+    +'<circle cx="188" cy="76" r="34" fill="#ffe08a" opacity=".95"/>'
+    +'<path d="M0 132Q225 58 450 130T900 118V220H0Z" fill="#231a2e" opacity=".22"/>'
+    +'<path d="M0 168Q225 108 450 178T900 154V220H0Z" fill="#231a2e" opacity=".3"/>'
+    +'<path d="M0 204Q225 172 450 206T900 196V220H0Z" fill="#231a2e" opacity=".42"/>'
+    +'<g fill="none" stroke="#6fe0c0" stroke-width="20" stroke-linecap="round" opacity=".8"><path d="M676 196V136"/><path d="M676 166h-24M676 154h24"/></g>'
+    +'<circle cx="676" cy="128" r="8" fill="#ffe08a"/>'
+    +twinkle(4,'#fff8e6'),
+  petals:()=>SOFT('petals','sage')+orb(734,128,110,'#ffeaa8',.5)
+    +'<g stroke="#231a2e" stroke-width="4" stroke-linecap="round" fill="none" opacity=".45"><path d="M204 138q-8 40 2 82"/><path d="M470 108q6 42-2 112"/><path d="M734 150q8 34 0 70"/></g>'
+    +'<g fill="#6fe0c0" opacity=".75"><ellipse cx="186" cy="176" rx="20" ry="10" transform="rotate(-24 186 176)"/><ellipse cx="222" cy="190" rx="20" ry="10" transform="rotate(24 222 190)"/><ellipse cx="452" cy="166" rx="18" ry="9" transform="rotate(-24 452 166)"/></g>'
+    +'<g opacity=".9"><g fill="#ff8fa8"><circle cx="204" cy="96" r="15"/><circle cx="222" cy="110" r="15"/><circle cx="204" cy="126" r="15"/><circle cx="186" cy="110" r="15"/></g><circle cx="204" cy="111" r="11" fill="#ffe08a"/>'
+    +'<g fill="#c3a5ff"><circle cx="470" cy="66" r="13"/><circle cx="486" cy="78" r="13"/><circle cx="470" cy="92" r="13"/><circle cx="454" cy="78" r="13"/></g><circle cx="470" cy="79" r="9" fill="#ffe08a"/>'
+    +'<g fill="#ffb482"><circle cx="734" cy="104" r="17"/><circle cx="754" cy="120" r="17"/><circle cx="734" cy="140" r="17"/><circle cx="714" cy="120" r="17"/></g><circle cx="734" cy="121" r="12" fill="#ffe08a"/></g>'
+    +'<path d="M0 208Q225 180 450 210T900 202V220H0Z" fill="#231a2e" opacity=".22"/>'
+    +twinkle(5,'#fff8e6'),
+  mountains:()=>SOFT('mountains','warm')+orb(150,60,52,'#ffeaa8',.8)
+    +'<path d="M0 206Q90 118 170 92T340 198Q410 76 490 104T690 200Q790 128 900 176V220H0Z" fill="#231a2e" opacity=".26"/>'
+    +'<path d="M0 220Q140 168 280 206T560 190Q720 146 900 204V220Z" fill="#231a2e" opacity=".36"/>'
+    +'<ellipse cx="170" cy="100" rx="22" ry="9" fill="#fff3df" opacity=".8" transform="rotate(-18 170 100)"/>'
+    +'<ellipse cx="410" cy="92" rx="26" ry="10" fill="#fff3df" opacity=".8" transform="rotate(16 410 92)"/>'
+    +twinkle(4,'#fff8e6'),
+  bubbles:()=>SOFT('bubbles','lilac')
+    +'<g fill="#fffaf0" opacity=".38" stroke="#fffaf0" stroke-width="2"><circle cx="90" cy="72" r="34"/><circle cx="210" cy="150" r="26"/><circle cx="330" cy="60" r="42"/><circle cx="470" cy="140" r="30"/><circle cx="600" cy="70" r="38"/><circle cx="740" cy="156" r="28"/><circle cx="840" cy="62" r="34"/><circle cx="540" cy="190" r="20"/></g>'
+    +'<g fill="none" stroke="#fffaf0" stroke-width="2.4" stroke-linecap="round" opacity=".7"><path d="M74 58a20 20 0 0 1 14-10"/><path d="M314 42a24 24 0 0 1 16-10"/><path d="M584 52a22 22 0 0 1 16-10"/><path d="M824 46a20 20 0 0 1 14-10"/></g>'
+    +'<path d="M0 202Q225 170 450 200T900 190V220H0Z" fill="#231a2e" opacity=".2"/>'
+    +twinkle(5,'#fff8e6'),
+  zigzag:()=>SOFT('zigzag','night')
+    +'<g fill="none" stroke-linecap="round" stroke-width="12" opacity=".45"><path d="M-20 80Q40 30 100 80T220 80T340 80T460 80T580 80T700 80T820 80T940 80" stroke="#ff8fa8"/>'
+    +'<path d="M-20 132Q40 82 100 132T220 132T340 132T460 132T580 132T700 132T820 132T940 132" stroke="#c3a5ff"/></g>'
+    +'<path d="M0 196Q225 164 450 198T900 188V220H0Z" fill="#0e0b1c" opacity=".55"/>'
+    +twinkle(7,'#fff1c4')
+};
+const BANNER_LABELS={waves:'Waves',hills:'Hills',confetti:'Confetti',skyline:'Skyline',shelf:'Bookshelf',stars:'Starfield',blobs:'Lantern glow',stripes:'Dusk beams',rain:'Rainy day',dunes:'Dunes',petals:'Petals',mountains:'Mountains',bubbles:'Bubbles',zigzag:'Zigzag'};
 
 function bannerInner(k){
   k=k===undefined?(S.look.banner||''):k;
@@ -1426,6 +1312,7 @@ function uploadBanner(file){
 }
 
 const P={
+  bookmark:'<path d="M6 3h12v18l-6-4.5L6 21z"/>',
   folder:'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
   doc:'<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 13h6M9 17h4"/>',
   sheet:'<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 10h16M4 15h16M10 4v16"/>',
@@ -1499,6 +1386,77 @@ function askConfirm(message,confirmLabel='Delete',onYes){
   ov.querySelector('[data-yes]').onclick=()=>{close();onYes()};
 }
 
+
+/* ---------- idea jar ---------- */
+const JARC=['var(--a1)','var(--a2)','var(--a3)','var(--pop)'];
+let jarNew='',ideaFilter='all';
+function jarArt(ideas,key,size){
+  const BODY='M32 34h56v8c12 7 16 16 16 30v46a14 14 0 0 1-14 14H30a14 14 0 0 1-14-14V72c0-14 4-23 16-30z';
+  const list=(ideas||[]).slice(0,18).reverse();
+  const slips=list.map((it,i)=>{
+    const hh=hash(it.id),x=38+(hh%38),y=127-Math.floor(i*3.9)-(hh%5),r=(hh%70)-35;
+    return`<g transform="translate(${x} ${y}) rotate(${r})"><g class="${it.id===jarNew?'jdrop':''}"><rect x="-14" y="-7" width="28" height="14" rx="2" fill="${JARC[i%4]}"/><path d="M-9 -2h18M-9 2.5h11" stroke-width="1.3"/></g></g>`}).join('');
+  return`<svg class="jar" width="${size}" height="${Math.round(size*1.25)}" viewBox="0 0 120 150" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><defs><clipPath id="jc-${key}"><path d="${BODY}"/></clipPath></defs>
+    <g clip-path="url(#jc-${key})">${slips}</g>
+    <path d="${BODY}" fill="var(--surface)" fill-opacity=".35"/>
+    <path d="M25 78v34" stroke="var(--surface)" stroke-width="3.2" opacity=".85"/>
+    <path d="M92 66l2.2 4.4 4.8.7-3.5 3.4.8 4.8-4.3-2.3-4.3 2.3.8-4.8-3.5-3.4 4.8-.7z" fill="var(--pop)" stroke-width="1.6"/>
+    <rect x="30" y="14" width="60" height="18" rx="6" fill="var(--a2)"/><path d="M40 23h40M30 30h60" stroke-width="1.8"/>
+    ${list.length?'':'<path d="M80 54l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="var(--a1)" stroke="none"/>'}
+  </svg>`;
+}
+function ideasPage(){
+  const all=S.ideas||[],withSite=S.sites.filter(s=>all.some(i=>i.site===s.id));
+  if(ideaFilter!=='all'&&!withSite.some(s=>s.id===ideaFilter))ideaFilter='all';
+  const list=all.filter(i=>ideaFilter==='all'||i.site===ideaFilter);
+  const chips=withSite.length>1?`<div class="seg" style="margin-top:18px"><button class="${ideaFilter==='all'?'on':''}" data-act="ideafilter" data-v="all">All</button>${withSite.map(s=>`<button class="${ideaFilter===s.id?'on':''}" data-act="ideafilter" data-v="${s.id}">${esc(s.name)}</button>`).join('')}</div>`:'';
+  const slip=i=>{
+    const hh=hash(i.id),s=site(i.site);
+    return`<button type="button" class="slip" style="--sc:${JARC[hh%4]};--rot:${((hh>>3)%7-3)*.55}deg" data-act="ideaopen" data-id="${i.id}"><span class="slip-txt">${esc(i.text)}</span><span class="slip-foot">${s?`<span class="pill">${esc(s.name)}</span>`:'<span></span>'}<span>${fmt(dstr(i.at))}</span></span></button>`};
+  const body=`
+    <div class="head"><div class="head-main"><div class="head-art" aria-hidden="true">${jarArt(all,'p',112)}</div><div><p class="eyebrow">${all.length?plural(all.length,'idea'):'Nothing yet'}</p><h1>Idea jar</h1></div></div></div>
+    <div class="addrow"><input id="ideain" placeholder="Drop an idea in" autocomplete="off"><button class="primary" data-act="ideaadd">Drop it in</button></div>
+    ${chips}
+    ${list.length?`<div class="slips">${list.map(slip).join('')}</div>`:`<div class="empty">${all.length?'No ideas for this one.':'Scenes, plot twists, a line you do not want to lose. Anything goes in.'}</div>`}`;
+  return{crumbs:[['Home','#/']],body};
+}
+function addIdea(){
+  const inp=document.getElementById('ideain');if(!inp)return;
+  const v=inp.value.trim();if(!v)return;
+  const it={id:uid(),text:v,site:'',at:Date.now()};
+  S.ideas.unshift(it);jarNew=it.id;refocus='#ideain';render();
+  setTimeout(()=>{jarNew=''},900);
+}
+function ideaToTodo(it){
+  const opts=[];S.sites.forEach(s=>s.cats.forEach(c=>opts.push([s.id+'|'+c.id,s.name+' / '+c.name])));
+  if(!opts.length){toast('Add a site first');return}
+  const pre=S.sites.find(s=>s.id===it.site)||S.sites[0];
+  modal({title:'Turn it into a to-do',
+    fields:[{key:'where',label:'Where should it go?',type:'select',value:pre.id+'|'+pre.cats[0].id,options:opts}],
+    onSave:v=>{
+      const[sid,cid]=v.where.split('|');
+      S.tasks.push({id:uid(),siteId:sid,catId:cid,text:it.text,status:'todo',due:'',url:'',libId:'',note:'',steps:[],doneAt:0});
+      S.ideas=S.ideas.filter(x=>x.id!==it.id);toast('Moved to your to-dos');
+    }});
+}
+function ideaModal(it){
+  if(!it)return;
+  const ov=document.createElement('div');ov.className='ov';
+  ov.innerHTML=`<form class="modal"><h2>Idea</h2>
+    <div class="fld"><textarea name="text" rows="4" aria-label="The idea">${esc(it.text)}</textarea></div>
+    <div class="fld"><label>For</label><select name="site"><option value="">Anything</option>${S.sites.map(s=>`<option value="${s.id}" ${it.site===s.id?'selected':''}>${esc(s.name)}</option>`).join('')}</select></div>
+    <div class="mrow"><button type="button" class="ghost danger" data-d>Delete</button><span class="sp"></span><button type="button" class="ghost" data-todo>Make a to-do</button><button class="primary">Save</button></div></form>`;
+  document.body.appendChild(ov);
+  const form=ov.querySelector('form'),onKey=e=>{if(e.key==='Escape')close()};
+  const close=()=>{ov.remove();document.removeEventListener('keydown',onKey)};
+  document.addEventListener('keydown',onKey);
+  ov.addEventListener('mousedown',e=>{if(e.target===ov)close()});
+  form.onsubmit=e=>{e.preventDefault();const t=form.elements.text.value.trim();if(t)it.text=t;it.site=form.elements.site.value;close();render()};
+  form.querySelector('[data-d]').onclick=()=>askConfirm('This idea will be removed from the jar.','Delete',()=>{S.ideas=S.ideas.filter(x=>x.id!==it.id);close();render()});
+  form.querySelector('[data-todo]').onclick=()=>{close();ideaToTodo(it)};
+  form.elements.text.focus();
+}
+
 /* ---------- routing & visual state ---------- */
 const parse=()=>location.hash.replace(/^#\/?/,'').split('/').filter(Boolean);
 let filter='active',q='',lastKey=null,lsort='name',lkind='';
@@ -1543,6 +1501,8 @@ function render(){
     if(!r[1]||(f&&f.type==='folder'))page=libPage(f);
   }else if(r[0]==='stickers'){
     page=stickersPage();
+  }else if(r[0]==='ideas'){
+    page=ideasPage();
   }
   if(!page){location.hash='#/';return}
   const trail=page.crumbs.length?`<nav class="trail"><a class="back" href="${page.crumbs[page.crumbs.length-1][1]}">${IC.back}Back</a>
@@ -1550,7 +1510,7 @@ function render(){
   const fresh=location.hash!==lastKey;lastKey=location.hash;
   const earned=(S.book||[]).length;
   app.innerHTML=`<header class="top">
-    <a class="logo" href="#/">inkwell<span></span></a>
+    <a class="logo" href="#/">${LOGO_MARK}inkwell<span></span></a>
     <div class="top-acts">
       <a class="pillbtn stickerbtn" href="#/stickers" title="Sticker book" aria-label="Sticker book, ${earned} earned">${IC.star}${earned?`<span class="count">${earned}</span>`:''}</a>
       <button class="pillbtn" data-act="look" title="Customize look & themes" aria-label="Customize look and themes">${IC.palette} <span class="lb">Look</span></button>
@@ -1602,13 +1562,18 @@ function homePage(){
   <div class="doors">
     <a class="door" style="--c:var(--a1)" href="#/quests">
       ${d1?`<div class="door-art" aria-hidden="true">${d1}</div>`:''}
-      <div><h2>To-dos</h2><p>Threads, characters, writing</p></div>
+      <div><h2>To-dos</h2><p>Good enough is good enough. We’re not supposed to be perfect.</p></div>
       <div class="foot"><span>${open} open${soon?', '+soon+' due soon':''}${dt?', '+dt+' done today':''}</span><span class="go">${IC.arrow}</span></div>
     </a>
     <a class="door" style="--c:var(--a2)" href="#/lib">
       ${d2?`<div class="door-art" aria-hidden="true">${d2}</div>`:''}
-      <div><h2>Library</h2><p>Files and folders</p></div>
+      <div><h2>Library</h2><p>People can lose their lives in libraries. They ought to be warned.</p></div>
       <div class="foot"><span>${plural(S.lib.length,'item')}</span><span class="go">${IC.arrow}</span></div>
+    </a>
+    <a class="door" style="--c:var(--a3)" href="#/ideas">
+      ${d1?`<div class="door-art" aria-hidden="true">${jarArt(S.ideas,'h',64)}</div>`:''}
+      <div><h2>Idea jar</h2><p>An idea that is not dangerous is unworthy of being called an idea at all.</p></div>
+      <div class="foot"><span>${S.ideas.length?plural(S.ideas.length,'idea'):'Empty for now'}</span><span class="go">${IC.arrow}</span></div>
     </a>
   </div>${quickLinks()}${recentStickers()}`};
 }
@@ -1641,6 +1606,7 @@ function sitePage(s){
 
 function rowLinks(t){
   const out=[],li=t.libId&&libItem(t.libId);
+  if(t.leftUrl)out.push(`<a class="rlink" style="--c:var(--pop)" href="${esc(fixUrl(t.leftUrl))}" target="_blank" rel="noopener" title="Where we left off">${svg('bookmark',15)}<span>Pick up here</span>${IC.ext}</a>`);
   if(li){
     const nm=esc(li.name);
     if(li.type==='folder')out.push(`<a class="rlink" style="--c:${colorFor(li)}" href="#/lib/${li.id}" data-lib="${li.id}" title="Open folder">${svg('folder',15)}<span>${nm}</span></a>`);
@@ -1661,7 +1627,7 @@ function sectionPage(s,c){
     return`<div class="row ${t.status==='done'?'isdone':''}" style="--c:${s.color}" data-row="${t.id}">
       <button class="chk ${t.status==='done'?'on':''}" data-act="toggle" data-id="${t.id}" aria-label="Toggle done">${IC.check}</button>
       <div class="rowbody"><a class="rowmain" href="#/quests/${s.id}/${c.id}/${t.id}"><b>${esc(t.text)}</b>
-        <div class="meta">${t.status==='doing'||t.status==='waiting'?`<span class="pill p-${t.status}">${STATUS[t.status]}</span>`:''}${di?`<span class="pill ${di.cls}">${di.txt}</span>`:''}${st.length?`<span class="pill">${sd}/${st.length} steps</span>`:''}</div></a>${rowLinks(t)}</div>
+        <div class="meta">${t.status==='doing'||t.status==='waiting'?`<span class="pill p-${t.status}">${STATUS[t.status]}</span>`:''}${di?`<span class="pill ${di.cls}">${di.txt}</span>`:''}${st.length?`<span class="pill">${sd}/${st.length} steps</span>`:''}</div>${t.leftNote?`<div class="leftnote">${esc(t.leftNote)}</div>`:''}</a>${rowLinks(t)}</div>
       ${t.status==='done'&&t.sticker?stk(t.sticker,44):''}<span class="rowgo">${IC.arrow}</span></div>`}).join('');
   const empty={active:'Nothing here yet.',waiting:'Nothing waiting.',done:'Nothing done yet.'}[filter];
   const emptyArt=getDoodle('empty_'+({active:'todo',waiting:'waiting',done:'done'}[filter]));
@@ -1699,6 +1665,10 @@ function taskPage(s,c,t){
       <div class="two"><select data-f="libId">${libOptions().map(o=>`<option value="${esc(o[0])}" ${o[0]===t.libId?'selected':''}>${esc(o[1])}</option>`).join('')}</select>
       <input data-f="url" value="${esc(t.url)}" placeholder="Or a link"></div>
       ${info}${btns?`<div class="linkbtns">${btns}</div>`:''}</div>
+    <div class="blk"><label>Where we left off${t.leftAt&&(t.leftUrl||t.leftNote)?`<span class="cnt">updated ${ago(dstr(t.leftAt))}</span>`:''}</label>
+      <div class="two"><input data-f="leftUrl" value="${esc(t.leftUrl||'')}" placeholder="Link to the exact post or page" autocomplete="off">
+      <textarea data-f="leftNote" rows="2" placeholder="Last line, what happens next">${esc(t.leftNote||'')}</textarea></div>
+      ${t.leftUrl?`<div class="linkbtns"><a class="ghost sm" href="${esc(fixUrl(t.leftUrl))}" target="_blank" rel="noopener">${svg('bookmark',15)} Pick up here ${IC.ext}</a></div>`:''}</div>
     <div class="blk"><label>Steps${steps.length?`<span class="cnt">${sd}/${steps.length}</span>`:''}</label>
       ${steps.map(x=>`<div class="step ${x.done?'on':''}" style="--c:${s.color}"><button class="chk sm ${x.done?'on':''}" data-act="steptoggle" data-sid="${x.id}" aria-label="Toggle step">${IC.check}</button><span>${esc(x.text)}</span><button class="stepx" data-act="stepdel" data-sid="${x.id}" aria-label="Remove step">${IC.x}</button></div>`).join('')}
       <input id="stepin" placeholder="Add a step" autocomplete="off"></div>
@@ -2139,6 +2109,9 @@ app.addEventListener('click',e=>{
     case 'lkind':lkind=el.dataset.v;return render();
     case 'filter':filter=el.dataset.v;return render();
     case 'qadd':return quickAdd();
+    case 'ideaadd':return addIdea();
+    case 'ideaopen':return ideaModal(S.ideas.find(i=>i.id===el.dataset.id));
+    case 'ideafilter':ideaFilter=el.dataset.v;return render();
     case 'steptoggle':{const t=task();if(!t)return;const x=(t.steps||[]).find(y=>y.id===el.dataset.sid);if(x)x.done=!x.done;return render()}
     case 'stepdel':{const t=task();if(!t)return;t.steps=(t.steps||[]).filter(y=>y.id!==el.dataset.sid);return render()}
     case 'timer':{const t=task();if(!t)return;startTimer(+el.dataset.v,t.text);return toast('Timer started')}
@@ -2166,6 +2139,7 @@ app.addEventListener('click',e=>{
 
 app.addEventListener('keydown',e=>{
   if(e.key==='Enter'&&e.target.id==='qa')quickAdd();
+  if(e.key==='Enter'&&e.target.id==='ideain')addIdea();
   if(e.key==='Enter'&&e.target.id==='stepin')addStep();
 });
 app.addEventListener('input',e=>{
@@ -2177,10 +2151,11 @@ app.addEventListener('change',e=>{
   const f=e.target.dataset.f;if(!f)return;
   const box=e.target.closest('[data-id]'),t=S.tasks.find(x=>x.id===box.dataset.id);if(!t)return;
   t[f]=e.target.value;
+  if(f==='leftUrl'||f==='leftNote')t.leftAt=Date.now();
   if(f==='text'&&!t.text.trim())t.text='Untitled';
   if(f==='catId'){location.hash=`#/quests/${t.siteId}/${t.catId}/${t.id}`;save();return}
   save();
-  if(f==='libId'||f==='url')render();
+  if(f==='libId'||f==='url'||f==='leftUrl')render();
 });
 
 render();
